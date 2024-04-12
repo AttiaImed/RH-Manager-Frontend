@@ -1,11 +1,12 @@
-export class Dossier {
- idDossier : number;
- num : number;
- nom : string;
+import {Tache} from "./tache";
+import {Projet} from "./projet";
 
-  constructor() {
-    this.idDossier = 0;
-    this.num = 0;
-    this.nom = "";
-  }
+export class Dossier {
+  id!: number;
+  num!: number;
+  nom!: string;
+  taches: Tache[] =[];
+  projet!: Projet;
+  goals!: string;
+  status!: string;
 }

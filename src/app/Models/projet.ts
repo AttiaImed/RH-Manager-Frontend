@@ -14,7 +14,4 @@ export class Projet {
     this.dateDebut = new Date();
     this.dateFin = new Date();
   }
-
-
 }
-

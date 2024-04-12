@@ -1,0 +1,92 @@
+<p>dossier works!</p>
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">Add New Dossier</button>
+
+<div class="table-responsive">
+  <table class="table">
+    <caption>List of dossiers</caption>
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Num</th>
+      <th scope="col">Status</th>
+      <th scope="col">Goals</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let dossier of listDossier">
+      <td>{{ dossier.id }}</td>
+      <td>{{ dossier.nom }}</td>
+      <td>{{ dossier.num }}</td>
+      <td>{{ dossier.status }}</td>
+      <td>{{ dossier.goals }}</td>
+      <td>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="edit(dossier)">Edit</button>
+        <button class="btn btn-danger" (click)="delete(dossier.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Dossier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Edit form fields -->
+        <label for="editNum">Num</label>
+        <input type="text" class="form-control" id="editNum" [(ngModel)]="selectedDossier.nom" name="editNum">
+        <label for="editNom">Goals</label>
+        <input type="text" class="form-control" id="editNom" [(ngModel)]="selectedDossier.goals" name="editNom">
+        <label for="editStatus">Status</label>
+        <input type="text" class="form-control" id="editStatus" [(ngModel)]="selectedDossier.status" name="editStatus">
+        <label for="editGoal">Goal</label>
+        <input type="text" class="form-control" id="editGoal" [(ngModel)]="selectedDossier.status" name="editGoal">
+        <!-- Add more form fields as needed -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add New Dossier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Add new dossier form fields -->
+        <label for="editNums">Num</label>
+        <input type="text" class="form-control" id="editNums" [(ngModel)]="newDossier.num" name="editNums">
+        <label for="editNoms">Nom</label>
+        <input type="text" class="form-control" id="editNoms" [(ngModel)]="newDossier.nom" name="editNoms">
+        <label for="editStatuss">Status</label>
+        <input type="text" class="form-control" id="editStatuss" [(ngModel)]="newDossier.status" name="editStatuss">
+        <label for="editGoals">Goal</label>
+        <input type="text" class="form-control" id="editGoals" [(ngModel)]="newDossier.goals" name="editGoal">
+        <!-- Add more form fields as needed -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addNewDossier()" data-dismiss="modal">Add Dossier</button>
+      </div>
+    </div>
+  </div>
+</div>
