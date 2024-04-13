@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CongeService } from '../Services/conge.service';
-import { Conge } from '../Models/conge';
-
+import { CongeService } from '../../../Services/conge.service';
+import { Conge } from '../../../Models/conge';
+import { NgForOf } from '@angular/common';  
 @Component({
   selector: 'app-conge',
   standalone: true,
-  imports: [],
+  imports: [NgForOf],
   templateUrl: './conge.component.html',
   styleUrl: './conge.component.css'
 })
