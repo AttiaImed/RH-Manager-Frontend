@@ -23,10 +23,11 @@ export class SignupComponent {
   loadUsers() {
     this.loginService.getAll().subscribe(
       (data: Utilisateur[]) => {
+        console.log(data)
         this.listUsers = data;
       },
       (error) => {
-        console.log(error + "no user found");
+        console.log(error);
       }
     );
   }
@@ -35,6 +36,7 @@ export class SignupComponent {
       (createdUser: Utilisateur) => {
         console.log(`New user added successfully.`);
         this.newUser = {
+          id:0,
           idUtilisateur: 0,
           nom: "",
           prenom: "",
@@ -51,15 +53,16 @@ export class SignupComponent {
     );
   }
 
-  delete(id: number) {
-    this.loginService.Delete(id).subscribe(
+  delete(user : Utilisateur) {
+    console.log(user);
+    this.loginService.Delete(user.id).subscribe(
       () => {
-        const index = this.listUsers.findIndex((user) => user.idUtilisateur === id);
+        const index = this.listUsers.findIndex((user) => user.idUtilisateur === user.id);
         if (index !== -1) {
           this.listUsers.splice(index, 1);
-          console.log(`User with id ${id} deleted successfully.`);
+          console.log(`User with id ${user.id} deleted successfully.`);
         } else {
-          console.log(`User with id ${id} not found.`);
+          console.log(`User with id ${user.id} not found.`);
         }
       },
       (error) => {
