@@ -1,0 +1,107 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="signup.component.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+  <script src="script.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+</head>
+
+<body>
+<div class="container">
+
+  <div class="card register">
+    <div class="card-body">
+      <nav class="nav">
+        <a class="nav-link " href="/login">Sign in</a>
+        <a class="nav-link active" href="#">Sign up</a>
+
+      </nav>
+
+      <div class="card-body">
+        <h2 class="card-title">Register a new account</h2>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="newUser.email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="newUser.password">
+          </div>
+
+          <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table">
+    <caption>List of dossiers</caption>
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nom</th>
+      <th scope="col">prenom</th>
+      <th scope="col">Type</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of listUsers">
+      <td>{{ user.idUtilisateur }}</td>
+      <td>{{ user.nom }}</td>
+      <td>{{ user.prenom }}</td>
+      <td>{{ user.type }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.status }}</td>
+      <td>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="edit(user)">Edit</button>
+        <button class="btn btn-danger" (click)="delete(user.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Dossier</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Edit form fields -->
+        <label for="editNom">Nom</label>
+        <input type="text" class="form-control" id="editNom" [(ngModel)]="selectedUser.nom" name="editNom">
+        <label for="editPrenom">Prenom</label>
+        <input type="text" class="form-control" id="editPrenom" [(ngModel)]="selectedUser.prenom" name="editPrenom">
+        <label for="editType">Type</label>
+        <input type="text" class="form-control" id="editType" [(ngModel)]="selectedUser.type" name="editType">
+        <label for="editEmail">Email</label>
+        <input type="text" class="form-control" id="editEmail" [(ngModel)]="selectedUser.email" name="editEmail">
+        <label for="editStatus">Status</label>
+        <input type="text" class="form-control" id="editStatus" [(ngModel)]="selectedUser.status" name="editStatus">
+        <!-- Add more form fields as needed -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

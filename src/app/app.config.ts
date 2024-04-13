@@ -19,5 +19,5 @@ export const appConfig: ApplicationConfig = {
     TokenStorageService,
     provideHttpClient(),
     authInterceptorProviders,
-    DataService,]
+    DataService, provideAnimationsAsync(),]
 };
