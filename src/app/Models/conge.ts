@@ -1,11 +1,7 @@
-export class Conge {
- idConge !: number
- congeType !: string;
- startDate !: Date;
- endDate !: Date;
- reason !: string;
- leaveRequestStatus !:string;
-
-
-
+export class Conge{
+    id!:number;
+    dateDebut!:Date;
+    dateFin!:Date;
+    type!:string;
+    description!:string
 }

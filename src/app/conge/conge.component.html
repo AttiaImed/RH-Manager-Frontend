@@ -1,0 +1,34 @@
+  <div class="container">
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <h3> Liste des congés </h3>
+      </div>    
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date de début</th>
+          <th>Date de fin</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let conge of conges  | async">
+          <td>{{ conge.id }}</td>
+          <td>{{ conge.dateDebut }}</td>
+          <td>{{ conge.dateFin }}</td>
+          <td>{{ conge.type }}</td>
+          <td>{{ conge.description }}</td>
+          <td>
+            <button (click)="updateConge(conge.id, conge)">Edit</button>
+            <button (click)="deleteConge(conge.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
