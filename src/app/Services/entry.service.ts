@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 //Api url
-const  APIUrl ="YOUR_API";
+const  APIUrl ="http://localhost:8081/api/v1/auth/";
 @Injectable({
   providedIn: 'root'
 })
@@ -12,10 +12,10 @@ export class EntryService {
   constructor(private http:HttpClient){}
 
   signIn(data :{email : string,password : string}): Observable<any>{
-    return this.http.post(APIUrl, data)
+    return this.http.post(`${APIUrl}authenticate`, data)
   }
-  signUp(data :{nom : string, identificateur : string, email : string, password : string}): Observable<any>{
-    return this.http.post(APIUrl, data)
+  signUp(data :any): Observable<any>{
+    return this.http.post(`${APIUrl}register`, data)
   }
 
   signOut(): void {

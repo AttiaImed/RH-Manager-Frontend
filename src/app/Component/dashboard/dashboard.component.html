@@ -1,0 +1,115 @@
+<body [class]="darkMode ? 'dark' : ''">
+<!-- SIDEBAR -->
+<section id="sidebar" [ngClass]="status ? 'hide' : ''">
+  <a class="brand" routerLink="/Dashboard/Profile">
+    <img
+      [src]="LogoImgPath"
+      [class]="status ? 'imgCollapsed' : 'imgNotCollapsed'"
+      alt="Company Logo"
+      loading="lazy"
+    />
+  </a>
+  <ul class="side-menu top">
+    <li routerLink="/Dashboard/Statistics" routerLinkActive="active">
+      <a>
+          <span class="text item-list-dash"
+          ><mat-icon>dashboard</mat-icon
+          ><span class="item-list-dash">Dashboard</span></span
+          >
+      </a>
+    </li>
+    <li routerLink="/Dashboard/Teams" routerLinkActive="active">
+      <a>
+        <i class='bx bxs-group'></i>
+        <span class="text">Team</span>
+      </a>
+    </li>
+    <li routerLink="/Dashboard/Project" routerLinkActive="active">
+      <a>
+        <i class='bx bxs-folder-minus'></i>
+        <span class="text">Project</span>
+      </a>
+    </li>
+
+    <li
+      *ngIf="userData.type == 'Admin'"
+      routerLink="/Dashboard/Privilege"
+      routerLinkActive="active"
+    >
+      <a>
+          <span class="text item-list-dash"
+          ><mat-icon>key</mat-icon
+          ><span class="item-list-dash">Privilege</span></span
+          >
+      </a>
+    </li>
+  </ul>
+  <ul class="side-menu">
+    <li routerLink="/Dashboard/Equipements" routerLinkActive="active">
+      <a>
+          <span class="text item-list-dash"
+          ><mat-icon>settings_brightness</mat-icon
+          ><span class="item-list-dash">Equipements</span></span
+          >
+      </a>
+    </li>
+    <li routerLink="/Dashboard/Historique" routerLinkActive="active">
+      <a>
+          <span class="text item-list-dash"
+          ><mat-icon>history</mat-icon
+          ><span class="item-list-dash">Historique</span></span
+          >
+      </a>
+    </li>
+    <li routerLink="/Dashboard/Profile" routerLinkActive="active">
+      <a>
+          <span class="text item-list-dash"
+          ><mat-icon>account_circle</mat-icon
+          ><span class="item-list-dash">Profil</span></span
+          >
+      </a>
+    </li>
+    <li>
+      <a
+        routerLink="/SignIn"
+        title="logout"
+        (click)="signOut()"
+        class="logout"
+      >
+          <span class="text item-list-dash"
+          ><mat-icon>input</mat-icon
+          ><span class="item-list-dash">Deconnexion</span></span
+          >
+      </a>
+    </li>
+  </ul>
+</section>
+<!-- SIDEBAR -->
+
+<!-- CONTENT -->
+<section id="content">
+  <!-- NAVBAR -->
+  <nav>
+    <i (click)="addToggle()"
+    ><mat-icon>reorder</mat-icon></i
+    >
+    <form></form>
+    <a aria-disabled="true" class="profile" routerLink="/Dashboard/Profile">
+      <img [src]="imageProfile" alt="user Image Profile" />
+      {{ userData.email }}
+    </a>
+    <label class="switch">
+      <input type="checkbox" [checked]="darkMode" (change)="modeChanges()" />
+      <span class="slider"></span>
+    </label>
+  </nav>
+  <!-- NAVBAR -->
+
+  <!-- MAIN -->
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <!-- MAIN -->
+</section>
+<!-- CONTENT -->
+</body>

@@ -6,7 +6,7 @@ import { Conge } from '../Models/conge';
   providedIn: 'root'
 })
 export class CongeService {
-  private baseUrl = 'http://localhost:8099/conges';
+  private baseUrl = 'http://localhost:8099/api/conges';
 
   constructor(private http: HttpClient) { }
   
