@@ -7,8 +7,6 @@ import {DashboardComponent} from "./Component/dashboard/dashboard.component";
 import {AuthGuard} from "./Guards/auth.guard";
 import {SecureInnerPagesGuard} from "./Guards/secure-inner-pages.guard";
 import {ProjectComponent} from "./Component/dashboard/project/project.component";
-import {LoginComponent} from "./Component/Projet/login/login.component";
-import {SignupComponent} from "./Component/Projet/signup/signup.component";
 import {ReclamationComponent} from "./Component/Reclamation/reclamation/reclamation.component";
 import { CongeComponent } from './Component/Projet/conge/conge.component';
 
