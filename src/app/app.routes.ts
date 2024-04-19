@@ -7,6 +7,11 @@ import {DashboardComponent} from "./Component/dashboard/dashboard.component";
 import {AuthGuard} from "./Guards/auth.guard";
 import {SecureInnerPagesGuard} from "./Guards/secure-inner-pages.guard";
 import {ProjectComponent} from "./Component/dashboard/project/project.component";
+import {LoginComponent} from "./Component/Projet/login/login.component";
+import {SignupComponent} from "./Component/Projet/signup/signup.component";
+import {ReclamationComponent} from "./Component/Reclamation/reclamation/reclamation.component";
+import { CongeComponent } from './Component/Projet/conge/conge.component';
+
 
 export const routes: Routes = [
   {path: 'projet', component :ProjetComponent},
@@ -29,6 +34,10 @@ export const routes: Routes = [
   { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
 
   { path: '**',  redirectTo: '/Dashboard/Project'},
+  {path: 'login', component :LoginComponent},
+  {path: 'signup', component :SignupComponent},
+  {path: 'reclamation', component :ReclamationComponent},
+  {path: 'conges', component :CongeComponent}
+
 
 ];
-

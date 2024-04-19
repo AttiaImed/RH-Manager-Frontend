@@ -1,0 +1,101 @@
+
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">Add New Reclamation</button>
+
+<div class="table-responsive">
+  <table class="table">
+    <caption>List of reclamations</caption>
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">DATE SOUMISSION</th>
+      <th scope="col">DATE CLOTURE</th>
+      <th scope="col">TITRE</th>
+      <th scope="col">DESCRIPTION</th>
+      <th scope="col">TYPE RECLAMATION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let reclamation of listReclamation">
+      <td>{{ reclamation.idReclamation }}</td>
+      <td>{{ reclamation.dateSoumission }}</td>
+      <td>{{ reclamation.dateCloture }}</td>
+      <td>{{ reclamation.titre }}</td>
+      <td>{{ reclamation.description }}</td>
+      <td>{{ reclamation.typeRec }}</td>
+
+      <td>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="edit(reclamation)">Edit</button>
+        <button class="btn btn-danger" (click)="delete(reclamation.idReclamation)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Reclamation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Edit form fields -->
+        <label for="editDateSoumission">Date Soumission</label>
+        <input type="text" class="form-control" id="editDateSoumission" [(ngModel)]="selectedReclamation.dateSoumission" name="editDateSoumission">
+        <label for="editDateCloture">Date Cloture</label>
+        <input type="text" class="form-control" id="editDateCloture" [(ngModel)]="selectedReclamation.dateCloture" name="editDateCloture">
+        <label for="editTitre">Titre</label>
+        <input type="text" class="form-control" id="editTitre" [(ngModel)]="selectedReclamation.titre" name="editTitre">
+        <label for="editDescription">Description</label>
+        <input type="text" class="form-control" id="editDescription" [(ngModel)]="selectedReclamation.description" name="editDescription">
+        <label for="editTypeRec">Type Reclamation</label>
+        <input type="text" class="form-control" id="editTypeRec" [(ngModel)]="selectedReclamation.typeRec" name="editTypeRec">
+
+        <!-- Add more form fields as needed -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add New Reclamation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Add new dossier form fields -->
+        <label for="editDateSoumission">Date Soumission</label>
+        <input type=date class="form-control" id="editDateSoumissions" [(ngModel)]="newReclamation.dateSoumission" name="editDateSoumission">
+        <label for="editDateCloture">Date Cloture</label>
+        <input type=date class="form-control" id="editDateClotures" [(ngModel)]="newReclamation.dateCloture" name="editDateClotures">
+        <label for="editTitres">Titre</label>
+        <input type="text" class="form-control" id="editTitres" [(ngModel)]="newReclamation.titre" name="editTitres">
+        <label for="editDescriptions">description</label>
+        <input type="text" class="form-control" id="editDescriptions" [(ngModel)]="newReclamation.description" name="editDescriptions">
+        <label for="editTypeRecs">Type Reclamation</label>
+        <input type="text" class="form-control" id="editTypeRecs" [(ngModel)]="newReclamation.typeRec" name="editTypeRecs">
+
+        <!-- Add more form fields as needed -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addNewReclamation()" data-dismiss="modal">Add Reclamation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
