@@ -7,7 +7,7 @@ import {DashboardComponent} from "./Component/dashboard/dashboard.component";
 import {AuthGuard} from "./Guards/auth.guard";
 import {SecureInnerPagesGuard} from "./Guards/secure-inner-pages.guard";
 import {ProjectComponent} from "./Component/dashboard/project/project.component";
-import {ReclamationComponent} from "./Component/Reclamation/reclamation/reclamation.component";
+import {ReclamationComponent} from "./Component/dashboard/reclamation/reclamation.component";
 import { CongeComponent } from './Component/Projet/conge/conge.component';
 
 
@@ -25,8 +25,11 @@ export const routes: Routes = [
         path: "Project",
         component: ProjectComponent,
         canActivate: [AuthGuard],
-      },
 
+
+      },
+      {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
+      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]}
     ]
   },
   { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
@@ -34,8 +37,7 @@ export const routes: Routes = [
   { path: '**',  redirectTo: '/Dashboard/Project'},
   {path: 'login', component :LoginComponent},
   {path: 'signup', component :SignupComponent},
-  {path: 'reclamation', component :ReclamationComponent},
-  {path: 'conges', component :CongeComponent}
+
 
 
 ];

@@ -79,7 +79,7 @@ export class ReclamationComponent {
           dateCloture: new Date(),
           titre: "",
           description:"",
-          typeRec: "",
+          typeReclamation: "",
         };
         this.loadReclamations();
       },

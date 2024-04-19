@@ -4,7 +4,7 @@ export class Reclamation {
  dateCloture!: Date;
  titre !: string;
  description !: string;
- typeRec !: string;
+  typeReclamation !: string;
 
 
 }

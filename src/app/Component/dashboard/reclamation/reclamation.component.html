@@ -22,7 +22,7 @@
       <td>{{ reclamation.dateCloture }}</td>
       <td>{{ reclamation.titre }}</td>
       <td>{{ reclamation.description }}</td>
-      <td>{{ reclamation.typeRec }}</td>
+      <td>{{ reclamation.typeReclamation }}</td>
 
       <td>
         <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="edit(reclamation)">Edit</button>
@@ -54,8 +54,10 @@
         <label for="editDescription">Description</label>
         <input type="text" class="form-control" id="editDescription" [(ngModel)]="selectedReclamation.description" name="editDescription">
         <label for="editTypeRec">Type Reclamation</label>
-        <input type="text" class="form-control" id="editTypeRec" [(ngModel)]="selectedReclamation.typeRec" name="editTypeRec">
-
+        <select class="form-control" id="editTypeRec" [(ngModel)]="selectedReclamation.typeReclamation" name="editTypeRecs">
+          <option value="BUG">BUG</option>
+          <option value="DEFECT">DEFECT</option>
+        </select>
         <!-- Add more form fields as needed -->
       </div>
       <div class="modal-footer">
@@ -87,7 +89,11 @@
         <label for="editDescriptions">description</label>
         <input type="text" class="form-control" id="editDescriptions" [(ngModel)]="newReclamation.description" name="editDescriptions">
         <label for="editTypeRecs">Type Reclamation</label>
-        <input type="text" class="form-control" id="editTypeRecs" [(ngModel)]="newReclamation.typeRec" name="editTypeRecs">
+        <select class="form-control" id="editTypeRecs" [(ngModel)]="newReclamation.typeReclamation" name="editTypeRecs">
+          <option value="BUG">BUG</option>
+          <option value="DEFECT">DEFECT</option>
+        </select>
+
 
         <!-- Add more form fields as needed -->
       </div>
