@@ -23,20 +23,20 @@ export class ReclamationComponent {
     this.loadReclamations();
   }
 
-  private loadReclamations() {
+   loadReclamations() {
     this.reclamationService.getAll().subscribe(
       (data:Reclamation[])=>{
         this.listReclamation=data;
       },
       (error)=>{
-        console.log(error+"reclamation not found");
+        console.log(error + "reclamation not found");
       }
       );
   }
   delete(id:number){
     this.reclamationService.Delete(id).subscribe(
       ()=>{
-        const index=this.listReclamation.findIndex((reclamation)=>reclamation.idReclamation===id);
+        const index=this.listReclamation.findIndex((reclamation)=>reclamation.id===id);
         if(index !== -1) {
           this.listReclamation.splice(index, 1);
           console.log(`Reclamation with id ${id} deleted successfully.`);
@@ -53,13 +53,13 @@ export class ReclamationComponent {
   edit(reclamation: Reclamation) {
     console.log( this.selectedReclamation)
 
-    this.selectedReclamation = { ...reclamation };
+    this.selectedReclamation = reclamation;
   }
 
   saveChanges() {
-    this.reclamationService.Update(this.selectedReclamation.idReclamation,this.selectedReclamation).subscribe(
+    this.reclamationService.Update(this.selectedReclamation.id,this.selectedReclamation).subscribe(
       () => {
-        console.log(`Reclamation with id ${this.selectedReclamation.idReclamation} updated successfully.`);
+        console.log(`Reclamation with id ${this.selectedReclamation.id} updated successfully.`);
         this.loadReclamations();
       },
       (error) => {
@@ -74,7 +74,7 @@ export class ReclamationComponent {
       (createdReclamation: Reclamation) => {
         console.log(`New reclamation added successfully.`);
         this.newReclamation = {
-          idReclamation: 0,
+          id: 0,
           dateSoumission: new Date(),
           dateCloture: new Date(),
           titre: "",

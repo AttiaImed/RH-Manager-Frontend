@@ -1,5 +1,5 @@
 export class Reclamation {
- idReclamation !: number;
+ id !: number;
  dateSoumission!: Date;
  dateCloture!: Date;
  titre !: string;
