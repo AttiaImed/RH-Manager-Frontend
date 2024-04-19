@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {LoginService} from "../../../Services/Projet/login.service";
-import {Utilisateur} from "../../../Models/utilisateur";
+import {LoginService} from "../../Services/Projet/login.service";
+import {Utilisateur} from "../../Models/utilisateur";
 import {CommonModule, DatePipe, NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 
