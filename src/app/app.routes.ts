@@ -9,6 +9,8 @@ import {SecureInnerPagesGuard} from "./Guards/secure-inner-pages.guard";
 import {ProjectComponent} from "./Component/dashboard/project/project.component";
 import {ReclamationComponent} from "./Component/dashboard/reclamation/reclamation.component";
 import { CongeComponent } from './Component/Projet/conge/conge.component';
+import {TasksComponent} from "./Component/dashboard/project/Project/tasks/tasks.component";
+import {DetailTaskComponent} from "./Component/dashboard/project/Project/tasks/detail-task/detail-task.component";
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
@@ -28,25 +30,38 @@ export const routes: Routes = [
         path: "Project",
         component: ProjectComponent,
         canActivate: [AuthGuard],
-
-
       },
       {
         path: 'Project/:id',
         component: ProjectDetailsComponent,
         canActivate: [AuthGuard],
       },
-
-      {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
       {path: 'equipe', component :EquipeComponent},
+      {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
+      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]},
+      {
+        path: 'Projects/Tasks',
+        component: TasksComponent,
+        canActivate: [AuthGuard],
+
+      },
       {
         path: 'equipe/Details/:id',
         component: TeamDetailsComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
+      {
+        path: 'Project/:id/Tasks',
+        component: DetailTaskComponent,
+        canActivate: [AuthGuard],
 
-      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]}
-    ]
+      },
+      {
+        path: 'Project/:id/Tasks/:id',
+        component: DetailTaskComponent,
+        canActivate: [AuthGuard],
+      }
+      ]
   },
   { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
 

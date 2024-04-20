@@ -4,13 +4,15 @@ import {ReclamationService} from "../../../Services/Reclamation/reclamation.serv
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-reclamation',
   standalone: true,
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    MatIcon
   ],
   templateUrl: './reclamation.component.html',
   styleUrl: './reclamation.component.css'

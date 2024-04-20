@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {DataService} from "./data.service";
+import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-const  APIUrlTeams ="http://localhost:8082/api/task";
+import {DataService} from "./data.service";
+const  APIUrlTasks ="http://localhost:8082/api/task";
 
 
 @Injectable({
@@ -9,5 +10,15 @@ const  APIUrlTeams ="http://localhost:8082/api/task";
 })
 export class TaskService extends DataService{
 
-  constructor(http:HttpClient){   super(APIUrlTeams,http);}
+  constructor(http:HttpClient,private https:HttpClient) {
+    super(APIUrlTasks,http);
+  }
+  getTasksByUserId(user : String): Observable<any>{
+    return this.https.get(APIUrlTasks+"/user/"+user);
+  }
+  getTasksByProjectIdAndUserId(userId : string , projectId :string): Observable<any>{
+    return this.https.get(APIUrlTasks+"/user/"+projectId+"/"+userId);
+  }
+
+
 }

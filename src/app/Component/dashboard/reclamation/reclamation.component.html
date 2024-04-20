@@ -23,11 +23,17 @@
       <td>{{ reclamation.titre }}</td>
       <td>{{ reclamation.description }}</td>
       <td>{{ reclamation.typeReclamation }}</td>
+      <div>
 
-      <td>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="edit(reclamation)">Edit</button>
-        <button class="btn btn-danger" (click)="delete(reclamation.id)">Delete</button>
-      </td>
+
+          <button class="button" data-toggle="modal" data-target="#editModal" (click)="edit(reclamation)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        <button class="button" (click)="delete(reclamation.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        </div>
     </tr>
     </tbody>
   </table>
