@@ -11,4 +11,8 @@ export class UserService extends DataService{
   constructor(http:HttpClient) {
     super(APIUrlTeams,http);
   }
+
+  getFile(userId: string) {
+
+  }
 }

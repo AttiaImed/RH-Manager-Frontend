@@ -36,6 +36,7 @@ export class DataService {
 
   //Create Method
   Create(data: any): Observable<any> {
+    console.log(data);
     return this.http.post(this.APIUrl, data);
   }
 

@@ -1,0 +1,151 @@
+<div class="head-title">
+  <div class="left">
+    <h1 routerLink="/Dashboard" style="cursor: pointer;">Dashboard</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>Dashboard</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active" routerLink="/Dashboard/Teams">Teams</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Team Details</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!--Begin Page Header-->
+<ul class="box-info">
+  <li>
+    <i class='bx bxs-group'></i>
+    <span class="text">
+      <h3>Team Name</h3>
+      <p>{{teamData.nom}}</p>
+    </span>
+  </li>
+  <li>
+    <i class='bx bxs-calendar-check'></i>
+    <span class="text">
+      <h3>Projects</h3>
+      <p>{{teamData.projets.length}}</p>
+    </span>
+  </li>
+  <li>x
+    <i class='bx bxs-calendar-check'></i>
+    <span class="text">
+      <h3>Status <mat-slide-toggle [checked]="teamData.status == 'inWorking' ? true : false" title="change Status"
+                                   (change)="changeStatus()"></mat-slide-toggle></h3>
+      <p>{{teamData.status}}</p>
+    </span>
+  </li>
+</ul>
+<!--End Page Header-->
+<!--Begin Table Users-->
+<div class="table-data" style="height: 400px;">
+  <div class="order">
+    <div class="head">
+      <h3>Members : {{usersData.length}}</h3>
+      <i class='bx bx-plus' data-toggle="modal" data-target="#adduserskill"
+         title="Add user to team"></i>
+    </div>
+    <table>
+      <thead>
+      <tr>
+        <th>User</th>
+        <th>Email</th>
+        <th >Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of usersData">
+        <td class="pointer" [routerLink]="['/Dashboard/Profile',item.id,'OverView']">
+          <img [src]="userProfilePictures[item.id]">
+          <p>{{item.nom}} {{item.prenom}}</p>
+        </td>
+        <td class="pointer" [routerLink]="['/Dashboard/Profile',item.id,'OverView']">{{item.email}}</td>
+        <td ><span class="status pending pointer" (click)="addOrRemoveUser(item.id)"
+                                                     title="Delete User from this team">remove</span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--End Table Users-->
+  <!--Begin Projects-->
+  <div class="todo">
+    <div class="head">
+      <h3>Projects</h3>
+      <i class='bx bx-plus' *ngIf="!addProjectSwitcher " (click)="fetchProjects()"></i>
+      <div *ngIf="addProjectSwitcher">
+        <mat-form-field>
+          <mat-label>Projects To add</mat-label>
+          <mat-select [formControl]="project" multiple>
+            <mat-select-trigger>
+              {{ project.value?.[0]?.name || '' }}
+              <span *ngIf="(project.value?.length || 0) > 1" class="example-additional-selection">
+                (+{{ (project.value?.length || 0) - 1 }} {{ project.value?.length === 2 ? 'other' : 'others' }})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let item of listProjects" [value]="item.id">
+              {{ item.projectName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="btn btn-primary" (click)="getSelectedProjects()">add project</button>
+        <button class="btn btn-danger" (click)="addProjectSwitcher = !addProjectSwitcher">Cancel</button>
+      </div>
+    </div>
+    <ul class="todo-list">
+      <li *ngFor="let item of teamData.projets" [class]="item.status == 'open' ? 'completed' : 'not-completed'"
+          [routerLink]="['/Dashboard/Project',item.id]">
+        <p class="pointer">{{item.projectName}}</p>
+        <mat-icon class="pointer" color="warn" (click)="removeProject(item?.id)">delete</mat-icon>
+      </li>
+    </ul>
+  </div>
+</div>
+<!--End Projects-->
+
+
+
+
+<!-- Modal Add User -->
+<div class="modal fade" id="adduserskill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add User By Email</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Select a choice</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item">Add User By Email</a>
+            </div>
+          </div>
+          <input [(ngModel)]="userIdtoSearch" type="text" class="form-control"
+                 aria-label="Text input with dropdown button" (keyup)="ModelAddSmothingToDepartment()">
+        </div>
+        <br><br>
+        <mat-list>
+          <h3 mat-subheader>Users Found</h3>
+          <div *ngFor="let item of ListOfSearch">
+            <mat-list-item (click)="addOrRemoveUser(item.userId)">{{item.email}}</mat-list-item>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-list>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Model End adding user-->

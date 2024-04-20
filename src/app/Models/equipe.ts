@@ -5,6 +5,7 @@ export class Equipe {
   id!: number;
   nom!: string;
   status!: string;
+  domaine!: string;
   projets: Projet[]=[];
   membres: Utilisateur[]=[];
   chef!: Utilisateur;

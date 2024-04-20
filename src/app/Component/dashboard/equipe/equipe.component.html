@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="Button-line">
+   <div class="Button-add">
+     <button class="btn btn-primary" (click)="openAddDialog()">ajouter</button>
+   </div>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-4" >
+              <div class="col-md-4" *ngFor="let team of teams">
+                <div class="card" style="width: 15rem;">
+                  <img src="../../../assets/team.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h4 class="card-title">{{team.nom}}</h4>
+                    <a [routerLink]="['/Dashboard/equipe/Details/', team.id]" class="btn btn-primary">Organisation</a>
+                    <button  class="btn btn-secondary delete " (click)="delete(team.id)" ><i class="bi bi-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+    </div>
+

@@ -10,6 +10,8 @@ import {ProjectComponent} from "./Component/dashboard/project/project.component"
 import {ReclamationComponent} from "./Component/dashboard/reclamation/reclamation.component";
 import { CongeComponent } from './Component/Projet/conge/conge.component';
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
+import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
+import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
 
 
 export const routes: Routes = [
@@ -36,6 +38,13 @@ export const routes: Routes = [
       },
 
       {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
+      {path: 'equipe', component :EquipeComponent},
+      {
+        path: 'equipe/Details/:id',
+        component: TeamDetailsComponent,
+        canActivate: [AuthGuard]
+      },
+
       {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]}
     ]
   },

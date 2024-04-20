@@ -1,0 +1,16 @@
+<div class="container form-container">
+    <h2 class="mb-4">Add New Team</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="teamName">Team Name</label>
+        <input type="text" class="form-control" id="teamName" name="teamName" placeholder="Enter team name" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}">
+      </div>
+      <div class="form-group">
+        <label for="domain">Domain</label>
+        <input type="text" class="form-control" id="domain" name="domain" placeholder="Enter domain" [(ngModel)]="domain" [ngModelOptions]="{standalone: true}">
+      </div>
+     
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  
