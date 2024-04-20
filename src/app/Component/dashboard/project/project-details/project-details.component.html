@@ -1,1 +1,372 @@
-<p>project-details works!</p>
+<div class="head-title">
+  <div class="left">
+    <h1 routerLink="/Dashboard" style="cursor: pointer;">Dashboard</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>Dashboard</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active" routerLink="/Dashboard/Project">Projects</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Project Details</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="card">
+  <div class="card-title" *ngIf="!inputProject">
+    <mat-icon style="float: right; margin: 10px" (click)="editProject()">edit</mat-icon>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title" *ngIf="!inputProject">About Project : {{projectData.projectName}}</h5>
+    <p class="card-text">{{projectData.projectDesc}}</p>
+    <p class="card-text"><small class="text-muted">Started At {{projectData.startDate | date}}</small></p>
+    <p class="card-text"><small class="text-muted">Due to {{projectData.endDate | date}}</small></p>
+
+    <div class="form-group" *ngIf="inputProject">
+      <label for="exampleInputEmail1">Change the name</label>
+      <input type="text" class="form-control" id="exampleInputEmail1SS" aria-describedby="emailHelp"
+             placeholder="Type your Goal in here" [(ngModel)]="projectData.projectName">
+      <input type="text" class="form-control" id="exampleInputEmail1S" aria-describedby="emailHelp"
+             placeholder="Type your Goal in here" [(ngModel)]="projectData.projectDesc">
+
+      <button style="margin: 12px;" class="btn btn-primary" >
+        Save
+      </button>
+      <button style="margin: 12px;" class="btn btn-secondary" (click)="inputProject = false">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+<div class="wrapper">
+  <div class="content-page">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-wrap align-items-center justify-content-between breadcrumb-content">
+                <h5>Folder : {{currentFolder.nom}}</h5>
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                  <div class="dropdown status-dropdown mr-3">
+                    <div class="dropdown-toggle" id="dropdownMenuButton03" data-toggle="dropdown">
+                      <div class="btn bg-body"><span class="h6">Folders :</span> Choose a folder</div>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton03">
+                      <a class="dropdown-item" *ngFor="let item of folders" (click)="splitData(item)"><i
+                        class="ri-mic-line mr-2"></i>{{item.nom}}</a>
+                    </div>
+                  </div>
+                  <div  class="pl-3 btn-new border-left">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                      New Folder
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Folder Container-->
+      <div *ngIf="this.currentFolder">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">About Folder : {{currentFolder.nom}}</h5>
+            <hr color="red">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                  <h6 class="card-title">Status : </h6>
+                </div>
+                <div class="col-sm">
+                  <div class="btn-group">
+                    <button type="button" [disabled]="true" class="btn "
+                            [class]="currentFolder.status == 'Completed' ? 'btn-success' : 'btn-danger'">{{currentFolder.status}}</button>
+                    <button  type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu" >
+                      <a class="dropdown-item" (click)="updateFolder('Completed')">Completed</a>
+                      <a class="dropdown-item" (click)="updateFolder('Open')">Open</a>
+                    </div>
+                  </div>
+                </div>
+
+
+                <hr color="red">
+                <div class="col-sm">
+                  <h6 class="card-title">Percentage : {{this.currentFolder.progress}}%</h6>
+                </div>
+                <mat-progress-bar style="width: 50%;" mode="determinate"
+                                  [value]="this.currentFolder.progress"></mat-progress-bar>
+
+              </div>
+
+            </div>
+            <hr color="red">
+
+            <p class="card-text" *ngIf="!inputGoals"><small class="text-muted"><span
+              style="color: red; font-weight: bold;">Goal To achive</span> :
+              {{currentFolder.goals}}</small>&nbsp;&nbsp;&nbsp; <mat-icon (click)="editGoal()"
+                                                                          >edit</mat-icon></p>
+            <div class="form-group" *ngIf="inputGoals">
+              <label for="exampleInputEmail1">Set Goal</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                     placeholder="Type your Goal in here" [(ngModel)]="goals">
+              <small id="emailHelp" class="form-text text-muted">Set a motivational goal to make your team work
+                better</small>
+              {{goals}}
+              <button style="margin: 12px;" class="btn btn-primary" (click)="updateFolder()">
+                Save
+              </button>
+              <button style="margin: 12px;" class="btn btn-secondary" (click)="inputGoals = false">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="grid" class="item-content animate__animated animate__fadeIn active" data-toggle-extra="tab-content">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card-transparent mb-0 desk-info">
+                <div class="card-body p-0">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <h5>Open Tasks ( {{openTasks.length}} )</h5>
+                            <a class="btn btn-primary" data-target="#new-task-modal" data-toggle="modal"
+                               (click)="getusers()">New Task</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="card" *ngFor="let item of openTasks">
+                        <div class="card-body">
+                          <h5 class="mb-3 pointer"
+                              [routerLink]="['/Dashboard/Project', projectData.id, 'Todos',item.id]"
+                              [queryParams]="{ projectId: projectData.id , projectName : projectData.projectName}">
+                            {{item.nom}}</h5>
+                          <p class="mb-3"><i class="las la-calendar-check mr-2"></i>Due to {{item.dateFin |date }}</p>
+                          <div class="d-flex align-items-center justify-content-between">
+                            <div class="iq-media-group">
+                              <a class="iq-media" *ngFor="let user of item.membres;">
+<!--                                <img [src]="userProfilePictures[user]" class="img-fluid avatar-40 rounded-circle"-->
+<!--                                     alt="">-->
+                              </a>
+                            </div>
+                            <div>
+                              <a class="btn bg-secondary-light" *ngIf="item.priority === 'High'">High</a>
+                              <a class="btn bg-info-light" *ngIf="item.priority === 'Medium'">Meduim</a>
+                              <a class="btn bg-success-light" *ngIf="item.priority === 'Low'">Low</a>
+                              <mat-icon class="pointer"  (click)="deleteTask(item.id)"
+                                        style="margin-left: 20px;" color="warn">delete</mat-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card-transparent mb-0 desk-info">
+                <div class="card-body p-0">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <h5>In Progress ( {{inProgressTasks.length}} )</h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="card" *ngFor="let item of inProgressTasks">
+                        <div class="card-body">
+                          <h5 class="mb-3 pointer"
+                              [routerLink]="['/Dashboard/Project', projectData.id, 'Todos',item.id]"
+                              [queryParams]="{ projectId: projectData.id , projectName : projectData.projectName}">
+                            {{item.name}}</h5>
+                          <p class="mb-3"><i class="las la-calendar-check mr-2"></i>Due to {{item.endTime | date}}</p>
+                          <div class="d-flex align-items-center justify-content-between">
+                            <div class="iq-media-group">
+                              <a class="iq-media" *ngFor="let user of item.userIds;">
+                                <img [src]="userProfilePictures[user]" class="img-fluid avatar-40 rounded-circle"
+                                     alt="">
+                              </a>
+                            </div>
+                            <div>
+                              <a class="btn bg-secondary-light" *ngIf="item.priorty == 'High'">High</a>
+                              <a class="btn bg-info-light" *ngIf="item.priorty == 'Medium'">Meduim</a>
+                              <a class="btn bg-success-light" *ngIf="item.priorty == 'Low'">Low</a>
+                              <mat-icon class="pointer" (click)="deleteTask(item.id)"
+                                        style="margin-left: 20px;" color="warn">delete</mat-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="card-transparent mb-0 desk-info">
+                <div class="card-body p-0">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <h5>Compeleted ( {{completedTasks.length}} )</h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="card" *ngFor="let item of completedTasks">
+                        <div class="card-body">
+                          <h5 class="mb-3 pointer"
+                              [routerLink]="['/Dashboard/Project', projectData.id, 'Todos',item.id]"
+                              [queryParams]="{ projectId: projectData.id , projectName : projectData.projectName}">
+                            {{item.name}}</h5>
+                          <p class="mb-3"><i class="las la-calendar-check mr-2"></i>Due to {{item.endTime | date}}</p>
+                          <div class="d-flex align-items-center justify-content-between">
+                            <div class="iq-media-group">
+                              <a class="iq-media" *ngFor="let user of item.userIds;">
+                                <img [src]="userProfilePictures[user]" class="img-fluid avatar-40 rounded-circle"
+                                     alt="">
+                              </a>
+                            </div>
+                            <div>
+                              <a class="btn bg-secondary-light" *ngIf="item.priorty == 'High'">High</a>
+                              <a class="btn bg-info-light" *ngIf="item.priorty == 'Medium'">Meduim</a>
+                              <a class="btn bg-success-light" *ngIf="item.priorty == 'Low'">Low</a>
+                              <mat-icon class="pointer" (click)="deleteTask(item.id)"
+                                        style="margin-left: 20px;" color="warn">delete</mat-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page end  -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Modal list start -->
+<div class="modal fade bd-example-modal-lg" role="dialog" aria-modal="true" id="new-task-modal">
+  <div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-block text-center pb-3 border-bttom">
+        <h3 class="modal-title" >New Task</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group mb-3">
+              <label for="exampleInputText02" class="h5">Task Name</label>
+              <input [(ngModel)]="newTask.name" type="text" class="form-control" id="exampleInputText02"
+                     placeholder="Enter task Name">
+              <a class="task-edit text-body"><i class="ri-edit-box-line"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <h6>Assigned to :</h6>
+            <div class="form-group mb-3">
+              <div class="form-check" *ngFor="let item of projectMembers">
+                <input class="form-check-input" type="checkbox" [value]="item.userId"
+                       (change)="onCheckboxChange($event, item)">
+                <label class="form-check-label">
+                  {{item.firstname + item.lastname}}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group mb-3">
+              <label for="exampleInputText05" class="h5">Due Dates*</label>
+              <input [(ngModel)]="newTask.endTime" type="date" class="form-control" id="exampleInputText05" value="">
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group mb-3">
+              <label class="h5">Priority</label>
+              <select name="type" class="selectpicker form-control" data-style="py-0" [(ngModel)]="newTask.priorty">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group mb-3">
+              <label for="exampleInputText040" class="h5">Description</label>
+              <textarea [(ngModel)]="newTask.desc" class="form-control" id="exampleInputText040" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="d-flex flex-wrap align-items-ceter justify-content-center mt-4">
+              <div class="btn btn-primary mr-3" data-dismiss="modal" (click)="saveTask()">Save</div>
+              <div class="btn btn-primary" data-dismiss="modal">Cancel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">New Folder</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Folder Name</label>
+            <input type="text" class="form-control" [(ngModel)]="newFolder.nom" name="projectName">
+          </div>
+          <div class="form-group">
+            <label >Folder Goal</label>
+            <input type="text" class="form-control" [(ngModel)]="newFolder.goals" name="projectDesc">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addFolder()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import {SecureInnerPagesGuard} from "./Guards/secure-inner-pages.guard";
 import {ProjectComponent} from "./Component/dashboard/project/project.component";
 import {ReclamationComponent} from "./Component/dashboard/reclamation/reclamation.component";
 import { CongeComponent } from './Component/Projet/conge/conge.component';
+import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 
 
 export const routes: Routes = [
@@ -28,6 +29,12 @@ export const routes: Routes = [
 
 
       },
+      {
+        path: 'Project/:id',
+        component: ProjectDetailsComponent,
+        canActivate: [AuthGuard],
+      },
+
       {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
       {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]}
     ]

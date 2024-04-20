@@ -6,7 +6,8 @@ export class Dossier {
   num!: number;
   nom!: string;
   taches: Tache[] =[];
-  projet!: Projet;
   goals!: string;
   status!: string;
+  progress!: number;
+
 }

@@ -1,14 +1,18 @@
+import {Utilisateur} from "./utilisateur";
+
 export class Tache {
-  idTache!: number;
+  id!: number;
   nom!: string;
   description!: string;
   status!: string;
-  supervisorId!: number;
   progress!: number;
-  priority!: boolean;
+  priority!: string;
   comments!: string;
-  startTime!: Date;
-  endTime!: Date;
+  dateDebut!: Date;
+  dateFin!: Date;
+  superviser : Utilisateur = new Utilisateur();
+  membres : Utilisateur[] = [];
+  sousTaches : Tache[] = [];
 
 
 }

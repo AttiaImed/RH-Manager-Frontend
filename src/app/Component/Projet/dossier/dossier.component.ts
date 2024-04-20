@@ -71,16 +71,13 @@ export class DossierComponent {
         console.log(`New dossier added successfully.`);
         // Clear newDossier and reload dossiers
         this.newDossier = {
-          goals: "",
-          id: 0,
-          nom: "",
-          num: 0,
-          projet: new Projet(),
-          status: "",
-          taches: [],
+          goals: "", id: 0, nom: "", num: 0, progress: 0, status: "", taches: []
+
+
         };
         this.loadDossiers();
       },
+
       (error) => {
         console.log(error);
       }

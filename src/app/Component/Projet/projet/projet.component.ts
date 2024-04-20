@@ -4,6 +4,7 @@ import {Projet} from "../../../Models/projet";
 import {Dossier} from "../../../Models/dossier";
 import {FormsModule} from "@angular/forms";
 import {DatePipe, NgForOf} from "@angular/common";
+import {Utilisateur} from "../../../Models/utilisateur";
 
 @Component({
   selector: 'app-projet',
@@ -25,8 +26,31 @@ export class ProjetComponent {
           }
     );
   }
-  selected_item: Projet = {
-    dateDebut: new Date(), dateFin: new Date(), description: "", idProjet: 0, nom: "", status: ""
+  selected_item: {
+    dossiers: any[];
+    endDate: Date;
+    projectDesc: string;
+    id: number;
+    team: { projets: any[]; chef: Utilisateur; id: number; nom: string; membres: any[]; status: string };
+    projectName: string;
+    startDate: Date;
+    status: string
+  } = {
+    dossiers: [],
+    endDate: new Date(),
+    id: 0,
+    projectDesc: "",
+    projectName: "",
+    startDate: new Date(),
+    status: "",
+    team: {
+      id: 0,
+      nom: '',
+      status: '',
+      projets: [],
+      membres: [],
+      chef: new Utilisateur()
+    }
   };
 
 
