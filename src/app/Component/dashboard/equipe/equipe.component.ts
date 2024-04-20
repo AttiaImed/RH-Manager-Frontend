@@ -6,11 +6,12 @@ import { Equipe } from '../../../Models/equipe';
 import { DatePipe, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {RouterLink} from "@angular/router";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-equipe',
   standalone: true,
-  imports: [NgForOf, DatePipe, FormsModule, RouterLink],
+  imports: [NgForOf, DatePipe, FormsModule, RouterLink, MatIcon],
   templateUrl: './equipe.component.html',
   styleUrl: './equipe.component.css'
 })
