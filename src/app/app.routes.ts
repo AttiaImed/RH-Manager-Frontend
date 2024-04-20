@@ -30,38 +30,25 @@ export const routes: Routes = [
         path: "Project",
         component: ProjectComponent,
         canActivate: [AuthGuard],
+
+
       },
       {
         path: 'Project/:id',
         component: ProjectDetailsComponent,
         canActivate: [AuthGuard],
       },
-      {path: 'equipe', component :EquipeComponent},
-      {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
-      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]},
-      {
-        path: 'Projects/Tasks',
-        component: TasksComponent,
-        canActivate: [AuthGuard],
 
-      },
+      {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
+      {path: 'equipe', component :EquipeComponent},
       {
         path: 'equipe/Details/:id',
         component: TeamDetailsComponent,
         canActivate: [AuthGuard],
       },
-      {
-        path: 'Project/:id/Tasks',
-        component: DetailTaskComponent,
-        canActivate: [AuthGuard],
 
-      },
-      {
-        path: 'Project/:id/Tasks/:id',
-        component: DetailTaskComponent,
-        canActivate: [AuthGuard],
-      }
-      ]
+      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]}
+    ]
   },
   { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
 
