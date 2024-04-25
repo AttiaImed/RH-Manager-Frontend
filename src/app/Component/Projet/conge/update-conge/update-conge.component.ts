@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,Inject, OnInit } from '@angular/core';
+import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { EquipeService } from '../../../../Services/Projet/equipe.service';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -11,23 +12,22 @@ import { Conge } from '../../../../Models/conge';
   templateUrl: './update-conge.component.html',
   styleUrl: './update-conge.component.css'
 })
-export class UpdateCongeComponent {
+export class UpdateCongeComponent implements OnInit{
   conge: Conge = new Conge();
 
-  constructor(private congeService: CongeService, private dialogRef: MatDialogRef<UpdateCongeComponent>) {}
+  constructor(private congeService: CongeService, private dialogRef: MatDialogRef<UpdateCongeComponent>,@Inject(MAT_DIALOG_DATA) public data: { conge: Conge }) {}
 
 
-
+  ngOnInit() {
+    console.log(this.data)
+  }
   onSubmit() {
-   
-    this.congeService.updateConge(this.conge.id, this.conge).subscribe(
-      (response: any) => {
+    console.log(this.data)
+    this.congeService.updateConge(this.data.conge.id, this.data.conge).subscribe(
+      response => {
         console.log('Conge updated successfully:', response);
-        this.dialogRef.close('success');
-      },
-      (error: any) => {
-        console.error('Error updating Conge:', error);
-      }
+        this.dialogRef.close('success');}
+  
     );
   }
 }

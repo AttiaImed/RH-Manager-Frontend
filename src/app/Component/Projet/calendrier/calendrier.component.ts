@@ -8,17 +8,6 @@ import { CalendarService } from '../../../Services/Projet/calendar.service';
   templateUrl: './calendrier.component.html',
   styleUrl: './calendrier.component.css'
 })
-export class CalendrierComponent implements OnInit{
-  
-  events: Event[] | undefined;
+export class CalendrierComponent {
 
-  constructor(private calendarService: CalendarService) { }
-
-  ngOnInit() {
-    this.getCalendarEvents();
-  }
-  getCalendarEvents(): void {
-    this.calendarService.getCalendarEvents()
-      .subscribe(events => this.events = events);
-  }
 }

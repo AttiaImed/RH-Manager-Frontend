@@ -9,13 +9,14 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/m
 import { MatDialog } from '@angular/material/dialog';
 import { AjouterCongeDialogComponent } from './ajouter-conge-dialog/ajouter-conge-dialog.component';
 import { UpdateCongeComponent } from './update-conge/update-conge.component';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-conge',
   standalone: true,
   imports: [NgForOf,
     MatButton,
     MatListModule, MatDividerModule,
-    MatCard,MatCardContent,MatCardHeader,MatCardTitle
+    MatCard,MatCardContent,MatCardHeader,MatCardTitle,MatIcon
   ],
   templateUrl: './conge.component.html',
   styleUrl: './conge.component.css'
@@ -28,8 +29,8 @@ export class CongeComponent {
   constructor(private dialog :MatDialog, private congeService: CongeService) { }
 
   ngOnInit() {
-    this.loadConges();
-    this.loadLeaveCounts();
+    //this.loadConges();
+    //this.loadLeaveCounts();
   }
 
   loadConges() {

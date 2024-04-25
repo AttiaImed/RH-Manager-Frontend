@@ -14,7 +14,8 @@ h3 {
     margin-bottom: 20px;
 }
 .ajout{
-margin-left: 59%;
+margin-left: 65%;
+margin-bottom: 15px;
 }
 .container {
     display: flex;
@@ -30,9 +31,25 @@ margin-left: 59%;
   }
   
   .card {
-    flex: 0 0 calc(33.3333% - 10px); /* Adjust for spacing */
+    flex: 0 0 calc(33.3333% - 10px); 
+    border-radius: 25px;
   }
   
   .list-card {
     width: 100%;
+    border-radius: 25px;
+  }
+  .iconsick{
+    margin-left: 14px;
+    margin-top: 10px;
+    font-size: 20px;
+  }
+
+  .columns{
+    border-spacing: 50px 30px;
+  }
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 120px;
   }
