@@ -1,0 +1,22 @@
+<div class="container form-container">
+  <h2 class="mb-4">Add New Conge</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="dateDebut">Date de début</label>
+      <input type="date" class="form-control" id="dateDebut" name="dateDebut" [(ngModel)]="conge.dateDebut" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group">
+      <label for="dateFin">Date de fin</label>
+      <input type="date" class="form-control" id="dateFin" name="dateFin" [(ngModel)]="conge.dateFin" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group">
+      <label for="type">Type</label>
+      <input type="text" class="form-control" id="type" name="type" placeholder="Enter type" [(ngModel)]="conge.type" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description" placeholder="Enter description" [(ngModel)]="conge.description" [ngModelOptions]="{standalone: true}"></textarea>
+    </div>
+    <button type="submit" class="btn btn-submit">Submit</button>
+  </form>
+</div>

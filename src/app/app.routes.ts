@@ -14,6 +14,7 @@ import {DetailTaskComponent} from "./Component/dashboard/project/Project/tasks/d
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
+import { CalendrierComponent } from './Component/Projet/calendrier/calendrier.component';
 
 
 export const routes: Routes = [
@@ -47,7 +48,8 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
 
-      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]}
+      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]},
+      {path: 'calendar-events', component :CalendrierComponent,canActivate: [AuthGuard]}
     ]
   },
   { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
