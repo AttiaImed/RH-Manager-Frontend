@@ -80,7 +80,7 @@ export class ProjectComponent {
   // Get projects based on the working team on it
   getProjectByUser() {
     this.projectService
-      .getProejctByUserId(this.tokenStorage.getUser() as string)
+      .getProejctByUserId(this.tokenStorage.getUser() as number)
       .subscribe(
         (res: any) => {
           if (this.projectData.length > 0) {
@@ -109,7 +109,7 @@ export class ProjectComponent {
   // gGet porjects that the current authenticated user is in charge on them
   getProjectsBySuperViser() {
     this.projectService
-      .getProejctBySuperviserId(this.tokenStorage.getUser() as string)
+      .getProejctBySuperviserId(this.tokenStorage.getUser() as number)
       .subscribe(
         (res: any) => {
           this.projectData = res;

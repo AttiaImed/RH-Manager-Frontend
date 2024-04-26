@@ -25,7 +25,7 @@ export class TasksComponent {
   fixsedTodoList: any[] = [];
   todoList: any[] = [];
   projects: any[] = [];
-  userId!: string | null;
+  userId!: number | null;
   projectChosen!: any;
   statusChosen: any = 'all';
 
@@ -36,7 +36,7 @@ export class TasksComponent {
     private route: ActivatedRoute,
     private matSnackBar: MatSnackBar
   ) {
-    this.userId = this.tokenStorage.getUser();
+    this.userId = this.tokenStorage.getUser() as number;
     this.getTodosByUser();
     this.getProjectByUser();
     this.route.queryParams.subscribe((params) => {
@@ -52,7 +52,7 @@ export class TasksComponent {
   //Get All projects belong to the current authenticated user
   getProjectByUser() {
     this.projectService
-      .getProejctByUserId(this.tokenStorage.getUser() as string)
+      .getProejctByUserId(this.tokenStorage.getUser() as number)
       .subscribe(
         (res: any) => {
           this.projects = res;
@@ -71,7 +71,7 @@ export class TasksComponent {
   //Get All Tasks related to the current Authenticated user
   getTodosByUser() {
     this.todoService
-      .getTasksByUserId(this.tokenStorage.getUser() as string)
+      .getTasksByUserId(this.tokenStorage.getUser() as number)
       .subscribe(
         (res: any) => {
           this.todoList = res;
@@ -92,7 +92,7 @@ export class TasksComponent {
     this.projectChosen = ProjectName;
     this.todoService
       .getTasksByProjectIdAndUserId(
-        this.tokenStorage.getUser() as string,
+        this.tokenStorage.getUser() as number,
         projectId
       )
       .subscribe(

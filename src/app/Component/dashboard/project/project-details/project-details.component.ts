@@ -253,7 +253,7 @@ export class ProjectDetailsComponent {
       this.newTask.userIds = this.selectedUsers as [];
       this.newTask.folderId = this.currentFolder.nom;
       const userAuth = this.tokenStorage.getUser();
-      this.newTask.supervisorId = userAuth as string;
+      this.newTask.supervisorId = String(userAuth);
       this.newTask.projectId = this.id;
       this.todoService.Create(this.newTask).subscribe(
         (res: any) => {

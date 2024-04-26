@@ -14,6 +14,7 @@ import {DetailTaskComponent} from "./Component/dashboard/project/Project/tasks/d
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
+import {ProfileComponent} from "./Component/dashboard/profile/profile.component";
 
 
 export const routes: Routes = [
@@ -26,6 +27,11 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],// this is the component with the <router-outlet> in the template
     children: [
+      {
+        path: "Profile",
+        component: ProfileComponent,
+        canActivate: [AuthGuard],
+      },
       {
         path: "Project",
         component: ProjectComponent,
