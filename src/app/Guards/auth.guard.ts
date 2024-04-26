@@ -26,11 +26,10 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     const jwtToken = this.authService.getToken();
-    console.log(jwtToken);
     const userRole = this.authService.getRole();
     if (!jwtToken) {
       this._snackBar.open('Access Denied !!!', '❌');
-      this.router.navigate(['/login'], {
+      this.router.navigate(['/login','forgetPassword'], {
         queryParams: { returnUrl: state.url },
       });
     } else {
@@ -39,12 +38,12 @@ export class AuthGuard implements CanActivate {
         this.router.navigate(['/Dashboard/Statistics'], {
           queryParams: { returnUrl: state.url },
         });
+
         return false;
       } else {
         return true;
       }
     }
-    console.log(jwtToken);
     return true;
   }
 }

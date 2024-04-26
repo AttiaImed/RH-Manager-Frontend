@@ -1,92 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .login {
+      max-width: 400px;
+      margin: 0 auto;
+      margin-top: 50px;
+    }
+    .container {
+      margin-top: 10%;
+    }
+    .login-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .login-form {
+      margin-bottom: 20px;
+    }
+
+    .forgot-password {
+      text-align: center;
+    }
+
+    .forgot-password a {
+      color: darkblue !important;
+    }
+    button.btn.btn-danger.login-btn {
+      background: darkblue;
+    }
+    .login-btn {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
 
 <div class="container">
-
   <div class="card login">
     <div class="card-body">
-      <nav class="nav">
-        <a class="nav-link active" href="#">Sign in</a>
-        <a class="nav-link" href="/signup">Sign up</a>
+      <h2 class="login-title">Login with your email</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email"><i class="me-3"><mat-icon>email</mat-icon></i> Email address</label>
+          <input type="email" class="form-control" id="email" formControlName="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password"><i class="me-3"><mat-icon>lock</mat-icon></i> Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password" required>
+        </div>
+        <div class="form-group">
+          <a href="/forgetPassword" class="forgot-password">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn btn-danger login-btn">Login</button>
+      </form>
 
-      </nav>
-
-      <div class="card-body">
-        <h2 class="card-title">Login with your email</h2>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
-          <!-- Email input -->
-          <mat-form-field class="form-group mb-3">
-            <mat-label class="form-label" for="Email">
-              <i class="me-3"><mat-icon>email</mat-icon></i> Email address
-            </mat-label>
-            <input
-              matInput
-              type="email"
-              id="email"
-              formControlName="email"
-              [errorStateMatcher]="matcher"
-              name="email"
-              required
-            />
-            <mat-error
-              *ngIf="email?.hasError('email') && !email?.hasError('required')"
-            >Please enter a valid <strong>email</strong> address</mat-error
-            >
-            <mat-error *ngIf="email?.hasError('required')"
-            >Email is <strong>required</strong></mat-error
-            >
-          </mat-form-field>
-
-          <!-- Password input -->
-          <mat-form-field class="form-group mb-3" appearance="fill">
-            <mat-label class="form-label" for="password">
-              <i class="me-3"><mat-icon>lock</mat-icon></i> Password
-            </mat-label>
-            <input
-              matInput
-              type="password"
-              id="password"
-              formControlName="password"
-              [errorStateMatcher]="matcher"
-              [type]="hide ? 'password' : 'text'"
-              name="password"
-              required
-            />
-            <button
-              type="button"
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide"
-            >
-              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-            </button>
-            <mat-error
-              *ngIf="
-            password?.hasError('minlength') && !password?.hasError('required')
-          "
-            >Password must have
-              <strong>{{password?.errors?.['minlength'].requiredLength}}</strong>
-              Letters, You have Submitted
-              <strong>{{password?.errors?.['minlength'].actualLength}}</strong>
-              Letters</mat-error
-            >
-            <mat-error *ngIf="password?.hasError('required')"
-            >Password is <strong>required</strong></mat-error
-            >
-          </mat-form-field>
-          <a routerLink="/resetEmail" style="color: red">Forget Password ?</a>
-
-          <!-- Login Button -->
-          <div class="text-center">
-            <button mat-raised-button type="submit" color="warn">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Login &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </button>
-          </div>
-        </form>
-        <button type="button" class="btn btn-link">Forgot password ?</button>
-      </div>
     </div>
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
