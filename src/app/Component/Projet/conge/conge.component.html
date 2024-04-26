@@ -1,34 +1,69 @@
-  <div class="container">
-    <hr>
-    <div class="row">
-      <div class="col-md-12">
-        <h3> Liste des congés </h3>
-      </div>    
-    </div>
-    <table class="table">
+<div class="container">
+  <div class="card-container">
+    <mat-card class="card">
+      <mat-card-header>
+  
+        <mat-icon> local_airport</mat-icon>
+      </mat-card-header>
+      <mat-card-title class="iconsick">Casual Leave</mat-card-title>
+      <mat-card-content>
+        <p>Number of Casual Leaves: {{ casualLeaveCount }}</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-icon  >airline_seat_individual_suite</mat-icon>
+      </mat-card-header>
+      <mat-card-title class="iconsick">Sick Leave</mat-card-title>
+      <mat-card-content>
+
+        <p>Remaining Sick Leave: {{ sickLeaveCount }}</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+       
+        <mat-icon >group</mat-icon>
+      </mat-card-header>
+      <mat-card-title class="iconsick">Personal Leave</mat-card-title>
+      <mat-card-content>
+        <p class="statistics">Remaining Personal Leaves: {{ personalDaysCount }}</p>
+      </mat-card-content>
+      
+    </mat-card>
+  </div>
+</div>
+
+  <mat-card class="list-card">
+    <mat-card-header>
+      <mat-card-title>Liste des congés  </mat-card-title>
+      <button mat-flat-button class="btn ajout" (click)="openAddDialog()">Ajouter Conge</button>
+
+    </mat-card-header>
+    <mat-card-content>
+    <table class="table table-striped">
       <thead>
-        <tr>
-          <th>ID</th>
+        <tr class="columns">
+          <th>Type</th>
           <th>Date de début</th>
           <th>Date de fin</th>
-          <th>Type</th>
+         
           <th>Description</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let conge of onges">
-          <td>{{ conge.id }}</td>
+        <tr *ngFor="let conge of conges" class="spacing">
+          <td>{{ conge.type }}</td>
           <td>{{ conge.dateDebut }}</td>
           <td>{{ conge.dateFin }}</td>
-          <td>{{ conge.type }}</td>
           <td>{{ conge.description }}</td>
           <td>
-            <button (click)="updateConge(conge.id, conge)">Edit</button>
-            <button (click)="deleteConge(conge.id)">Delete</button>
+            <button mat-flat-button class="btn btn-secondary" (click)="openUpdateDialog(conge)">Edit</button>
+            <button mat-flat-button color="btn btn-danger" (click)="deleteConge(conge.id)">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
-  
+  </mat-card-content>
+</mat-card>

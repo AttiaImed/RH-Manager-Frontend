@@ -12,7 +12,9 @@ import {CongeComponent} from './Component/Projet/conge/conge.component';
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 import {EquipeComponent} from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
+import { CalendrierComponent } from './Component/Projet/calendrier/calendrier.component';
 import {ProfileComponent} from "./Component/dashboard/profile/profile.component";
+
 
 
 export const routes: Routes = [
@@ -29,6 +31,8 @@ export const routes: Routes = [
         path: "Project",
         component: ProjectComponent,
         canActivate: [AuthGuard],
+
+
       },
       {
         path: 'Project/:id',
@@ -51,8 +55,12 @@ export const routes: Routes = [
       {path: 'Conges', component: CongeComponent, canActivate: [AuthGuard]}
     ]
   },
-  {path: '', redirectTo: '/Dashboard/Project', pathMatch: 'full'},
-  {path: '**', redirectTo: '/Dashboard/Project'},
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
+  { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
+
+  { path: '**',  redirectTo: '/Dashboard/Project'},
+  {path: 'login', component :LoginComponent},
+  {path: 'signup', component :SignupComponent},
+
+
+
 ];
