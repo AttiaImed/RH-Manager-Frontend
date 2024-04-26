@@ -44,4 +44,16 @@ export class DataService {
   Delete(id: any): Observable<any> {
     return this.http.delete(`${this.APIUrl}/${id}`);
   }
+  Authenticate(credentiels: any): Observable<any> {
+    return this.http.post(`${this.APIUrl}/authenticate`,credentiels);
+  }
+  Register(body:any): Observable<any>{
+    return this.http.post(`${this.APIUrl}/register`,body)
+  }
+  getUserDetails(id:string){
+    return this.http.get<any>(`http://localhost:8081/api/utilisateur/${id}`)
+  }
+  saveUserDetails(id:string,body:any){
+    return this.http.put<any>(`http://localhost:8081/api/utilisateur/${id}`,body)
+  }
 }

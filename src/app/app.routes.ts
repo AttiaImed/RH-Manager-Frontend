@@ -14,7 +14,6 @@ import {DetailTaskComponent} from "./Component/dashboard/project/Project/tasks/d
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
-import {FeedbackComponent} from "./Component/dashboard/feedback/feedback.component";
 
 
 export const routes: Routes = [
@@ -30,13 +29,6 @@ export const routes: Routes = [
       {
         path: "Project",
         component: ProjectComponent,
-        canActivate: [AuthGuard],
-
-
-      },
-      {
-        path: "FeedBack",
-        component: FeedbackComponent,
         canActivate: [AuthGuard],
 
 
