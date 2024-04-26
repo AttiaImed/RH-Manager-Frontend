@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DataService} from "./data.service";
 import {HttpClient} from "@angular/common/http";
-const  APIUrlTeams ="http://localhost:8082/api/user";
+const  APIUrlTeams ="http://localhost:8081/api/user";
 
 @Injectable({
   providedIn: 'root'
@@ -15,4 +15,5 @@ export class UserService extends DataService{
   getFile(userId: string) {
 
   }
+
 }
