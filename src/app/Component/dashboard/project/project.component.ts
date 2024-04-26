@@ -160,7 +160,7 @@ export class ProjectComponent {
   onSubmit() {
     if(this.newProject.projectName != "" && this.newProject.projectDesc !=""){
       this.projectService
-        .CreateProject(this.newProject.idteam, this.newProject)
+        .CreateProject(2, this.newProject)
         .subscribe(
           (res: any) => {
             this.projectData.push(res);

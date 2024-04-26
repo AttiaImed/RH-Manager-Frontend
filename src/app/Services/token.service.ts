@@ -18,7 +18,7 @@ export class TokenStorageService {
   public getUser():string | null{
     const jwtToken = this.getToken();
     const decodedToken: any = this.getToken() != null ? jwtDecode(jwtToken as string) : null;
-    const userId = decodedToken != null ? decodedToken?.id : null;
+    const userId = decodedToken != null ? decodedToken?.jti : null;
     return userId;
   }
   public getToken(): string | null {
@@ -26,7 +26,9 @@ export class TokenStorageService {
   }
 
   public getRole(){
-    return window.sessionStorage.getItem(ROLE_KEY) !== null ? window.sessionStorage.getItem(ROLE_KEY) : null;
+    const jwtToken = this.getToken();
+    const decodedToken: any = this.getToken() != null ? jwtDecode(jwtToken as string) : null;
+    const role = decodedToken != null ? decodedToken?.role : null;
+    return role;
   }
-
 }
