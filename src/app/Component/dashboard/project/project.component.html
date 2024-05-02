@@ -109,7 +109,7 @@
                    id="exampleInputPassword1" placeholder="Password">
           </div>
           <select class="form-control form-control-sm" name="team" [(ngModel)]="newProject.idteam">
-            <option *ngFor="let item of teams" [value]="item.id">{{item.name}}</option>
+            <option *ngFor="let item of teams" [value]="item.id">{{item.nom}}</option>
           </select>
         </form>
       </div>

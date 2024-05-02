@@ -145,6 +145,7 @@ export class ProjectComponent {
     this.teamService.getAll().subscribe(
       (res: any) => {
         this.teams = res;
+        console.log(res)
       },
       () => {
         this.matSnackBar.open('Error while loading teams', '❌', {
