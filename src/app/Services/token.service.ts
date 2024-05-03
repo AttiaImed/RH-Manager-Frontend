@@ -30,6 +30,7 @@ export class TokenStorageService {
     const jwtToken = this.getToken();
     const decodedToken: any = this.getToken() != null ? jwtDecode(jwtToken as string) : null;
     const role = decodedToken != null ? decodedToken?.role : null;
+    console.log(role);
     return role;
   }
 }

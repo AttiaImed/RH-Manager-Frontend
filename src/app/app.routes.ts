@@ -20,8 +20,6 @@ import {StatisticsComponent} from "./Component/dashboard/statistics/statistics.c
 
 
 export const routes: Routes = [
-  {path: 'projet', component :ProjetComponent},
-  {path: 'dossier', component :DossierComponent},
   {path: 'login', component :LoginComponent, canActivate: [SecureInnerPagesGuard]},
   {path: 'signup', component :SignupComponent, canActivate: [SecureInnerPagesGuard]},
   {
@@ -33,25 +31,43 @@ export const routes: Routes = [
         path: "Profile",
         component: ProfileComponent,
         canActivate: [AuthGuard],
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
+        }
       },
       {
         path: "Project",
         component: ProjectComponent,
         canActivate: [AuthGuard],
-
-
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR']
+        }
       },
       {
         path: "Statistics",
         component: StatisticsComponent,
         canActivate: [AuthGuard],
-
-
       },
       {
         path: 'Project/:id',
         component: ProjectDetailsComponent,
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'Reclamation',
+        component :ReclamationComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR','RH','EMPLOYE']
+        }
+      },
+      {
+        path: 'equipe',
+        component :EquipeComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR','RH','DIRECTOR']
+        }
       },
 
       {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
@@ -61,17 +77,21 @@ export const routes: Routes = [
         path: 'equipe/Details/:id',
         component: TeamDetailsComponent,
         canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR','RH','DIRECTOR']
+        }
       },
-
-      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]}
+      {
+        path: 'Conges',
+        component :CongeComponent,
+        canActivate: [AuthGuard],
+      },
+      {path : "" , redirectTo: '/Statistics', pathMatch: 'full'}
     ]
   },
-  { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
+  { path: '',   redirectTo: '/Dashboard/Statistics', pathMatch: 'full' }, // redirect to
 
-  { path: '**',  redirectTo: '/Dashboard/Project'},
+  { path: '**',  redirectTo: '/Dashboard/Statistics'},
   {path: 'login', component :LoginComponent},
   {path: 'signup', component :SignupComponent},
-
-
-
 ];

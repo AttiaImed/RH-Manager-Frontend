@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenStorageService} from "../../../Services/token.service";
 import {Router, RouterLink} from "@angular/router";
@@ -21,7 +21,7 @@ import {JsonPipe, NgForOf} from "@angular/common";
   templateUrl: './project.component.html',
   styleUrl: './project.component.css'
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnInit{
   projectData: any[] = [];
   filtredProjects: any[] = [];
   newProject = {
@@ -43,8 +43,11 @@ export class ProjectComponent {
     private router : Router
   ) {
     //this.getProjectsByRole();
-    this.getAllProjects();
   }
+
+  ngOnInit(): void {
+    this.getAllProjects();
+    }
 
   // Get project based on the role granted
   // getProjectsByRole() {
@@ -192,6 +195,7 @@ export class ProjectComponent {
             .navigateByUrl('/', { skipLocationChange: true })
             .then(() => {
               this.router.navigate(['/Dashboard/Project']);
+              this.getAllProjects();
             });
         },
         () => {

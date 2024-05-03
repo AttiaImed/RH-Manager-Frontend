@@ -14,6 +14,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {Dossier} from "../../../../Models/dossier";
 import {Tache} from "../../../../Models/tache";
+import {DossierService} from "../../../../Services/Projet/dossier.service";
 
 @Component({
   selector: 'app-project-details',
@@ -71,6 +72,7 @@ export class ProjectDetailsComponent {
     private tokenStorage: TokenStorageService,
     public ar: ActivatedRoute,
     private projectService: ProjectService,
+    private dossierService : DossierService,
     private router: Router,
     private userService: UserService,
     private todoService: TaskService,
@@ -168,7 +170,8 @@ export class ProjectDetailsComponent {
   // add new Folder to the project
   addFolder() {
     if(this.newFolder.nom !=""){
-      this.projectService.addNewFloder(this.id, this.newFolder).subscribe(
+
+      this.dossierService.CreateFolder(this.newFolder,this.id).subscribe(
         (res: any) => {
           window.location.reload();
         },
