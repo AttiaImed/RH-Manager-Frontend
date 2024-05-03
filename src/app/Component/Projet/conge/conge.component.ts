@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CongeService } from '../../../Services/conge.service';
 import { Conge } from '../../../Models/conge';
-import { NgForOf } from '@angular/common';  
+import { NgForOf } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatList, MatListItem, MatListModule } from '@angular/material/list';
 import { MatDivider, MatDividerModule } from '@angular/material/divider';
@@ -29,13 +29,13 @@ export class CongeComponent {
   constructor(private dialog :MatDialog, private congeService: CongeService) { }
 
   ngOnInit() {
-    //this.loadConges();
-    //this.loadLeaveCounts();
+    this.loadConges();
+    this.loadLeaveCounts();
   }
 
   loadConges() {
-    this.congeService.getCongesList().subscribe(conges => { 
-      this.conges = conges; 
+    this.congeService.getCongesList().subscribe(conges => {
+      this.conges = conges;
     });
   }
 
