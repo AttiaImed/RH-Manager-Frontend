@@ -31,7 +31,7 @@ export const routes: Routes = [
         component: ProfileComponent,
         canActivate: [AuthGuard],
         data:{
-          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR']
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
         }
       },
       {
