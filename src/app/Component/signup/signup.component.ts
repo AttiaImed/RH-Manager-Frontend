@@ -63,7 +63,6 @@ mail = "exemple@mail.com"
       Validators.minLength(8),
       Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
     ]),
-    type: new FormControl('', [Validators.required]),
 
   });
   onSubmit() {
@@ -73,12 +72,13 @@ mail = "exemple@mail.com"
       this.userData.nom = this.form.get('nom')?.value;
       this.userData.prenom = this.form.get('prenom')?.value;
       this.userData.password = this.form.get('password')?.value;
-      this.userData.type = this.form.get('type')?.value;
 
       // Call register method with populated userData
       this.entryService.signUp(this.userData).subscribe({
         next: (data: any) => {
           this.router.navigate(['/login']);
+          this._snackBar.open("Sign up successfully, Redirecting to log in page", '❌');
+
         },
         error: (err: Error) => {
           console.log(err);

@@ -76,15 +76,6 @@
             <div *ngIf="form.get('prenom')?.errors?.['required']">Lastname is required</div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="type"><i class="me-3"><mat-icon>chrome_reader_mode</mat-icon></i>Type</label>
-          <select class="form-control" id="type" formControlName="type" required>
-            <option *ngFor="let option of typeOptions" [value]="option">{{ option }}</option>
-          </select>
-          <div *ngIf="form.get('type')?.invalid && (form.get('type')?.dirty || form.get('type')?.touched)" class="text-danger">
-            <div *ngIf="form.get('type')?.errors?.['required']">Type is required</div>
-          </div>
-        </div>
 
         <button type="submit" class="btn btn-danger login-btn">Sign up</button>
         Already have an account? Please <a href="login">Sign in</a>
