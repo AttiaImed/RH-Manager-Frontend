@@ -15,6 +15,7 @@ import {ProjectDetailsComponent} from "./Component/dashboard/project/project-det
 import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
 import {ProfileComponent} from "./Component/dashboard/profile/profile.component";
+import {FeedbackComponent} from "./Component/dashboard/feedback/feedback.component";
 import {StatisticsComponent} from "./Component/dashboard/statistics/statistics.component";
 
 
@@ -54,6 +55,7 @@ export const routes: Routes = [
       },
 
       {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
+      {path: 'FeedBack', component :FeedbackComponent,canActivate: [AuthGuard]},
       {path: 'equipe', component :EquipeComponent},
       {
         path: 'equipe/Details/:id',

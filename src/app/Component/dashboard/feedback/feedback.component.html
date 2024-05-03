@@ -1,10 +1,9 @@
 <!-- Button to trigger modal -->
-
-
 <h2 class="feedback-title">Feedback Page</h2>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFeedbackModal">
   Ajouter feedback
 </button>
+
 <table class="table">
   <thead>
   <tr>
@@ -12,6 +11,7 @@
     <th scope="col">LIBELLE</th>
     <th scope="col">DATE SOUMISSION</th>
     <th scope="col">DESCRIPTION</th>
+    <th scope="col">TYPE FEEDBACK</th>
     <th scope="col">ACTIONS</th>
   </tr>
   </thead>
@@ -21,16 +21,18 @@
     <td>{{item.libelle}}</td>
     <td>{{item.dateSoumission | date}}</td>
     <td>{{item.description}}</td>
+    <td>{{item.typeFeedBack}}</td>
     <td>
       <button class="btn btn-danger" (click)="delete(item.id)">Delete</button>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editFeedBack(item)">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editFeedback(item)">
         <mat-icon>edit</mat-icon>
       </button>
     </td>
   </tr>
   </tbody>
 </table>
-<!-- Modal -->
+
+<!-- Modal for editing feedback -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -38,31 +40,31 @@
         <h5 class="modal-title" id="exampleModalLabel">Modifier un feedback</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <!-- Formulaire pour modifier un feedback -->
-        <form>
-          <div class="modal-body">
-            <label for="libelle" class="form-label">Libellé</label>
-            <input type="text" class="form-control" id="libellec" [(ngModel)]="selectedFeedback.libelle" placeholder="Entrez le libellé">
-            <label for="dateSoumission" class="form-label">Date de soumission</label>
-            <input type="date" class="form-control" id="dateSoumissionc" [(ngModel)]="selectedFeedback.dateSoumission" name="editDateSoumission">
-            <label for="typeFeedbacks" class="form-label">Type de Reclamation</label>
-            <select class="form-select" id="typeFeedbacks" [(ngModel)]="selectedFeedback.typeFeedBack" name="typeFeedbacks">
-              <option value="PLEASED">Satisfait</option>
-              <option value="UNPLEASED">Insatisfait</option>
-            </select>
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="descriptionc" rows="3" placeholder="Entrez la description"></textarea>
-          </div>
-        </form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary"  (click)="saveChanges()" >Enregistrer</button>
-      </div>
-
+      <!-- Formulaire pour modifier un feedback -->
+      <form>
+        <div class="modal-body">
+          <label for="libelle" class="form-label">Libellé</label>
+          <input type="text" class="form-control" id="libellec" [(ngModel)]="selectedFeedback.libelle" name="editLibelle" placeholder="Entrez le libellé">
+          <label for="dateSoumission" class="form-label">Date de soumission</label>
+          <input type="date" class="form-control" id="dateSoumission" [(ngModel)]="selectedFeedback.dateSoumission" name="editDateSoumission">
+          <label for="typeFeedbacks" class="form-label">Type de Reclamation</label>
+          <select class="form-select" id="typeFeedbacks" [(ngModel)]="selectedFeedback.typeFeedBack" name="typeFeedbacks">
+            <option value="PLEASED">Satisfait</option>
+            <option value="UNPLEASED">Insatisfait</option>
+          </select>
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="descriptionc" [(ngModel)]="selectedFeedback.description" rows="3"  name="editDescription" placeholder="Entrez la description"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary" (click)="saveChanges()">Enregistrer</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-<!-- Modal -->
+
+<!-- Modal for adding new feedback -->
 <div class="modal fade" id="addFeedbackModal" tabindex="-1" aria-labelledby="addFeedbackModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -72,31 +74,37 @@
       </div>
       <div class="modal-body">
         <!-- Feedback creation form -->
-        <form>
+        <form #feedbackForm="ngForm" (ngSubmit)="addNewFeedback()">
           <div class="mb-3">
             <label for="libelle" class="form-label">Libellé</label>
-            <input type="text" class="form-control" id="libelle" [(ngModel)]="newFeedback.libelle" placeholder="Entrez le libellé">
-          </div>
-          <div class="mb-3">
-            <label for="dateSoumission" class="form-label">Date de soumission</label>
-            <input type="date" class="form-control" id="dateSoumission" [(ngModel)]="newFeedback.dateSoumission">
-          </div>
-          <div class="mb-3">
-            <label for="typeFeedback" class="form-label">Type de feedback</label>
-            <select class="form-select" id="typeFeedback" [(ngModel)]="newFeedback.typeFeedBack">
-              <option value="PLEASED">Satisfait</option>
-              <option value="UNPLEASED">Insatisfait</option>
-            </select>
+            <input type="text" class="form-control" id="libelle" [(ngModel)]="newFeedback.libelle" name="libelle" placeholder="Entrez le libellé" required>
+            <div *ngIf="feedbackForm.controls['libelle'].invalid && (feedbackForm.controls['libelle'].dirty || feedbackForm.controls['libelle'].touched)" class="text-danger">
+              Libellé est requis.
+            </div>
           </div>
           <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" [(ngModel)]="newFeedback.description"rows="3" placeholder="Entrez la description"></textarea>
+            <textarea class="form-control" id="description" [(ngModel)]="newFeedback.description" name="description" rows="3" placeholder="Entrez la description" required></textarea>
+            <div *ngIf="feedbackForm.controls['description'].invalid && (feedbackForm.controls['description'].dirty || feedbackForm.controls['description'].touched)" class="text-danger">
+              Description est requise.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="typeFeedback" class="form-label">Type de feedback</label>
+            <select class="form-select" id="typeFeedback" [(ngModel)]="newFeedback.typeFeedBack" name="typeFeedBack" required>
+              <option value="">Sélectionnez un type</option>
+              <option value="PLEASED">Satisfait</option>
+              <option value="UNPLEASED">Insatisfait</option>
+            </select>
+            <div *ngIf="feedbackForm.controls['typeFeedBack'].invalid && (feedbackForm.controls['typeFeedBack'].dirty || feedbackForm.controls['typeFeedBack'].touched)" class="text-danger">
+              Type de feedback est requis.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            <button type="submit" class="btn btn-primary" [disabled]="feedbackForm.invalid">Enregistrer</button>
           </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" (click)="addNewFeedback()" data-bs-dismiss="modal">Enregistrer</button>
       </div>
     </div>
   </div>

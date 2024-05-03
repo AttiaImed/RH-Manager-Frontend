@@ -55,6 +55,7 @@ export class ReclamationComponent {
       }
     );
   }
+
   edit(reclamation: Reclamation) {
     console.log( this.selectedReclamation)
 
