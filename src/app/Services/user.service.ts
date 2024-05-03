@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {DataService} from "./data.service";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-const  APIUrlUser ="http://localhost:8081/api/utilisateur";
+const  APIUrlUser ="http://localhost:8081/api/Utilisateur";
 
 @Injectable({
   providedIn: 'root'

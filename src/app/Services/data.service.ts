@@ -51,9 +51,9 @@ export class DataService {
     return this.http.post(`${this.APIUrl}/register`,body)
   }
   getUserDetails(id:string){
-    return this.http.get<any>(`http://localhost:8081/api/utilisateur/${id}`)
+    return this.http.get<any>(`http://localhost:8081/api/Utilisateur/${id}`)
   }
   saveUserDetails(id:string,body:any){
-    return this.http.put<any>(`http://localhost:8081/api/utilisateur/${id}`,body)
+    return this.http.put<any>(`http://localhost:8081/api/Utilisateur/${id}`,body)
   }
 }
