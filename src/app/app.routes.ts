@@ -17,6 +17,7 @@ import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/te
 import {ProfileComponent} from "./Component/dashboard/profile/profile.component";
 import {FeedbackComponent} from "./Component/dashboard/feedback/feedback.component";
 import {StatisticsComponent} from "./Component/dashboard/statistics/statistics.component";
+import {UtilisateurComponent} from "./Component/dashboard/utilisateur/utilisateur.component";
 
 export const routes: Routes = [
   {path: 'login', component :LoginComponent, canActivate: [SecureInnerPagesGuard]},
@@ -58,6 +59,14 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data:{
           role :['ADMINISTRATEUR','RH','EMPLOYE']
+        }
+      },
+      {
+        path: 'Utilisateurs',
+        component :UtilisateurComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR']
         }
       },
       {
