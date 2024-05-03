@@ -1,107 +1,101 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" href="signup.component.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-  </script>
-  <script src="script.js"></script>
-  <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .login {
+      max-width: 400px;
+      margin: 0 auto;
+      margin-top: 50px;
+    }
+    .container {
+      margin-top: 10%;
+    }
+    .login-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .login-form {
+      margin-bottom: 20px;
+    }
+
+    .forgot-password {
+      text-align: center;
+    }
+
+    .forgot-password a {
+      color: darkblue !important;
+    }
+    button.btn.btn-danger.login-btn {
+      background: darkblue;
+    }
+    .login-btn {
+      width: 100%;
+    }
+  </style>
 </head>
-
 <body>
+
 <div class="container">
-
-  <div class="card register">
+  <div class="card login">
     <div class="card-body">
-      <nav class="nav">
-        <a class="nav-link " href="/login">Sign in</a>
-        <a class="nav-link active" href="#">Sign up</a>
-
-      </nav>
-
-      <div class="card-body">
-        <h2 class="card-title">Register a new account</h2>
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="newUser.email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <h2 class="login-title">Sign up for a new account</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email"><i class="me-3"><mat-icon>email</mat-icon></i> Email address</label>
+          <input type="email" class="form-control" id="email" formControlName="email" required>
+          <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)" class="text-danger">
+            <div *ngIf="form.get('email')?.errors?.['required']">Email is required</div>
+            <div *ngIf="form.get('email')?.errors?.['email']">Invalid email format: {{mail}}</div>
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [(ngModel)]="newUser.password">
+        </div>
+        <div class="form-group">
+          <label for="password"><i class="me-3"><mat-icon>lock</mat-icon></i> Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password" required>
+          <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)" class="text-danger">
+            <div *ngIf="form.get('password')?.errors?.['required']">Password is required</div>
+            <div *ngIf="form.get('password')?.errors?.['minlength']">Password must be at least 8 characters long</div>
+            <div *ngIf="form.get('password')?.errors?.['pattern']">Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character</div>
           </div>
+        </div>
+        <div class="form-group">
+          <label for="nom"><i class="me-3"><mat-icon>account_circle</mat-icon></i>Name</label>
+          <input type="text" class="form-control" id="nom" formControlName="nom" required>
+          <div *ngIf="form.get('nom')?.invalid && (form.get('nom')?.dirty || form.get('nom')?.touched)" class="text-danger">
+            <div *ngIf="form.get('nom')?.errors?.['required']">Name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="prenom"><i class="me-3"><mat-icon>account_circle</mat-icon></i>Lastname</label>
+          <input type="text" class="form-control" id="prenom" formControlName="prenom" required>
+          <div *ngIf="form.get('prenom')?.invalid && (form.get('prenom')?.dirty || form.get('prenom')?.touched)" class="text-danger">
+            <div *ngIf="form.get('prenom')?.errors?.['required']">Lastname is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="type"><i class="me-3"><mat-icon>chrome_reader_mode</mat-icon></i>Type</label>
+          <select class="form-control" id="type" formControlName="type" required>
+            <option *ngFor="let option of typeOptions" [value]="option">{{ option }}</option>
+          </select>
+          <div *ngIf="form.get('type')?.invalid && (form.get('type')?.dirty || form.get('type')?.touched)" class="text-danger">
+            <div *ngIf="form.get('type')?.errors?.['required']">Type is required</div>
+          </div>
+        </div>
 
-          <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
-        </form>
-      </div>
+        <button type="submit" class="btn btn-danger login-btn">Sign up</button>
+        Already have an account? Please <a href="login">Sign in</a>
+      </form>
+
     </div>
   </div>
 </div>
 
-<div class="table-responsive">
-  <table class="table">
-    <caption>List of dossiers</caption>
-    <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nom</th>
-      <th scope="col">prenom</th>
-      <th scope="col">Type</th>
-      <th scope="col">Email</th>
-      <th scope="col">Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let user of listUsers">
-      <td>{{ user.idUtilisateur }}</td>
-      <td>{{ user.nom }}</td>
-      <td>{{ user.prenom }}</td>
-      <td>{{ user.type }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.status }}</td>
-      <td>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="edit(user)">Edit</button>
-        <button class="btn btn-danger" (click)="delete(user)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Edit Dossier</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Edit form fields -->
-        <label for="editNom">Nom</label>
-        <input type="text" class="form-control" id="editNom" [(ngModel)]="selectedUser.nom" name="editNom">
-        <label for="editPrenom">Prenom</label>
-        <input type="text" class="form-control" id="editPrenom" [(ngModel)]="selectedUser.prenom" name="editPrenom">
-        <label for="editType">Type</label>
-        <input type="text" class="form-control" id="editType" [(ngModel)]="selectedUser.type" name="editType">
-        <label for="editEmail">Email</label>
-        <input type="text" class="form-control" id="editEmail" [(ngModel)]="selectedUser.email" name="editEmail">
-        <label for="editStatus">Status</label>
-        <input type="text" class="form-control" id="editStatus" [(ngModel)]="selectedUser.status" name="editStatus">
-        <!-- Add more form fields as needed -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveChanges()" data-dismiss="modal">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
