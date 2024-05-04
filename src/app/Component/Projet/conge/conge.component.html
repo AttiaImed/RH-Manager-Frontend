@@ -38,10 +38,9 @@
     <mat-card-header>
       <mat-card-title>Liste des congés  </mat-card-title>
       <button mat-flat-button class="btn ajout" (click)="openAddDialog()">Ajouter Conge</button>
-
     </mat-card-header>
     <mat-card-content>
-    <table class="table table-striped">
+    <table class="table table-striped" mat-table>
       <thead>
         <tr class="columns">
           <th>Type</th>
@@ -53,7 +52,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let conge of conges" class="spacing">
+        <tr *ngFor="let conge of paginatedConges" class="spacing">
           <td>{{ conge.type }}</td>
           <td>{{ conge.dateDebut }}</td>
           <td>{{ conge.dateFin }}</td>
@@ -65,5 +64,7 @@
         </tr>
       </tbody>
     </table>
+    <button mat-flat-button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+    <button mat-flat-button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === itemsPerPage - 1">Next</button>
   </mat-card-content>
 </mat-card>

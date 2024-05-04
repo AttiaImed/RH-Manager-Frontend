@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CongeService } from '../../../Services/conge.service';
 import { Conge } from '../../../Models/conge';
 import { NgForOf } from '@angular/common';  
@@ -10,35 +10,53 @@ import { MatDialog } from '@angular/material/dialog';
 import { AjouterCongeDialogComponent } from './ajouter-conge-dialog/ajouter-conge-dialog.component';
 import { UpdateCongeComponent } from './update-conge/update-conge.component';
 import { MatIcon } from '@angular/material/icon';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-conge',
   standalone: true,
   imports: [NgForOf,
     MatButton,
     MatListModule, MatDividerModule,
-    MatCard,MatCardContent,MatCardHeader,MatCardTitle,MatIcon
+    MatCard,MatCardContent,MatCardHeader,MatCardTitle,MatIcon,MatPaginatorModule,MatSort
   ],
   templateUrl: './conge.component.html',
   styleUrl: './conge.component.css'
 })
-export class CongeComponent {
+export class CongeComponent{
+  
   casualLeaveCount: number = 0;
   sickLeaveCount: number = 0;
   personalDaysCount: number = 0;
-  conges: Conge[] | undefined;
+  conges: Conge[] = [];
+  currentPage: number = 0;
+  itemsPerPage: number = 5;
+ 
   constructor(private dialog :MatDialog, private congeService: CongeService) { }
 
   ngOnInit() {
-    //this.loadConges();
-    //this.loadLeaveCounts();
-  }
+    this.loadConges();
+    this.loadLeaveCounts();
 
+  }
   loadConges() {
     this.congeService.getCongesList().subscribe(conges => { 
       this.conges = conges; 
     });
   }
+  get paginatedConges() {
+    const start = this.currentPage * this.itemsPerPage;
+    return this.conges.slice(start, start + this.itemsPerPage);
+  }
 
+  nextPage() {
+    this.currentPage++;
+  }
+
+  previousPage() {
+    this.currentPage--;
+  }
   updateConge(id: number, conge: Conge) {
     this.congeService.updateConge(id, conge).subscribe(() => {
 
@@ -105,4 +123,5 @@ export class CongeComponent {
       }
     });
   }
+ 
 }
