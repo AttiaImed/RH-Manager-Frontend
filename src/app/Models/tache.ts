@@ -1,4 +1,6 @@
 import {Utilisateur} from "./utilisateur";
+import {Dossier} from "./dossier";
+import {SousTache} from "./sousTache";
 
 export class Tache {
   id!: number;
@@ -12,7 +14,6 @@ export class Tache {
   dateFin!: Date;
   superviser : Utilisateur = new Utilisateur();
   membres : Utilisateur[] = [];
-  sousTaches : Tache[] = [];
-
-
+  sousTaches : SousTache[] = [];
+  dossier : Dossier = new Dossier();
 }
