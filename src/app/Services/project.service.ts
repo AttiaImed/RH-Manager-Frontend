@@ -23,10 +23,10 @@ export class ProjectService extends DataService{
   updateFolder(idProject :any,folder :any){
     return this.https.patch(APIUrlProjects+"/folder/"+idProject,folder);
   }
-  getProejctByUserId(userId : string){
+  getProejctByUserId(userId : number){
     return this.https.get(APIUrlProjects+"/user/"+userId);
   }
-  getProejctBySuperviserId(userId : string){
+  getProejctBySuperviserId(userId : number){
     return this.https.get(APIUrlProjects+"/superviser/"+userId);
   }
 }

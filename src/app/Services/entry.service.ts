@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import * as jwt_decode from 'jwt-decode';
+import {Router} from "@angular/router";
 
 //Api url
 const  APIUrl ="http://localhost:8081/api/v1/auth/";
@@ -9,7 +11,7 @@ const  APIUrl ="http://localhost:8081/api/v1/auth/";
 })
 export class EntryService {
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient,private route :Router){}
 
   signIn(data :{email : string,password : string}): Observable<any>{
     return this.http.post(`${APIUrl}authenticate`, data)
@@ -20,7 +22,13 @@ export class EntryService {
 
   signOut(): void {
     window.sessionStorage.clear();
-    window.location.reload();
+    console.log(window.sessionStorage)
+    this.route.navigate(['/login'])
   }
+getUserId(){
+    const token : any = window.sessionStorage.getItem('auth-token');
+    const decodedToken : any = jwt_decode.jwtDecode(token)
+  return decodedToken?.user_id
+}
 
 }

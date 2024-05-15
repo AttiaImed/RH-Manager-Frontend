@@ -1,0 +1,190 @@
+<div class="container">
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <div [class]="'profile-pic'">
+                <label class="-label" for="file">
+                  <span class="glyphicon glyphicon-camera"></span>
+                  <span>Change Image</span>
+                </label>
+                <input id="file" type="file" (change)="onImageUpload($event)" />
+                <img
+                  [src]="imageProfile"
+                  id="output"
+                  width="200"
+                  alt="Profile Picture"
+                />
+              </div>
+              <div class="mt-3">
+                <h4>{{ user.prenom }}</h4>
+                <p class="text-secondary mb-1">{{ user.type }}</p>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Change Profile
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Frist Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ user.nom }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Last Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ user.prenom }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ user.email }}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Account Status</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <button
+                  class="btn btn-success"
+                  disabled
+                  *ngIf="user.status"
+                >
+                  Active
+                </button>
+                <button
+                  class="btn bn-danger"
+                  disabled
+                  *ngIf="!user.status"
+                >
+                  Suspended
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Change profile-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <!-- firstName input -->
+          <mat-form-field class="form-group mb-3">
+            <mat-label class="form-label" for="firstName"> First Name </mat-label>
+            <input
+              matInput
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              [errorStateMatcher]="matcher"
+              name="firstName"
+              required
+            />
+            <mat-error *ngIf="firstName?.hasError('required')">
+              first Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- lastName input -->
+          <mat-form-field class="form-group mb-3">
+            <mat-label class="form-label" for="lastName"> Last Name </mat-label>
+            <input
+              matInput
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              [errorStateMatcher]="matcher"
+              name="lastName"
+              required
+            />
+            <mat-error *ngIf="lastName?.hasError('required')">
+              last Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!-- Email input -->
+          <mat-form-field class="form-group mb-3">
+            <mat-label class="form-label" for="Email">
+              <i class="me-3"> <mat-icon> email</mat-icon></i> Email address
+            </mat-label>
+            <input
+              matInput
+              type="email"
+              id="email"
+              formControlName="email"
+              [errorStateMatcher]="matcher"
+              name="email"
+              required
+            />
+            <mat-error
+              *ngIf="email?.hasError('email') && !email?.hasError('required')"
+            >
+              Please enter a valid <strong>email</strong> address
+            </mat-error>
+            <mat-error *ngIf="email?.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <!--Login Button -->
+          <div class="text-center">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              style="margin-right: 10px"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

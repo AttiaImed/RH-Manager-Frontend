@@ -14,7 +14,7 @@
       <a>
           <span class="text item-list-dash"
           ><mat-icon>dashboard</mat-icon
-          ><span class="item-list-dash">Dashboard</span></span
+          ><span class="item-list-dash">Statistics</span></span
           >
       </a>
     </li>
@@ -52,11 +52,17 @@
       </a>
     </li>
 
-    
+
     <li routerLink="/Dashboard/calendar-events" routerLinkActive="active">
       <a>
         <i class='bx bxs-folder-minus'></i>
         <span class="text">Calendar</span>
+      </a>
+    </li>
+    <li routerLink="/Dashboard/Utilisateurs" routerLinkActive="active">
+      <a>
+        <i class='bx bxs-folder-minus'></i>
+        <span class="text">Utilisateurs</span>
       </a>
     </li>
 
@@ -77,11 +83,11 @@
     </li>
   </ul>
   <ul class="side-menu">
-    <li routerLink="/Dashboard/Equipements" routerLinkActive="active">
+    <li routerLink="/Dashboard/FeedBack" routerLinkActive="active">
       <a>
           <span class="text item-list-dash"
-          ><mat-icon>settings_brightness</mat-icon
-          ><span class="item-list-dash">Equipements</span></span
+          ><mat-icon>feedback</mat-icon>
+          <span class="item-list-dash">FeedBack</span></span
           >
       </a>
     </li>
@@ -103,7 +109,7 @@
     </li>
     <li>
       <a
-        routerLink="/SignIn"
+        routerLink="/login"
         title="logout"
         (click)="signOut()"
         class="logout"

@@ -1,36 +1,56 @@
-<!-- Button to trigger modal -->
-<h2 class="feedback-title">Feedback Page</h2>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFeedbackModal">
   Ajouter feedback
 </button>
+<div *ngIf="filteredFeedback.length > 0">
 
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">ID FEEDBACK</th>
-    <th scope="col">LIBELLE</th>
-    <th scope="col">DATE SOUMISSION</th>
-    <th scope="col">DESCRIPTION</th>
-    <th scope="col">TYPE FEEDBACK</th>
-    <th scope="col">ACTIONS</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let item of listFeedback">
-    <th scope="row">{{item.id}}</th>
-    <td>{{item.libelle}}</td>
-    <td>{{item.dateSoumission | date}}</td>
-    <td>{{item.description}}</td>
-    <td>{{item.typeFeedBack}}</td>
-    <td>
-      <button class="btn btn-danger" (click)="delete(item.id)">Delete</button>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editFeedback(item)">
-        <mat-icon>edit</mat-icon>
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">ID FEEDBACK</th>
+      <th scope="col">LIBELLE</th>
+      <th scope="col">DATE SOUMISSION</th>
+      <th scope="col">DESCRIPTION</th>
+      <th scope="col">TYPE FEEDBACK</th>
+      <th scope="col">ACTIONS</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of filteredFeedback | paginate: { itemsPerPage: 6, currentPage: p }">
+      <th scope="row">{{item.id}}</th>
+      <td>{{item.libelle}}</td>
+      <td>{{item.dateSoumission | date}}</td>
+      <td>{{item.description}}</td>
+      <td>{{item.typeFeedBack}}</td>
+      <td>
+        <button class="btn btn-danger" (click)="delete(item.id)">Delete</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editFeedback(item)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="setPage($event)"></pagination-controls>
+
+</div>
+<!-- Tableau pour les données non filtrées et message avant la recherche -->
+<div *ngIf="filteredFeedback.length === 0">
+  <p>Aucun résultat trouvé.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal for editing feedback -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
