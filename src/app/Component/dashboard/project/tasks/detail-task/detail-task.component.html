@@ -1,0 +1,149 @@
+<div class="head-title">
+  <div class="left">
+    <h1 routerLink="/Dashboard" style="cursor: pointer;">Dashboard</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>Dashboard</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active" routerLink="/Dashboard/Projects/Todos">Tasks</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active">Task Details</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="box" *ngIf="id != null" >
+  <ul class="directory-list">
+    <li class="folder" style="cursor: pointer;" [routerLink]="['/Dashboard/Project/',todoData.id]">Project Id : {{todoData.id}}
+      <ul>
+        <li class="folder">Folder Number : {{todoData.dossier}}
+          <ul>
+            <li>Task Id : {{todoData.id}}</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div class="card card-list">
+  <div class="card-header d-flex align-items-center justify-content-between">
+    <div class="header-title">
+      <div class="custom-control custom-checkbox custom-control-inline">
+        <input type="checkbox" class="custom-control-input" id="customCheck05" [checked]="todoData.status =='completed'" [disabled]="todoData.status =='completed'" (change)="markSubTaskAsDone()">
+        <label class="custom-control-label h5" for="customCheck05">{{todoData.status =='completed' ? todoData.status : 'Mark as Completed'}} </label>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-info" style="margin-right: 10px;" (click)="EditTask()">Edit Task</button>
+      <button class="btn btn-danger" *ngIf="editTask"  (click)="this.editTask = false">Cancel</button>
+    </div>
+    <div>
+      Priority :
+      <a class="btn bg-secondary-light" *ngIf="todoData.priority == 'High'" >High</a>
+      <a class="btn bg-info-light" *ngIf="todoData.priority == 'Medium'">Meduim</a>
+      <a class="btn bg-success-light" *ngIf="todoData.priority == 'Low'">Low</a>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="form-group mb-3 position-relative">
+      <input type="text" class="form-control bg-white" [(ngModel)]="todoData.nom" [disabled]="!editTask">
+      <a class="task-edit task-simple-edit text-body"><i class="ri-edit-box-line"></i></a>
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group mb-0">
+              <label class="h5">Memebers</label>
+              <div *ngIf="editTask" >
+                <h6>Assigned to :</h6>
+                <div class="form-group mb-3">
+                  <div class="form-check" *ngFor="let item of projectMembers; let i = index" >
+                    <input class="form-check-input" type="checkbox"  [value]="item.userId" (change)="onCheckboxChange($event, item)">
+                    <label class="form-check-label">
+                      {{item.firstname +" "+ item.lastname}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <mat-list *ngIf="!editTask" >
+                <div *ngFor="let item of taskMembers" >
+                  <mat-list-item>{{ item.firstname +" "+ item.lastname}}</mat-list-item>
+                  <mat-divider></mat-divider>
+                </div>
+              </mat-list>
+            </div>
+
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group mb-0">
+              <label for="exampleInputText3" class="h5">Due Dates*</label>
+              <input type="date" [(ngModel)]="todoData.dateFin"  class="form-control" id="exampleInputText3" [disabled]="!editTask">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <h5 class="mb-2">Description</h5>
+            <p class="mb-0" *ngIf="!editTask" >{{todoData.description}}</p>
+            <div class="form-group mb-3 position-relative" *ngIf="editTask">
+              <input type="text" class="form-control bg-white" [(ngModel)]="todoData.description" [disabled]="!editTask">
+            </div>
+
+          </div>
+          <div class="col-lg-6">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-8"><h5 class="mb-2">Checklist</h5></div>
+                <div class="col-sm-4" (click)="switchCheck()" ><mat-icon>playlist_add</mat-icon></div>
+                <div class="col-sm-4" (click)="switchCheck()" *ngIf="check" ><mat-icon>clear</mat-icon></div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div style="width: 100%;">
+                <mat-list *ngIf="!check">
+                  <mat-divider></mat-divider>
+                  <div mat-subheader>List Checklist</div>
+                  <p><i>click on the Sub-Task to view details</i></p>
+                  <mat-list-item *ngFor="let item of todoData.sousTaches; let i = index">
+                    <mat-icon matListItemIcon>
+                      <input style="margin-left: 2%;" class="form-check-input" type="checkbox" [value]="i" [id]="i" [checked]="item.checked" [disabled]="item.checked" (change)="changechecklist(i)" title="Complete this task">
+                    </mat-icon>
+                    <div matListItemTitle (click)="viewInfo(item)" style="cursor: pointer;">{{item.text}}</div>
+                    <mat-divider></mat-divider>
+                    <span >
+                                        Delete This note
+                                        <mat-icon style="color: red;" (click)="deleteCheck(i)" >delete</mat-icon>
+                                      </span>
+                  </mat-list-item>
+                </mat-list>
+                <div class="form-check" *ngIf="check" >
+                  <label for="exampleInputText3" class="h5">Add new Check</label>
+                  <input type="text" [(ngModel)]="newCheck" class="form-control">
+                  <br>
+                  <button class="btn btn-primary" (click)="addCheck()">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group mb-0">
+      <label  class="h5">Progress : {{todoData.progress}} %</label>
+      <div class="custom-file">
+        <mat-progress-bar mode="determinate" [value]="todoData.progress"></mat-progress-bar>
+      </div>
+    </div>
+  </div>
+</div>

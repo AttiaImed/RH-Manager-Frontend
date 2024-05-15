@@ -9,8 +9,8 @@ import {SecureInnerPagesGuard} from "./Guards/secure-inner-pages.guard";
 import {ProjectComponent} from "./Component/dashboard/project/project.component";
 import {ReclamationComponent} from "./Component/dashboard/reclamation/reclamation.component";
 import { CongeComponent } from './Component/Projet/conge/conge.component';
-import {TasksComponent} from "./Component/dashboard/project/Project/tasks/tasks.component";
-import {DetailTaskComponent} from "./Component/dashboard/project/Project/tasks/detail-task/detail-task.component";
+import {TasksComponent} from "./Component/dashboard/project/tasks/tasks.component";
+import {DetailTaskComponent} from "./Component/dashboard/project/tasks/detail-task/detail-task.component";
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
@@ -27,6 +27,22 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],// this is the component with the <router-outlet> in the template
     children: [
+      {
+        path: "Tasks",
+        component: TasksComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
+        }
+      },
+      {
+        path: "Tasks/:id",
+        component: DetailTaskComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
+        }
+      },
       {
         path: "Profile",
         component: ProfileComponent,

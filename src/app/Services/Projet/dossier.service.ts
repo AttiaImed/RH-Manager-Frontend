@@ -18,4 +18,5 @@ export class DossierService extends DataService{
     return this.httpPrivate.post(`${APIUrlDossier}/${id}`, data);
   }
 
+
 }

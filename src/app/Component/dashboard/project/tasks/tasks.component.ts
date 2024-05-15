@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import {TaskService} from "../../../../../Services/task.service";
-import {TokenStorageService} from "../../../../../Services/token.service";
-import {ProjectService} from "../../../../../Services/project.service";
+import {TaskService} from "../../../../Services/task.service";
+import {TokenStorageService} from "../../../../Services/token.service";
+import {ProjectService} from "../../../../Services/project.service";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {MatIcon} from "@angular/material/icon";
 import {NgForOf, NgIf} from "@angular/common";
+import {Tache} from "../../../../Models/tache";
 
 @Component({
   selector: 'app-tasks',
@@ -23,7 +24,7 @@ import {NgForOf, NgIf} from "@angular/common";
 })
 export class TasksComponent {
   fixsedTodoList: any[] = [];
-  todoList: any[] = [];
+  todoList: Tache[] = [];
   projects: any[] = [];
   userId!: number | null;
   projectChosen!: any;
@@ -74,6 +75,7 @@ export class TasksComponent {
       .getTasksByUserId(this.tokenStorage.getUser() as number)
       .subscribe(
         (res: any) => {
+          console.log(res);
           this.todoList = res;
           this.fixsedTodoList = res;
         },

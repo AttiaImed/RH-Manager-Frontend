@@ -1,4 +1,3 @@
-import {Component} from '@angular/core';
 import {FormsModule, NgModel} from "@angular/forms";
 import {DatePipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
@@ -7,6 +6,8 @@ import {ActivatedRoute} from "@angular/router";
 import {FeedbackService} from "../../../Services/feedback.service";
 import {Utilisateur} from "../../../Models/utilisateur";
 import {NgxPaginationModule} from "ngx-pagination";
+import {Component} from "@angular/core";
+
 @Component({
   selector: 'app-feedback',
   standalone: true,

@@ -40,9 +40,9 @@
                     </div>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton03">
                       <a class="dropdown-item" (click)="getTodosByStatus('all')">All</a>
-                      <a class="dropdown-item" (click)="getTodosByStatus('open')">Open</a>
-                      <a class="dropdown-item" (click)="getTodosByStatus('completed')">Completed</a>
-                      <a class="dropdown-item" (click)="getTodosByStatus('inProgress')">In Progress</a>
+                      <a class="dropdown-item" (click)="getTodosByStatus('OPEN_TASK')">Open</a>
+                      <a class="dropdown-item" (click)="getTodosByStatus('DONE')">Completed</a>
+                      <a class="dropdown-item" (click)="getTodosByStatus('IN_PROGRESS')">In Progress</a>
                     </div>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="col-lg-12" *ngFor="let item of todoList">
-          <div class="card pointer" [routerLink]="['/Dashboard/Project', item.projectId, 'Todos',item.id]">
+          <div class="card pointer" [routerLink]="['/Dashboard/Tasks',item.id]">
             <div class="card-body">
               <div class="row">
                 <div class="col-lg-12">
@@ -65,7 +65,7 @@
                             <label class="custom-control-label" for="customCheck26"></label>
                           </div>
                           <div>
-                            <h5 class="mb-2">{{item.name}}</h5>
+                            <h5 class="mb-2">{{item.nom}}</h5>
                             <div class="media align-items-center">
                               <div class="btn bg-body mr-3"><i
                                 class="ri-align-justify mr-2"></i>{{countCheckList(item)}}</div>
@@ -73,9 +73,9 @@
                           </div>
                         </div>
                         <div class="media align-items-center mt-md-0 mt-3">
-                          <a href="#" class="btn bg-secondary-light" *ngIf="item?.priorty == 'High'">High</a>
-                          <a href="#" class="btn bg-info-light" *ngIf="item?.priorty == 'Medium'">Meduim</a>
-                          <a href="#" class="btn bg-success-light" *ngIf="item?.priorty == 'Low'">Low</a>
+                          <a  class="btn bg-secondary-light" *ngIf="item?.priority == 'High'">High</a>
+                          <a  class="btn bg-info-light" *ngIf="item?.priority == 'Medium'">Meduim</a>
+                          <a  class="btn bg-success-light" *ngIf="item?.priority == 'Low'">Low</a>
 
                         </div>
                         <div class="form-group mb-0">
