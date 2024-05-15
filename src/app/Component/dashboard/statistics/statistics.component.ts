@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
+import {PresenceService} from "../../../Services/presence.service";
 
 @Component({
   selector: 'app-statistics',
@@ -11,6 +12,14 @@ import { EChartsOption } from 'echarts';
   styleUrl: './statistics.component.css',
 })
 export class StatisticsComponent {
+  presence : number =0;
+  allPresence : number = 0;
+  constructor(private presenceService : PresenceService) {
+    this.presenceService.getPresenceByUser().subscribe((res:any[]) =>{
+      this.presence = res.filter(p=> p.presence == true).length;
+      this.allPresence = res.length;
+    })
+  }
   // Data for charts
   dataCircle = [
     { value: 1048, name: 'Search Engine' },
