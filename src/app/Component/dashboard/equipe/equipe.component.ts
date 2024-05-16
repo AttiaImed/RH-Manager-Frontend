@@ -7,11 +7,13 @@ import { DatePipe, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {RouterLink} from "@angular/router";
 import {MatIcon} from "@angular/material/icon";
+import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {MatCard, MatCardContent} from "@angular/material/card";
 
 @Component({
   selector: 'app-equipe',
   standalone: true,
-  imports: [NgForOf, DatePipe, FormsModule, RouterLink, MatIcon],
+  imports: [NgForOf, DatePipe, FormsModule, RouterLink, MatIcon, MatGridTile, MatGridList, MatCardContent, MatCard],
   templateUrl: './equipe.component.html',
   styleUrl: './equipe.component.css'
 })
@@ -40,7 +42,9 @@ export class EquipeComponent {
 
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AjouterEquipeDialogComponent, {
-      width: '400px'
+      width: '400px',
+      height: '330px',
+      data:null
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {

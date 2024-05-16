@@ -15,6 +15,12 @@
       </li>
     </ul>
   </div>
+  <div>
+    <div class="actions">
+      <div class="update"> <mat-icon class="icon" (click)="openUpdateDialog()">edit</mat-icon></div>
+      <div class="historique"> <mat-icon class="icon">history</mat-icon></div>
+    </div>
+  </div>
 </div>
 <!--Begin Page Header-->
 <ul class="box-info">
@@ -29,10 +35,10 @@
     <i class='bx bxs-calendar-check'></i>
     <span class="text">
       <h3>Projects</h3>
-      <p>{{teamData.projets.length}}</p>
+     <!-- <p>{{teamData.projets.length}}</p>-->
     </span>
   </li>
-  <li>x
+  <li>
     <i class='bx bxs-calendar-check'></i>
     <span class="text">
       <h3>Status <mat-slide-toggle [checked]="teamData.status == 'inWorking' ? true : false" title="change Status"
@@ -43,64 +49,88 @@
 </ul>
 <!--End Page Header-->
 <!--Begin Table Users-->
+
 <div class="table-data" style="height: 400px;">
   <div class="order">
     <div class="head">
-      <h3>Members : {{usersData.length}}</h3>
-      <i class='bx bx-plus' data-toggle="modal" data-target="#adduserskill"
+     <!-- <h3>Members : {{usersData.length}}</h3> -->
+      <i class='bx bx-plus' (click)="openAddUser()" data-target="#adduserskill"
          title="Add user to team"></i>
     </div>
-    <table>
-      <thead>
-      <tr>
-        <th>User</th>
-        <th>Email</th>
-        <th >Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of usersData">
-        <td class="pointer" [routerLink]="['/Dashboard/Profile',item.id,'OverView']">
-          <img [src]="userProfilePictures[item.id]">
-          <p>{{item.nom}} {{item.prenom}}</p>
-        </td>
-        <td class="pointer" [routerLink]="['/Dashboard/Profile',item.id,'OverView']">{{item.email}}</td>
-        <td ><span class="status pending pointer" (click)="addOrRemoveUser(item.id)"
-                                                     title="Delete User from this team">remove</span></td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="container">
+
+      <ol>
+ <li class="level-1 rectangle">
+   <div class="account-data">
+   <img src="assets/employeePic.png" class="profilePic">
+     <div class="info-text">
+   <h4 class="name">{{this.ManagerData.prenom}} {{ this.ManagerData.nom}}</h4>
+     <h5 class="poste">{{this.ManagerData.poste}}</h5></div>
+   </div>
+ </li>
+      </ol>
+      <ol class="level-2-wrapper" *ngFor="let member of this.teamMemberData1  ;let i= index">
+
+          <li class="level-2 rectangle hoverable-div" >
+            <div class="delete-icon"><mat-icon (click)="addOrRemoveUser(this.teamMemberData1[i].id)">clear</mat-icon></div>
+            <div class="account-data">
+              <img src="assets/managerPic.png" class="profilePic">
+              <div class="info-text">
+                <h4 class="name"> {{this.teamMemberData1[i].prenom}} {{ this.teamMemberData1[i].nom}}</h4>
+                <h5 class="poste">{{this.teamMemberData1[i].poste }}</h5></div>
+            </div>
+          </li>
+
+        <li class="level-2 rectangle hoverable-div"  *ngIf="this.teamMemberData2[i]!=null">
+          <div class="delete-icon"><mat-icon (click)="addOrRemoveUser(this.teamMemberData2[i].id)">clear</mat-icon></div>
+          <div class="account-data">
+            <img src="assets/managerPic.png" class="profilePic">
+            <div class="info-text">
+              <h4 class="name"> {{this.teamMemberData2[i].prenom}} {{ this.teamMemberData2[i].nom}}</h4>
+              <h5 class="poste">{{ this.teamMemberData2[i].poste }}</h5></div>
+          </div>
+        </li>
+
+
+
+
+      </ol>
+
+    </div>
   </div>
   <!--End Table Users-->
   <!--Begin Projects-->
   <div class="todo">
     <div class="head">
       <h3>Projects</h3>
-      <i class='bx bx-plus' *ngIf="!addProjectSwitcher " (click)="fetchProjects()"></i>
+      <i class='bx bx-plus' (click)="openAddProject()"></i>
       <div *ngIf="addProjectSwitcher">
         <mat-form-field>
           <mat-label>Projects To add</mat-label>
           <mat-select [formControl]="project" multiple>
             <mat-select-trigger>
               {{ project.value?.[0]?.name || '' }}
-              <span *ngIf="(project.value?.length || 0) > 1" class="example-additional-selection">
-                (+{{ (project.value?.length || 0) - 1 }} {{ project.value?.length === 2 ? 'other' : 'others' }})
+              <span  class="example-additional-selection">
+                (+{{ (project.value?.length || 0) - 1 }} )
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let item of listProjects" [value]="item.id">
+            <mat-option *ngFor="let item of ProjectData" [value]="item.id">
               {{ item.projectName }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button class="btn btn-primary" (click)="getSelectedProjects()">add project</button>
+        <button class="btn btn-primary" >add project</button>
         <button class="btn btn-danger" (click)="addProjectSwitcher = !addProjectSwitcher">Cancel</button>
       </div>
     </div>
     <ul class="todo-list">
-      <li *ngFor="let item of teamData.projets" [class]="item.status == 'open' ? 'completed' : 'not-completed'"
-          [routerLink]="['/Dashboard/Project',item.id]">
+      <li *ngFor="let item of ProjectData" [class]="item.status == 'open' ? 'completed' : 'not-completed'"
+          >
         <p class="pointer">{{item.projectName}}</p>
-        <mat-icon class="pointer" color="warn" (click)="removeProject(item?.id)">delete</mat-icon>
+        <div class="icons">
+        <mat-icon class="pointer" color="warn" [routerLink]="['/Dashboard/Project',item.id]" >info</mat-icon>
+        <mat-icon class="pointer del-icon"  color="warn" (click)="removeProject(item.id)">delete</mat-icon>
+  </div>
       </li>
     </ul>
   </div>

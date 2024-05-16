@@ -1,32 +1,64 @@
-.container {
-    width: 100%;
-    margin: 20px auto ;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.Button-line {
-    position: relative; /* Ensure the container is positioned */
-    height: 40px;
-    width: auto;
 
+.actions{
+  right: 0px;
+  width: 100px;
+  height: 50px;
+  right: 30px;
+}
+
+
+.icon{
+  width: 35px;
+  height: 35px;
+  font-size: 28px;
+}
+
+
+.container {
+  width: 100%;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Button-line {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: flex-end; /* Align items to the end */
+  height: 40px;
+  width: auto;
 }
 
 .Button-add {
-    position: absolute;
-    right: 30px;
-    width: 60px;
-
-
+  width: 60px;
+  margin-left: 10px; /* Adjust margin as needed */
 }
 
 .content {
-    padding: 20px;
-    background-color: white;
-    border-radius: 5px;
+  padding: 20px;
+  border-radius: 5px;
 }
 
-.delete{
-    background-color: #e44e4e;
-    margin-left: 5px;
+.delete {
+
+  background-color: #dc4c4c;
+  margin-left: 5px;
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  width: calc(25% - 16px);
+  margin-bottom: 16px;
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+}
+

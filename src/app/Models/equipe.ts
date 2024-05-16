@@ -8,7 +8,7 @@ export class Equipe {
   domaine!: string;
   projets: Projet[]=[];
   membres: Utilisateur[]=[];
-  chef!: Utilisateur;
+  chef!:Utilisateur;
 
 
 }
