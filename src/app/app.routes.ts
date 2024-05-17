@@ -18,9 +18,11 @@ import {ProfileComponent} from "./Component/dashboard/profile/profile.component"
 import {FeedbackComponent} from "./Component/dashboard/feedback/feedback.component";
 import {StatisticsComponent} from "./Component/dashboard/statistics/statistics.component";
 import {UtilisateurComponent} from "./Component/dashboard/utilisateur/utilisateur.component";
+import {ForgetPasswordComponent} from "./Component/login/forget-password/forget-password.component";
 
 export const routes: Routes = [
   {path: 'login', component :LoginComponent, canActivate: [SecureInnerPagesGuard]},
+  {path: 'forget-password', component :ForgetPasswordComponent, canActivate: [SecureInnerPagesGuard]},
   {path: 'signup', component :SignupComponent, canActivate: [SecureInnerPagesGuard]},
   {
     path: 'Dashboard',
@@ -127,4 +129,5 @@ export const routes: Routes = [
   { path: '**',  redirectTo: '/Dashboard/Statistics'},
   {path: 'login', component :LoginComponent},
   {path: 'signup', component :SignupComponent},
+  {path: 'forget-password', component :ForgetPasswordComponent},
 ];
