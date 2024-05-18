@@ -13,7 +13,6 @@ import {provideClientHydration} from "@angular/platform-browser";
 import {intAuthInterceptor} from "./Interceptors/int-auth.interceptor";
 import {ErrorsStateMatcher} from "./Models/ErrorStateMatcher";
 import {JwtModule} from "@auth0/angular-jwt";
-import {InjectableRxStompConfig, RxStompService, rxStompServiceFactory} from "@stomp/ng2-stompjs";
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
