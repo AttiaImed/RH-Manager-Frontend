@@ -2,7 +2,7 @@
   <div class="card-container">
     <mat-card class="card">
       <mat-card-header>
-  
+
         <mat-icon> local_airport</mat-icon>
       </mat-card-header>
       <mat-card-title class="iconsick">Casual Leave</mat-card-title>
@@ -17,22 +17,22 @@
       <mat-card-title class="iconsick">Sick Leave</mat-card-title>
       <mat-card-content>
 
-        <p>Remaining Sick Leave: {{ sickLeaveCount }}</p>
+        <p>Number of Sick Leaves: {{ sickLeaveCount }}</p>
       </mat-card-content>
     </mat-card>
     <mat-card class="card">
       <mat-card-header>
-       
+
         <mat-icon >group</mat-icon>
       </mat-card-header>
       <mat-card-title class="iconsick">Personal Leave</mat-card-title>
       <mat-card-content>
-        <p class="statistics">Remaining Personal Leaves: {{ personalDaysCount }}</p>
+        <p class="statistics">Number of Personal Leaves: {{ personalDaysCount }}</p>
       </mat-card-content>
-      
+
     </mat-card>
   </div>
-</div>
+
 
   <mat-card class="list-card">
     <mat-card-header>
@@ -43,11 +43,12 @@
     <table class="table table-striped" mat-table>
       <thead>
         <tr class="columns">
+
           <th>Type</th>
           <th>Date de début</th>
           <th>Date de fin</th>
-         
           <th>Description</th>
+          <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -57,9 +58,12 @@
           <td>{{ conge.dateDebut }}</td>
           <td>{{ conge.dateFin }}</td>
           <td>{{ conge.description }}</td>
+          <td>{{ conge.status }}</td>
           <td>
             <button mat-flat-button class="btn btn-secondary" (click)="openUpdateDialog(conge)">Edit</button>
             <button mat-flat-button color="btn btn-danger" (click)="deleteConge(conge.id)">Delete</button>
+
+        <!-- we add *ngIf="isHr"  for two buttons approve and reject only for rh-->
           </td>
         </tr>
       </tbody>
@@ -68,3 +72,24 @@
     <button mat-flat-button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === itemsPerPage - 1">Next</button>
   </mat-card-content>
 </mat-card>
+</div>
+
+<div >
+<app-calendrier [conges]="conges" (selectedEventChange)="onSelectedEventChange($event)"></app-calendrier>
+<div *ngIf="selectedEventDetails">
+  <h2>Event Details</h2>
+  <p><strong>Type:</strong> {{ selectedEventDetails.type }}</p>
+  <p><strong>Date de début:</strong> {{ selectedEventDetails.dateDebut }}</p>
+  <p><strong>Date de fin:</strong> {{ selectedEventDetails.dateFin }}</p>
+  <p><strong>Description:</strong> {{ selectedEventDetails.description }}</p>
+  <!-- Add more details as needed -->
+</div>
+<div class="optimal-periods">
+  <h3>Optimal Leave Periods</h3>
+  <ul>
+    <li *ngFor="let period of optimalLeavePeriods">
+      {{ period.start }} - {{ period.end }}
+    </li>
+  </ul>
+</div>
+</div>

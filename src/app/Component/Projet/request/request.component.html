@@ -1,0 +1,32 @@
+
+      <table class="table table-striped" mat-table>
+        <thead>
+          <tr class="columns">
+            <th>Employe</th> 
+            <th>Type</th>
+            <th>Date de début</th>
+            <th>Date de fin</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let conge of paginatedConges" class="spacing">
+            <td>{{ conge.utilisateur.nom }} {{ conge.utilisateur.prenom}}</td>
+              <td>{{ conge.type }}</td>
+            <td>{{ conge.dateDebut }}</td>
+            <td>{{ conge.dateFin }}</td>
+            <td>{{ conge.description }}</td>
+            <td>{{ conge.status }}</td> 
+           
+            <td>
+              <button mat-flat-button class="btn btn-primary" (click)="approveConge(conge.id)">Approve</button>
+              <button mat-flat-button color="btn btn-warning" (click)="rejectConge(conge.id)">Reject</button>
+          <!-- we add *ngIf="isHr"  for two buttons approve and reject only for rh-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button mat-flat-button class="btn btn-secondary" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+      <button mat-flat-button class="btn btn-secondary" (click)="nextPage()" [disabled]="currentPage === itemsPerPage - 1">Next</button>

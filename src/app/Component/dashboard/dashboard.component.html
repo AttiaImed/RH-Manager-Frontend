@@ -53,10 +53,11 @@
     </li>
 
 
-    <li routerLink="/Dashboard/calendar-events" routerLinkActive="active">
+
+    <li routerLink="/Dashboard/Requests" routerLinkActive="active">
       <a>
         <i class='bx bxs-folder-minus'></i>
-        <span class="text">Calendar</span>
+        <span class="text">Demande Conges</span>
       </a>
     </li>
     <li routerLink="/Dashboard/Utilisateurs" routerLinkActive="active">
@@ -151,3 +152,10 @@
 </section>
 <!-- CONTENT -->
 </body>
+<div>
+  <!-- Your existing content -->
+  <button class="toggle-chat-btn" *ngIf="!isChatVisible" (click)="toggleChat()">
+      rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  </button>
+  <app-chat [isVisible]="isChatVisible"></app-chat>
+</div>

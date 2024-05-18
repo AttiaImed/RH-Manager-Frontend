@@ -8,15 +8,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIcon } from '@angular/material/icon';
 import { Utilisateur } from '../../Models/utilisateur';
 import {UserService} from "../../Services/user.service";
+import {ChatComponent} from "../chat/chat.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, RouterLinkActive, MatIcon],
+    imports: [RouterOutlet, RouterLink, CommonModule, RouterLinkActive, MatIcon, ChatComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
+  isChatVisible: boolean = true;
+
+  toggleChat(): void {
+    this.isChatVisible = !this.isChatVisible;
+  }
   LogoImgPath = '../../../assets/logo.png';
   isLoggedIn:boolean = false;
 
@@ -34,6 +40,7 @@ export class DashboardComponent implements OnInit {
 
   // Image profile variable
   imageProfile!: SafeUrl;
+
 
   constructor(
     private tokenStorageService: TokenStorageService,
