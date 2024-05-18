@@ -1,0 +1,13 @@
+<form (ngSubmit)="onSubmit()" class="dialog-form">
+  <div class="form-group">
+    <label for="selectedUserId" *ngIf="action === 'add user'">Choisir un nouveau membre :</label>
+    <label for="selectedUserId" *ngIf="action === 'add project'">Choisir un nouveau projet :</label>
+    <select class="form-control" id="selectedUserId" *ngIf="action === 'add user'" [(ngModel)]="selectedUserId" [ngModelOptions]="{ standalone: true }">
+      <option *ngFor="let user of UsersList" [value]="user.id">{{ user.prenom }} {{ user.nom }}</option>
+    </select>
+    <select class="form-control" id="selecteProjectId" *ngIf="action === 'add project'" [(ngModel)]="selectedProjectId" [ngModelOptions]="{ standalone: true }">
+      <option *ngFor="let project of projectList" [value]="project.id">{{ project.projectName }}</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Ajouter</button>
+</form>

@@ -31,7 +31,7 @@ import {ErrorsStateMatcher} from "../../../Models/ErrorStateMatcher";
 })
 export class ProfileComponent {
   user: Utilisateur = {
-    email: "", id: 0, idUtilisateur: 0, login: "", nom: "", password: "", prenom: "", status: false, type: ""
+    email: "", id: 0, idUtilisateur: 0, login: "", nom: "", password: "", prenom: "", status: false, type: "",poste:""
 
   };
 

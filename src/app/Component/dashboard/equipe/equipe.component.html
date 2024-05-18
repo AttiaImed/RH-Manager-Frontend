@@ -1,25 +1,36 @@
-<div class="container">
-    <div class="Button-line">
-   <div class="Button-add">
-     <button class="btn btn-primary" (click)="openAddDialog()">ajouter</button>
-   </div>
-    </div>
-    <div class="content">
-        <div class="row">
-            <div class="col-md-4" >
-              <div class="col-md-4" *ngFor="let team of teams">
-                <div class="card" style="width: 15rem;">
-                  <img src="../../../assets/team.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h4 class="card-title">{{team.nom}}</h4>
-                    <a [routerLink]="['/Dashboard/equipe/Details/', team.id]" class="btn btn-primary">Organisation</a>
-                    <button  class="btn btn-secondary delete " (click)="delete(team.id)" ><mat-icon>delete</mat-icon></button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="head-title">
+  <div class="left">
+    <h1 routerLink="/Dashboard" style="cursor: pointer;">Dashboard</h1>
+    <ul class="breadcrumb">
+      <li>
+        <a>Dashboard</a>
+      </li>
+      <li><i class='bx bx-chevron-right' ></i></li>
+      <li>
+        <a class="active" >Teams</a>
+      </li>
 
-          </div>
+    </ul>
+  </div>
+  <div>
+    <div class="actions">
+      <div class="update"> <mat-icon class="icon" (click)="openAddDialog()">add</mat-icon></div>
     </div>
+  </div>
+</div>
+<div class="container">
+  <div class="content">
+    <div class="card-container" fxLayout="row wrap" fxLayoutGap="16px">
+      <div class="card" *ngFor="let team of teams">
+        <img src="../../../assets/team.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h4 class="card-title">{{ team.nom }}</h4>
+          <a [routerLink]="['/Dashboard/equipe/Details/', team.id]" class="btn btn-primary">organisation</a>
+          <button class="btn btn-secondary delete" (click)="delete(team.id)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 

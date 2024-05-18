@@ -8,6 +8,6 @@ export class Utilisateur {
  login !: string;
  password !: string
  status !: boolean;
-
+poste !:string;
 
 }

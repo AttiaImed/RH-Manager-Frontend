@@ -1,16 +1,19 @@
 <div class="container form-container">
-    <h2 class="mb-4">Add New Team</h2>
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="teamName">Team Name</label>
+        <label for="teamName">Nom d'équipe :</label>
         <input type="text" class="form-control" id="teamName" name="teamName" placeholder="Enter team name" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}">
       </div>
       <div class="form-group">
-        <label for="domain">Domain</label>
+        <label for="domain">Domaine de travail :</label>
         <input type="text" class="form-control" id="domain" name="domain" placeholder="Enter domain" [(ngModel)]="domain" [ngModelOptions]="{standalone: true}">
       </div>
-     
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="form-group">
+        <label for="selectedUserId">Choisir le chef d'équipe :</label>
+        <select class="form-control" id="selectedUserId"  [(ngModel)]="selectedUserId" [ngModelOptions]="{standalone: true}">
+          <option *ngFor="let user of UsersList" [value]="user.id"> {{user.prenom}} {{user.nom}}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Valider</button>
     </form>
   </div>
-  
