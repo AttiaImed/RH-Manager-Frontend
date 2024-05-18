@@ -17,7 +17,7 @@ interface Message {
   providedIn: 'root'
 })
 export class ChatsService {
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth,private tokenStorage : TokenStorageService) {
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) {
 
   }
 

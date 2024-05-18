@@ -2,7 +2,7 @@
       <table class="table table-striped" mat-table>
         <thead>
           <tr class="columns">
-            <th>Employe</th> 
+            <th>Employe</th>
             <th>Type</th>
             <th>Date de début</th>
             <th>Date de fin</th>
@@ -13,13 +13,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let conge of paginatedConges" class="spacing">
-            <td>{{ conge.utilisateur.nom }} {{ conge.utilisateur.prenom}}</td>
               <td>{{ conge.type }}</td>
             <td>{{ conge.dateDebut }}</td>
             <td>{{ conge.dateFin }}</td>
             <td>{{ conge.description }}</td>
-            <td>{{ conge.status }}</td> 
-           
+            <td>{{ conge.status }}</td>
+
             <td>
               <button mat-flat-button class="btn btn-primary" (click)="approveConge(conge.id)">Approve</button>
               <button mat-flat-button color="btn btn-warning" (click)="rejectConge(conge.id)">Reject</button>
