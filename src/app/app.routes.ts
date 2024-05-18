@@ -19,6 +19,7 @@ import {FeedbackComponent} from "./Component/dashboard/feedback/feedback.compone
 import {StatisticsComponent} from "./Component/dashboard/statistics/statistics.component";
 import {UtilisateurComponent} from "./Component/dashboard/utilisateur/utilisateur.component";
 import {ForgetPasswordComponent} from "./Component/login/forget-password/forget-password.component";
+import {RequestComponent} from "./Component/Projet/request/request.component";
 
 export const routes: Routes = [
   {path: 'login', component :LoginComponent, canActivate: [SecureInnerPagesGuard]},
@@ -45,6 +46,8 @@ export const routes: Routes = [
           role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
         }
       },
+      {path: 'Requests', component :RequestComponent},
+
       {
         path: "Profile",
         component: ProfileComponent,

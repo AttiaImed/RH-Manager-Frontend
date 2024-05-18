@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {  ViewChild } from '@angular/core';
 import { CongeService } from '../../../Services/conge.service';
 import { Conge } from '../../../Models/conge';
-import { NgForOf } from '@angular/common';  
+import { NgForOf } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatList, MatListItem, MatListModule } from '@angular/material/list';
 import { MatDivider, MatDividerModule } from '@angular/material/divider';
@@ -27,7 +27,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './request.component.css'
 })
 export class RequestComponent {
-  
+
   casualLeaveCount: number = 0;
   sickLeaveCount: number = 0;
   personalDaysCount: number = 0;
@@ -43,8 +43,8 @@ export class RequestComponent {
 
   }
   loadConges() {
-    this.congeService.getCongesList().subscribe(conges => { 
-      this.conges = conges; 
+    this.congeService.getCongesList().subscribe(conges => {
+      this.conges = conges;
     });
   }
   get paginatedConges() {
@@ -125,7 +125,7 @@ export class RequestComponent {
   }
 
 getUserById(id: number) {
-    this.userService.getUtilisateur(id).subscribe(
+    this.userService.get(id).subscribe(
       (data) => {
         console.log(data);
       },
@@ -134,5 +134,5 @@ getUserById(id: number) {
       }
     );
   }
-  
+
 }
