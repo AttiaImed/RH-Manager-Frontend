@@ -1,10 +1,11 @@
 export class Reclamation {
- id !: number;
- dateSoumission!: Date;
- dateCloture!: Date;
- titre !: string;
- description !: string;
+  id !: number;
+  dateSoumission!: Date;
+  dateCloture!: Date;
+  titre !: string;
+  description !: string;
   typeReclamation !: string;
+  status !:string
 
 
 }
