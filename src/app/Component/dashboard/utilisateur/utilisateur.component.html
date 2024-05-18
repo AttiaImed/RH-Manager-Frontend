@@ -1,0 +1,109 @@
+
+
+<div class="table-responsive">
+  <table class="table">
+    <caption>List of users</caption>
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Type</th>
+      <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+<tr *ngFor="let user of listUsers">
+  <td>{{ user.id }}</td>
+  <td>{{ user.nom }}</td>
+  <td>{{ user.prenom }}</td>
+  <td>{{ user.email }}</td>
+  <td>{{ user.type }}</td>
+  <td>{{ user.status }}</td>
+      <div>
+        <button class="button" data-toggle="modal" data-target="#editModal" (click)="edit(user)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button class="button" (click)="delete(user.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+      </div>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Reclamation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Edit form fields -->
+        <label for="nom">Name</label>
+        <input type="text" class="form-control" id="nom" [(ngModel)]="selectedReclamation.nom" name="nom">
+        <label for="prenom">Lastname</label>
+        <input type="text" class="form-control" id="prenom" [(ngModel)]="selectedReclamation.prenom" name="prenom">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" [(ngModel)]="selectedReclamation.email" name="email">
+        <label for="type">Type</label>
+        <input type="text" class="form-control" id="type" [(ngModel)]="selectedReclamation.type" name="type">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" [(ngModel)]="selectedReclamation.status" name="status">
+          <option value="BUG">BUG</option>
+          <option value="DEFECT">DEFECT</option>
+        </select>
+        <!-- Add more form fields as needed -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add New Reclamation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Add new dossier form fields -->
+        <label for="nom">Name</label>
+        <input type=date class="form-control" id="nom" [(ngModel)]="newReclamation.nom" name="nom">
+        <label for="prenom">Lastname</label>
+        <input type=date class="form-control" id="prenom" [(ngModel)]="newReclamation.prenom" name="prenom">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" [(ngModel)]="newReclamation.email" name="email">
+        <label for="type">Type</label>
+        <input type="text" class="form-control" id="type" [(ngModel)]="newReclamation.type" name="type">
+        <label for="status">Status</label>
+        <select class="form-control" id="status" [(ngModel)]="newReclamation.status" name="status">
+          <option value="BUG">BUG</option>
+          <option value="DEFECT">DEFECT</option>
+        </select>
+
+
+        <!-- Add more form fields as needed -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addNewReclamation()" data-dismiss="modal">Add Reclamation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
