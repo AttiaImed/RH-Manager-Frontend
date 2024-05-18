@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let reclamation of listReclamation">
+    <tr *ngFor="let reclamation of listReclamation | search:searchText">
       <td>{{ reclamation.id }}</td>
       <td>{{ reclamation.dateSoumission }}</td>
       <td>{{ reclamation.dateCloture }}</td>
