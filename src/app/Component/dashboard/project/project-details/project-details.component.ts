@@ -14,6 +14,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {Dossier} from "../../../../Models/dossier";
 import {Tache} from "../../../../Models/tache";
+import {DossierService} from "../../../../Services/Projet/dossier.service";
 
 @Component({
   selector: 'app-project-details',
@@ -55,22 +56,27 @@ export class ProjectDetailsComponent {
 
   users!: Utilisateur[];
   selectedUsers: string[] = [];
-  newTask = {
-    name: '',
-    desc: '',
-    priorty: '',
-    userIds: ([] = []),
-    endTime: new Date(),
-    projectId: '',
-    status: 'open',
+  newTask :Tache = {
+    comments: "",
+    dateDebut: new Date(),
+    dateFin: new Date(),
+    description: "",
+    dossier: new Dossier(),
+    id: 0,
+    membres: [],
+    nom: "",
+    priority: "",
     progress: 0,
-    supervisorId: '',
-    folderId: '',
-  };
+    sousTaches: [],
+    status: "",
+    superviser: new Utilisateur()
+
+  }
   constructor(
     private tokenStorage: TokenStorageService,
     public ar: ActivatedRoute,
     private projectService: ProjectService,
+    private dossierService : DossierService,
     private router: Router,
     private userService: UserService,
     private todoService: TaskService,
@@ -119,6 +125,7 @@ export class ProjectDetailsComponent {
   // Split the tasks By it's status
   splitData(item: Dossier) {
     this.currentFolder = item;
+    console.log(this.currentFolder);
     if (this.currentFolder.taches.length > 0) {
       this.openTasks = this.currentFolder.taches.filter(
         (todo: any) => todo.status === 'OPEN_TASK'
@@ -168,7 +175,8 @@ export class ProjectDetailsComponent {
   // add new Folder to the project
   addFolder() {
     if(this.newFolder.nom !=""){
-      this.projectService.addNewFloder(this.id, this.newFolder).subscribe(
+
+      this.dossierService.CreateFolder(this.newFolder,this.id).subscribe(
         (res: any) => {
           window.location.reload();
         },
@@ -197,10 +205,12 @@ export class ProjectDetailsComponent {
     this.currentFolder.status = status;
     this.goals != ''
       ? (this.currentFolder.goals = this.goals)
-      : (this.currentFolder.goals = this.currentFolder.goals);
-    this.projectService.updateFolder(this.id, this.currentFolder).subscribe(
+      : (this.currentFolder.goals);
+    console.log(this.currentFolder)
+    this.dossierService.Update(this.currentFolder.id, this.currentFolder).subscribe(
       (res: any) => {
         this.inputGoals = false;
+        window.location.reload();
       },
       () => {
         this.matSnackBar.open('Error while trying to Updating Folder', '❌', {
@@ -249,13 +259,14 @@ export class ProjectDetailsComponent {
 
   // Save the new task
   saveTask() {
-    if(this.newTask.name !="" && this.newTask.desc !=""){
-      this.newTask.userIds = this.selectedUsers as [];
-      this.newTask.folderId = this.currentFolder.nom;
+    if(this.newTask.nom !="" && this.newTask.description !=""){
+      //this.newTask.u = this.selectedUsers as [];
+      this.newTask.nom = this.currentFolder.nom;
       const userAuth = this.tokenStorage.getUser();
-      this.newTask.supervisorId = userAuth as string;
-      this.newTask.projectId = this.id;
-      this.todoService.Create(this.newTask).subscribe(
+      this.newTask.status = "OPEN_TASK";
+//      this.newTask.supervisorId = String(userAuth);
+ //     this.newTask.projectId = this.id;
+      this.todoService.CreateTask(this.currentFolder.id,this.newTask).subscribe(
         (res: any) => {
           this.getProjectData();
         },

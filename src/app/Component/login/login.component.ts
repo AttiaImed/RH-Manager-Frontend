@@ -12,6 +12,7 @@ import {TokenStorageService} from "../../Services/token.service";
 import {ErrorsStateMatcher} from "../../Models/ErrorStateMatcher";
 import {CommonModule} from "@angular/common";
 import {MatInput} from "@angular/material/input";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,7 @@ import {MatInput} from "@angular/material/input";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -69,6 +71,7 @@ export class LoginComponent {
 
   // Function invoked on form submission
   onSubmit() {
+    console.log(this.form)
     const LoginInfo = {
       email: this.email?.value,
       password: this.password?.value,
@@ -76,10 +79,13 @@ export class LoginComponent {
     console.log(LoginInfo);
     if (this.form.valid) {
       this.entryService.signIn(LoginInfo)
+        .pipe(
+          takeUntil(this.destroy$)
+    )
         .subscribe({
           next: (data: any) => {
             this.tokenStorage.saveToken(data.token);
-            this.router.navigate(['/down']);
+            this.router.navigate(['/Dashboard']);
           },
           error: (err: Error) => {
             this.errorMessage = err.message;
@@ -87,8 +93,6 @@ export class LoginComponent {
             this._snackBar.open(this.errorMessage, '❌');
           }
         });
-
-      this.router.navigate(['/down']);
     } else {
       this._snackBar.open('Enter valid information!!!', '❌');
     }

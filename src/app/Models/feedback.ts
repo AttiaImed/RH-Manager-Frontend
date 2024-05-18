@@ -1,9 +1,11 @@
+import {Utilisateur} from "./utilisateur";
+
 export class Feedback {
- idFeedback !: number;
+  id !: number;
  libelle !: string;
  dateSoumission!: Date;
- description !: string;
- TypeFeed!:string;
-
-
+  description !: string;
+  typeFeedBack!:string;
+  utilisateurManagerFeedBack! : Utilisateur;
+  utilisateurEmployeFeedBack!: Utilisateur;
 }

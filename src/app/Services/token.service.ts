@@ -15,10 +15,11 @@ export class TokenStorageService {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
-  public getUser():string | null{
+  public getUser():number | null{
     const jwtToken = this.getToken();
     const decodedToken: any = this.getToken() != null ? jwtDecode(jwtToken as string) : null;
-    const userId = decodedToken != null ? decodedToken?.id : null;
+    const userId = decodedToken != null ? decodedToken?.jti : null;
+    console.log(userId);
     return userId;
   }
   public getToken(): string | null {
@@ -26,7 +27,9 @@ export class TokenStorageService {
   }
 
   public getRole(){
-    return window.sessionStorage.getItem(ROLE_KEY) !== null ? window.sessionStorage.getItem(ROLE_KEY) : null;
+    const jwtToken = this.getToken();
+    const decodedToken: any = this.getToken() != null ? jwtDecode(jwtToken as string) : null;
+    const role = decodedToken != null ? decodedToken?.role : null;
+    return role;
   }
-
 }

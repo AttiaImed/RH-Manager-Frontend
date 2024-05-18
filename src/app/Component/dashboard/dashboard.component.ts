@@ -7,6 +7,7 @@ import { TokenStorageService } from '../../Services/token.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIcon } from '@angular/material/icon';
 import { Utilisateur } from '../../Models/utilisateur';
+import {UserService} from "../../Services/user.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ import { Utilisateur } from '../../Models/utilisateur';
 })
 export class DashboardComponent implements OnInit {
   LogoImgPath = '../../../assets/logo.png';
+  isLoggedIn:boolean = false;
 
   // Dark Mode or Light Mode
   darkMode: boolean = false;
@@ -24,6 +26,7 @@ export class DashboardComponent implements OnInit {
   // User data object
   userData: Utilisateur = {
     email: "", id: 0, idUtilisateur: 0, login: "", nom: "", password: "", prenom: "", status: false, type: ""
+
   };
 
   // Status variable
@@ -35,20 +38,28 @@ export class DashboardComponent implements OnInit {
   constructor(
     private tokenStorageService: TokenStorageService,
     private EService: EntryService,
-  ) {
-    // Setting user role from token storage
-    this.userData.type = this.tokenStorageService.getRole() as string;
-  }
+    private sanitizer: DomSanitizer,
+    private MatSnackBar: MatSnackBar,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
+    this.isLoggedIn =!!this.tokenStorageService.getToken();
     // Method to initialize component
     this.refreshProfile();
   }
 
   // Method to refresh profile
   refreshProfile() {
-    //const userAuth = this.tokenStorageService.getUser();
-    this.getImage();
+    const userAuth = this.tokenStorageService.getUser();
+    this.getImage(userAuth as number);
+    this.userService.get(userAuth).subscribe((res: Utilisateur) => {
+      this.userData = res;
+    },(error)=>{
+      this.MatSnackBar.open(error.error.message,'❌',{
+        duration: 3000
+      })
+    });
   }
 
   // Method to logout
@@ -62,14 +73,21 @@ export class DashboardComponent implements OnInit {
   }
 
   // Method to get user image
-  getImage() {
-    this.imageProfile =
-      'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp';
+  getImage(userId : number) {
+    this.userService.getFile(userId).subscribe(
+      (res: any) => {
+        let objectURL = URL.createObjectURL(res);
+        this.imageProfile = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      },
+      () => {
+        this.imageProfile =
+          'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp';
+      }
+    );
   }
 
   // Method to change mode (Dark Mode or Light Mode)
   modeChanges() {
     this.darkMode = !this.darkMode;
-    console.log(this.darkMode);
   }
 }

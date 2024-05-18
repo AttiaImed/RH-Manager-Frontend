@@ -153,7 +153,7 @@
                       <div class="card" *ngFor="let item of openTasks">
                         <div class="card-body">
                           <h5 class="mb-3 pointer"
-                              [routerLink]="['/Dashboard/Project', projectData.id, 'Todos',item.id]"
+                              [routerLink]="['/Dashboard/Tasks',item.id]"
                               [queryParams]="{ projectId: projectData.id , projectName : projectData.projectName}">
                             {{item.nom}}</h5>
                           <p class="mb-3"><i class="las la-calendar-check mr-2"></i>Due to {{item.dateFin |date }}</p>
@@ -246,7 +246,7 @@
                           <p class="mb-3"><i class="las la-calendar-check mr-2"></i>Due to {{item.endTime | date}}</p>
                           <div class="d-flex align-items-center justify-content-between">
                             <div class="iq-media-group">
-                              <a class="iq-media" *ngFor="let user of item.userIds;">
+                              <a class="iq-media" *ngFor="let user of item.id;">
                                 <img [src]="userProfilePictures[user]" class="img-fluid avatar-40 rounded-circle"
                                      alt="">
                               </a>
@@ -291,7 +291,7 @@
           <div class="col-lg-12">
             <div class="form-group mb-3">
               <label for="exampleInputText02" class="h5">Task Name</label>
-              <input [(ngModel)]="newTask.name" type="text" class="form-control" id="exampleInputText02"
+              <input [(ngModel)]="newTask.nom" type="text" class="form-control" id="exampleInputText02"
                      placeholder="Enter task Name">
               <a class="task-edit text-body"><i class="ri-edit-box-line"></i></a>
             </div>
@@ -311,13 +311,13 @@
           <div class="col-lg-4">
             <div class="form-group mb-3">
               <label for="exampleInputText05" class="h5">Due Dates*</label>
-              <input [(ngModel)]="newTask.endTime" type="date" class="form-control" id="exampleInputText05" value="">
+              <input [(ngModel)]="newTask.dateFin" type="date" class="form-control" id="exampleInputText05" value="">
             </div>
           </div>
           <div class="col-lg-4">
             <div class="form-group mb-3">
               <label class="h5">Priority</label>
-              <select name="type" class="selectpicker form-control" data-style="py-0" [(ngModel)]="newTask.priorty">
+              <select name="type" class="selectpicker form-control" data-style="py-0" [(ngModel)]="newTask.priority">
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
@@ -327,7 +327,7 @@
           <div class="col-lg-12">
             <div class="form-group mb-3">
               <label for="exampleInputText040" class="h5">Description</label>
-              <textarea [(ngModel)]="newTask.desc" class="form-control" id="exampleInputText040" rows="2"></textarea>
+              <textarea [(ngModel)]="newTask.dossier" class="form-control" id="exampleInputText040" rows="2"></textarea>
             </div>
           </div>
           <div class="col-lg-12">

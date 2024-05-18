@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {DataService} from "./data.service";
 import {Observable} from "rxjs";
-const  APIUrlTeams ="http://localhost:8082/api/Equipe";
+const  APIUrlTeams ="http://localhost:8081/api/Equipe";
 
 
 @Injectable({

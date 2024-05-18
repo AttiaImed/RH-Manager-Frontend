@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TokenStorageService} from "../../../Services/token.service";
 import {Router, RouterLink} from "@angular/router";
@@ -21,7 +21,7 @@ import {JsonPipe, NgForOf} from "@angular/common";
   templateUrl: './project.component.html',
   styleUrl: './project.component.css'
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnInit{
   projectData: any[] = [];
   filtredProjects: any[] = [];
   newProject = {
@@ -43,8 +43,11 @@ export class ProjectComponent {
     private router : Router
   ) {
     //this.getProjectsByRole();
-    this.getAllProjects();
   }
+
+  ngOnInit(): void {
+    this.getAllProjects();
+    }
 
   // Get project based on the role granted
   // getProjectsByRole() {
@@ -80,7 +83,7 @@ export class ProjectComponent {
   // Get projects based on the working team on it
   getProjectByUser() {
     this.projectService
-      .getProejctByUserId(this.tokenStorage.getUser() as string)
+      .getProejctByUserId(this.tokenStorage.getUser() as number)
       .subscribe(
         (res: any) => {
           if (this.projectData.length > 0) {
@@ -109,7 +112,7 @@ export class ProjectComponent {
   // gGet porjects that the current authenticated user is in charge on them
   getProjectsBySuperViser() {
     this.projectService
-      .getProejctBySuperviserId(this.tokenStorage.getUser() as string)
+      .getProejctBySuperviserId(this.tokenStorage.getUser() as number)
       .subscribe(
         (res: any) => {
           this.projectData = res;
@@ -145,6 +148,7 @@ export class ProjectComponent {
     this.teamService.getAll().subscribe(
       (res: any) => {
         this.teams = res;
+        console.log(res)
       },
       () => {
         this.matSnackBar.open('Error while loading teams', '❌', {
@@ -160,7 +164,7 @@ export class ProjectComponent {
   onSubmit() {
     if(this.newProject.projectName != "" && this.newProject.projectDesc !=""){
       this.projectService
-        .CreateProject(this.newProject.idteam, this.newProject)
+        .CreateProject(2, this.newProject)
         .subscribe(
           (res: any) => {
             this.projectData.push(res);
@@ -191,6 +195,7 @@ export class ProjectComponent {
             .navigateByUrl('/', { skipLocationChange: true })
             .then(() => {
               this.router.navigate(['/Dashboard/Project']);
+              this.getAllProjects();
             });
         },
         () => {

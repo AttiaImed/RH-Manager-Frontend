@@ -9,18 +9,20 @@ import {SecureInnerPagesGuard} from "./Guards/secure-inner-pages.guard";
 import {ProjectComponent} from "./Component/dashboard/project/project.component";
 import {ReclamationComponent} from "./Component/dashboard/reclamation/reclamation.component";
 import { CongeComponent } from './Component/Projet/conge/conge.component';
-import {TasksComponent} from "./Component/dashboard/project/Project/tasks/tasks.component";
-import {DetailTaskComponent} from "./Component/dashboard/project/Project/tasks/detail-task/detail-task.component";
+import {TasksComponent} from "./Component/dashboard/project/tasks/tasks.component";
+import {DetailTaskComponent} from "./Component/dashboard/project/tasks/detail-task/detail-task.component";
 import {ProjectDetailsComponent} from "./Component/dashboard/project/project-details/project-details.component";
 import { EquipeComponent } from './Component/dashboard/equipe/equipe.component';
 import {TeamDetailsComponent} from "./Component/dashboard/equipe/team-details/team-details.component";
-import { CalendrierComponent } from './Component/Projet/calendrier/calendrier.component';
-
+import {ProfileComponent} from "./Component/dashboard/profile/profile.component";
+import {FeedbackComponent} from "./Component/dashboard/feedback/feedback.component";
+import {StatisticsComponent} from "./Component/dashboard/statistics/statistics.component";
+import {UtilisateurComponent} from "./Component/dashboard/utilisateur/utilisateur.component";
+import {ForgetPasswordComponent} from "./Component/login/forget-password/forget-password.component";
 
 export const routes: Routes = [
-  {path: 'projet', component :ProjetComponent},
-  {path: 'dossier', component :DossierComponent},
   {path: 'login', component :LoginComponent, canActivate: [SecureInnerPagesGuard]},
+  {path: 'forget-password', component :ForgetPasswordComponent, canActivate: [SecureInnerPagesGuard]},
   {path: 'signup', component :SignupComponent, canActivate: [SecureInnerPagesGuard]},
   {
     path: 'Dashboard',
@@ -28,36 +30,104 @@ export const routes: Routes = [
     canActivate: [AuthGuard],// this is the component with the <router-outlet> in the template
     children: [
       {
+        path: "Tasks",
+        component: TasksComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
+        }
+      },
+      {
+        path: "Tasks/:id",
+        component: DetailTaskComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
+        }
+      },
+      {
+        path: "Profile",
+        component: ProfileComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR','EMPLOYE']
+        }
+      },
+      {
         path: "Project",
         component: ProjectComponent,
         canActivate: [AuthGuard],
-
-
+        data:{
+          role: ['RH','DIRECTOR','MANAGER','ADMINISTRATEUR']
+        }
+      },
+      {
+        path: "Statistics",
+        component: StatisticsComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'Project/:id',
         component: ProjectDetailsComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: 'Reclamation',
+        component :ReclamationComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR','RH','EMPLOYE']
+        }
+      },
+      {
+        path: 'Utilisateurs',
+        component :UtilisateurComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR']
+        }
+      },
+      {
+        path: 'equipe',
+        component :EquipeComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR','RH','DIRECTOR']
+        }
+      },
 
       {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},
+      {
+        path: 'FeedBack',
+        component :FeedbackComponent,
+        canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR','RH','DIRECTOR']
+        }
+      },
+
+
       {path: 'equipe', component :EquipeComponent},
       {
         path: 'equipe/Details/:id',
         component: TeamDetailsComponent,
         canActivate: [AuthGuard],
+        data:{
+          role :['ADMINISTRATEUR','RH','DIRECTOR']
+        }
       },
-
-      {path: 'Conges', component :CongeComponent,canActivate: [AuthGuard]},
-      {path: 'calendar-events', component :CalendrierComponent,canActivate: [AuthGuard]}
+      {
+        path: 'Conges',
+        component :CongeComponent,
+        canActivate: [AuthGuard],
+      },
+      {path : "" , redirectTo: '/Statistics', pathMatch: 'full'}
     ]
   },
-  { path: '',   redirectTo: '/Dashboard/Project', pathMatch: 'full' }, // redirect to
+  { path: '',   redirectTo: '/Dashboard/Statistics', pathMatch: 'full' }, // redirect to
 
-  { path: '**',  redirectTo: '/Dashboard/Project'},
+  { path: '**',  redirectTo: '/Dashboard/Statistics'},
   {path: 'login', component :LoginComponent},
   {path: 'signup', component :SignupComponent},
-
-
-
+  {path: 'forget-password', component :ForgetPasswordComponent},
 ];

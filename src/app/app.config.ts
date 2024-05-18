@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import {ApplicationConfig, importProvidersFrom} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -12,11 +12,12 @@ import {DataService} from "./Services/data.service";
 import {provideClientHydration} from "@angular/platform-browser";
 import {intAuthInterceptor} from "./Interceptors/int-auth.interceptor";
 import {ErrorsStateMatcher} from "./Models/ErrorStateMatcher";
-import { CalendarModule } from 'angular-calendar';
-import { DateAdapter } from '@angular/material/core';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import {JwtModule} from "@auth0/angular-jwt";
+export function tokenGetter() {
+  return localStorage.getItem("TOKEN_KEY");
+}
+
 export const appConfig: ApplicationConfig = {
-  
   providers: [ provideRouter(routes),
     provideClientHydration(),
     provideAnimationsAsync(),
@@ -24,9 +25,16 @@ export const appConfig: ApplicationConfig = {
     {provide: ErrorsStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
     EntryService,
     TokenStorageService,
-  
     provideHttpClient(withInterceptors([intAuthInterceptor])),
     DataService,
-  
+    importProvidersFrom(
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: tokenGetter,
+          allowedDomains: ["http://localhost:8081/api/"],
+          //disallowedRoutes: ["http://example.com/examplebadroute/"],
+        },
+      }),
+    ),
   ]
 };

@@ -21,9 +21,11 @@ export class ReclamationComponent {
   listReclamation: Reclamation[]=[];
   selectedReclamation: Reclamation=new Reclamation();
   newReclamation: Reclamation=new Reclamation();
+
   constructor(private reclamationService: ReclamationService) {
     this.loadReclamations();
   }
+
 
    loadReclamations() {
     this.reclamationService.getAll().subscribe(
@@ -35,6 +37,7 @@ export class ReclamationComponent {
       }
       );
   }
+
   delete(id:number){
     this.reclamationService.Delete(id).subscribe(
       ()=>{
@@ -52,6 +55,7 @@ export class ReclamationComponent {
       }
     );
   }
+
   edit(reclamation: Reclamation) {
     console.log( this.selectedReclamation)
 
