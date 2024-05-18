@@ -44,7 +44,7 @@ export class EquipeComponent {
     const dialogRef = this.dialog.open(AjouterEquipeDialogComponent, {
       width: '400px',
       height: '330px',
-      data:null
+      data: {action: 'add'}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
