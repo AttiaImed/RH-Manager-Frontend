@@ -33,8 +33,22 @@ export class FeedbackComponent {
 
 
   constructor(private feedbackService: FeedbackService) {
-    this.loadFeedbacks()
+    this.loadFeedbacks();
+    this.loadStatistics();
   }
+  loadStatistics() {
+    this.feedbackService.getFeedbackStatistics().subscribe(
+      (data: { pleasedCount: number; unpleasedCount: number }) => {
+      },
+      (error) => {
+        console.log(error + "statistics not found");
+      }
+    );
+  }
+
+
+
+
 
   loadFeedbacks() {
     this.feedbackService.getAll().subscribe(
