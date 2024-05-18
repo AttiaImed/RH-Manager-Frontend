@@ -1,6 +1,16 @@
+<div class="container">
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">Add New Reclamation</button>
+  <div class="group">
+    <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+      <g>
+        <path
+          d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+      </g>
+    </svg>
+    <input placeholder="Search" type="search" class="input" [(ngModel)]="searchText">
+  </div>
+</div>
 
-
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">Add New Reclamation</button>
 
 <div class="table-responsive">
   <table class="table">
@@ -11,8 +21,10 @@
       <th scope="col">DATE SOUMISSION</th>
       <th scope="col">DATE CLOTURE</th>
       <th scope="col">TITRE</th>
-      <th scope="col">DESCRIPTION</th>
+      <th width="230">DESCRIPTION</th>
       <th scope="col">TYPE RECLAMATION</th>
+      <th scope="col">STATUS</th>
+      <th scope="col">ACTIONS</th>
     </tr>
     </thead>
     <tbody>
@@ -23,17 +35,31 @@
       <td>{{ reclamation.titre }}</td>
       <td>{{ reclamation.description }}</td>
       <td>{{ reclamation.typeReclamation }}</td>
-      <div>
 
+      <td>
+        <div *ngIf="editStatusId !== reclamation.id">
+          <div (click)="setEditStatusId(reclamation.id)" style="cursor: pointer">
+            {{ reclamation.status }}
+          </div>
+        </div>
+        <div *ngIf="editStatusId === reclamation.id">
+          <select class="form-control" id="editStatus" [(ngModel)]="reclamation.status" (blur)="clearEditStatusId()"
+                  name="editStatus">
+            <option value="PENDING">PENDING</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="DONE">Done</option>
+          </select>
+        </div>
+      </td>
 
-          <button class="button" data-toggle="modal" data-target="#editModal" (click)="edit(reclamation)">
-            <mat-icon>edit</mat-icon>
-          </button>
+      <td>
+        <button class="button" data-toggle="modal" data-target="#editModal" (click)="edit(reclamation)">
+          <mat-icon>edit</mat-icon>
+        </button>
         <button class="button" (click)="delete(reclamation.id)">
           <mat-icon>delete</mat-icon>
         </button>
-
-        </div>
+      </td>
     </tr>
     </tbody>
   </table>
@@ -52,15 +78,19 @@
       <div class="modal-body">
         <!-- Edit form fields -->
         <label for="editDateSoumission">Date Soumission</label>
-        <input type="text" class="form-control" id="editDateSoumission" [(ngModel)]="selectedReclamation.dateSoumission" name="editDateSoumission">
+        <input type="text" class="form-control" id="editDateSoumission" [(ngModel)]="selectedReclamation.dateSoumission"
+               name="editDateSoumission">
         <label for="editDateCloture">Date Cloture</label>
-        <input type="text" class="form-control" id="editDateCloture" [(ngModel)]="selectedReclamation.dateCloture" name="editDateCloture">
+        <input type="text" class="form-control" id="editDateCloture" [(ngModel)]="selectedReclamation.dateCloture"
+               name="editDateCloture">
         <label for="editTitre">Titre</label>
         <input type="text" class="form-control" id="editTitre" [(ngModel)]="selectedReclamation.titre" name="editTitre">
         <label for="editDescription">Description</label>
-        <input type="text" class="form-control" id="editDescription" [(ngModel)]="selectedReclamation.description" name="editDescription">
+        <input type="text" class="form-control" id="editDescription" [(ngModel)]="selectedReclamation.description"
+               name="editDescription">
         <label for="editTypeRec">Type Reclamation</label>
-        <select class="form-control" id="editTypeRec" [(ngModel)]="selectedReclamation.typeReclamation" name="editTypeRecs">
+        <select class="form-control" id="editTypeRec" [(ngModel)]="selectedReclamation.typeReclamation"
+                name="editTypeRecs">
           <option value="BUG">BUG</option>
           <option value="DEFECT">DEFECT</option>
         </select>
@@ -87,27 +117,28 @@
       <div class="modal-body">
         <!-- Add new dossier form fields -->
         <label for="editDateSoumission">Date Soumission</label>
-        <input type=date class="form-control" id="editDateSoumissions" [(ngModel)]="newReclamation.dateSoumission" name="editDateSoumission">
+        <input type=date class="form-control" id="editDateSoumissions" [(ngModel)]="newReclamation.dateSoumission"
+               name="editDateSoumission">
         <label for="editDateCloture">Date Cloture</label>
-        <input type=date class="form-control" id="editDateClotures" [(ngModel)]="newReclamation.dateCloture" name="editDateClotures">
+        <input type=date class="form-control" id="editDateClotures" [(ngModel)]="newReclamation.dateCloture"
+               name="editDateClotures">
         <label for="editTitres">Titre</label>
         <input type="text" class="form-control" id="editTitres" [(ngModel)]="newReclamation.titre" name="editTitres">
         <label for="editDescriptions">description</label>
-        <input type="text" class="form-control" id="editDescriptions" [(ngModel)]="newReclamation.description" name="editDescriptions">
+        <input type="text" class="form-control" id="editDescriptions" [(ngModel)]="newReclamation.description"
+               name="editDescriptions">
         <label for="editTypeRecs">Type Reclamation</label>
         <select class="form-control" id="editTypeRecs" [(ngModel)]="newReclamation.typeReclamation" name="editTypeRecs">
           <option value="BUG">BUG</option>
           <option value="DEFECT">DEFECT</option>
         </select>
-
-
-        <!-- Add more form fields as needed -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addNewReclamation()" data-dismiss="modal">Add Reclamation</button>
+        <button type="button" class="btn btn-primary" (click)="addNewReclamation()" data-dismiss="modal">Add
+          Reclamation
+        </button>
       </div>
     </div>
   </div>
 </div>
-

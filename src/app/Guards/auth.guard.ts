@@ -31,9 +31,12 @@ export class AuthGuard implements CanActivate {
     const jwtToken = this.authService.getToken();
     console.log(jwtToken);
     const userRole = this.authService.getRole();
+    console.log("state.url1", state.url)
+    if(state.url != "/forget-password"){
     if (!jwtToken || this.jwtHelper.isTokenExpired(jwtToken)) {
       // check Wither the real problem is the expiration of the
       if(this.jwtHelper.isTokenExpired(this.authService.getToken())){
+        console.log("state.url", state.url)
         this._snackBar.open("Your session is Expired please try to loggIn again", '❌');
         this.entryService.signOut();
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
@@ -50,6 +53,8 @@ export class AuthGuard implements CanActivate {
       else{
         return true;
       }
+    }
+
     }
     console.log(jwtToken)
     return true;

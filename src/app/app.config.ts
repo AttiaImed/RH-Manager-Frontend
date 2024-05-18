@@ -13,6 +13,11 @@ import {provideClientHydration} from "@angular/platform-browser";
 import {intAuthInterceptor} from "./Interceptors/int-auth.interceptor";
 import {ErrorsStateMatcher} from "./Models/ErrorStateMatcher";
 import {JwtModule} from "@auth0/angular-jwt";
+import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../environments/environment";
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
+import {AngularFireAuthModule} from "@angular/fire/compat/auth";
+import {ChatsService} from "./Services/chats.service";
 export function tokenGetter() {
   return localStorage.getItem("TOKEN_KEY");
 }
@@ -36,5 +41,11 @@ export const appConfig: ApplicationConfig = {
         },
       }),
     ),
+    importProvidersFrom(
+      AngularFireModule.initializeApp(environment.firebaseConfig),
+      AngularFireAuthModule,
+      AngularFirestoreModule
+    ),
+    ChatsService
   ]
 };
