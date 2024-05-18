@@ -21,6 +21,7 @@ import {MatSelectTrigger} from "@angular/material/select";
 import {AjouterEquipeDialogComponent} from "../ajouter-equipe-dialog/ajouter-equipe-dialog.component";
 import {AjouterUserTeamComponent} from "../ajouter-user-team/ajouter-user-team.component";
 import {MatDialog} from "@angular/material/dialog";
+import {EquipeHistoriqueDialogComponent} from "../equipe-historique-dialog/equipe-historique-dialog.component";
 
 @Component({
   selector: 'app-team-details',
@@ -215,7 +216,8 @@ teamMemberData2: Utilisateur[] = [] as Utilisateur[];
     const dialogRef = this.dialog.open(AjouterEquipeDialogComponent, {
       width: '400px',
        height: '330px',
-      data:this.teamData
+      data:{teamData:this.teamData,
+      action:'update'}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
@@ -247,4 +249,13 @@ teamMemberData2: Utilisateur[] = [] as Utilisateur[];
     });
   }
 
+  openHistory() {
+    const dialogRef = this.dialog.open(EquipeHistoriqueDialogComponent, {
+      width: '400px',
+      height: '330px',
+      data:this.teamData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });}
 }

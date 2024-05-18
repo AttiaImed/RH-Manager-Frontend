@@ -56,4 +56,8 @@ export class EquipeService extends DataService  {
   deleteProject(teamId: number, projectId: number){
     return this.https.patch(`${APIUrlEquipe}/deleteProject/${teamId}/${projectId}`,null);
   }
+  SaveActionHistory(action: string, actionDetails: string, userId: number ,Date:Date){
+    return this.https.post(`${APIUrlEquipe}/actionHistory`,{action: action, actionDetails: actionDetails, userId: userId});
+  }
+
 }
