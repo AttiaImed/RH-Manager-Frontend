@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {SearchPipe} from "../../../search.pipe";
+import {TokenStorageService} from "../../../Services/token.service";
 
 @Component({
   selector: 'app-reclamation',
@@ -35,9 +36,10 @@ export class ReclamationComponent {
   }=new Reclamation();
   editStatusId: number | null = null; // Initialisé à null au lieu de undefined
   searchText='';
-
-  constructor(private reclamationService: ReclamationService) {
+  isLoggedIn : string ="";
+  constructor(private reclamationService: ReclamationService , private tokenStorage : TokenStorageService) {
     this.loadReclamations();
+    this.isLoggedIn =this.tokenStorage.getRole();
   }
 
 
@@ -153,8 +155,6 @@ export class ReclamationComponent {
       status: "" // Réinitialiser le statut
     };
   }
-
-
 
   setEditStatusId(reclamationId: number) {
     this.editStatusId = reclamationId;
