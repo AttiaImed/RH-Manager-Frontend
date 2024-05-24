@@ -97,8 +97,8 @@ export const routes: Routes = [
         component :EquipeComponent,
         canActivate: [AuthGuard],
         data:{
-          role :['ADMINISTRATEUR','RH','DIRECTOR']
-        }
+         role :['ADMINISTRATEUR','RH','DIRECTOR']
+       }
       },
 
       {path: 'Reclamation', component :ReclamationComponent,canActivate: [AuthGuard]},

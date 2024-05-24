@@ -6,7 +6,7 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
-// import {SearchPipe} from "../../../search.pipe";
+import {SearchPipe} from "../../../search.pipe";
 
 @Component({
   selector: 'app-reclamation',
@@ -16,7 +16,7 @@ import {MatIcon} from "@angular/material/icon";
     NgForOf,
     MatIcon,
     NgIf,
-    // SearchPipe
+    SearchPipe
   ],
   templateUrl: './reclamation.component.html',
   styleUrl: './reclamation.component.css'

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Equipe} from "../../../../Models/equipe";
 import {ProjectService} from "../../../../Services/project.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
@@ -18,6 +18,10 @@ import {MatIcon} from "@angular/material/icon";
 import {MatList, MatListItem} from "@angular/material/list";
 import {MatDivider} from "@angular/material/divider";
 import {MatSelectTrigger} from "@angular/material/select";
+import {AjouterEquipeDialogComponent} from "../ajouter-equipe-dialog/ajouter-equipe-dialog.component";
+import {AjouterUserTeamComponent} from "../ajouter-user-team/ajouter-user-team.component";
+import {MatDialog} from "@angular/material/dialog";
+import {EquipeHistoriqueDialogComponent} from "../equipe-historique-dialog/equipe-historique-dialog.component";
 
 @Component({
   selector: 'app-team-details',
@@ -42,18 +46,18 @@ import {MatSelectTrigger} from "@angular/material/select";
   templateUrl: './team-details.component.html',
   styleUrl: './team-details.component.css'
 })
-export class TeamDetailsComponent {
+export class TeamDetailsComponent implements OnInit {
   ListOfSearch: any;
   addProjectSwitcher: boolean = false;
   id: string = '';
   userIdtoSearch: string = '';
   teamData: Equipe = new Equipe();
-  usersData: Utilisateur[] = [];
-
+  usersData: Utilisateur[] = [] as Utilisateur[] ;
+  ManagerData: Utilisateur = new Utilisateur();
   usersSkillsData: Utilisateur[] = [];
-
-
-
+ProjectData: Projet[]=[] as Projet[];
+ teamMemberData1: Utilisateur[] = [] as Utilisateur[];
+teamMemberData2: Utilisateur[] = [] as Utilisateur[];
   constructor(
     private projectService: ProjectService,
     public ar: ActivatedRoute,
@@ -62,17 +66,42 @@ export class TeamDetailsComponent {
     private tokenStorage: TokenStorageService,
     private router: Router,
     private _snackBar: MatSnackBar,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private dialog :MatDialog
   ) {
     this.ar.params.subscribe((data) => {
       this.id = data['id'];
+      console.log(data);
     });
     this.teamService.get(this.id).subscribe((res: Equipe) => {
       this.teamData = res;
-      this.getUsersById();
+
     });
   }
-  // Get users that belong to the current team
+
+  ngOnInit(): void {
+    this.teamService.getTeamProjects(this.id).subscribe((res: any) => {
+      this.ProjectData = res;
+      console.log(this.ProjectData);
+    });
+    this.teamService.getTeamMembers(this.id).subscribe((res: any) => {
+      this.usersData = res;
+      console.log(this.usersData);
+      let mid = Math.ceil(this.usersData.length / 2);
+
+      this.teamMemberData1 = this.usersData.slice(0, mid);
+      this.teamMemberData2 = this.usersData.slice(mid);
+      console.log(this.teamMemberData1);
+      console.log(this.teamMemberData2);
+
+    });
+    this.teamService.getTeamManager(this.id).subscribe((res: Utilisateur) => {
+      this.ManagerData = res;
+      console.log(this.ManagerData);
+
+    });
+
+  }  // Get users that belong to the current team
   getUsersById() {
     this.teamData.membres?.forEach((id: any) => {
       this.userService.get(id).subscribe((res: Utilisateur) => {
@@ -84,33 +113,29 @@ export class TeamDetailsComponent {
       //this.fetchProfilePicture(id);
     });
   }
-  // Remove project from this Team
-  removeProject(projectIdToRemove: any) {
-    console.log(this.teamData.id, projectIdToRemove);
-    this.teamService
-      .addOrRemoveProject(this.teamData.id, projectIdToRemove)
-      .subscribe(() => {
-        this.router
-          .navigateByUrl('/', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate([
-              '/Dashboard/Teams/Details',
-              this.teamData.id,
-            ]);
-          });
-        // Perform any necessary operations with the project
-      });
-  }
-  // Function that exicute in two way
-  // 1- Add user to the team
-  // 2- Remove user from the team
+
   addOrRemoveUser(userId: number) {
+    console.log(this.teamData.id,userId);
     this.teamService
-      .addOrRemoveUser(this.teamData.id, userId)
+      .deleteUser(this.teamData.id, userId)
       .subscribe(() => {
-        window.location.reload();
+        this.ngOnInit()
+      },(error) => {
+        console.error('An error occurred:', error);
+        // Handle the error here
       });
   }
+  removeProject(projectId: number) {
+    this.teamService
+      .deleteProject(this.teamData.id, projectId)
+      .subscribe(() => {
+        this.ngOnInit()
+      },(error) => {
+        console.error('An error occurred:', error);
+        // Handle the error here
+      });
+  }
+
 
   // Add to Department Users /Skills
   //On Opning model get informations
@@ -139,33 +164,7 @@ export class TeamDetailsComponent {
     });
   }
   //Get Selected Project from the Select tag to add it to list and save team's projects in database
-  getSelectedProjects() {
-    // Retrieve the selected projects
-    const selectedProjects = this.project.value;
-    // Retrieve the IDs of the selected projects
-    selectedProjects.forEach((projectId: string) => {
-      this.teamService
-        .addOrRemoveProject(this.teamData.id, projectId)
-        .subscribe(
-          () => {
-            this.router
-              .navigateByUrl('/', { skipLocationChange: true })
-              .then(() => {
-                this.router.navigate([
-                  '/Dashboard/Teams/Details',
-                  this.teamData.id,
-                ]);
-              });
-          },
-          () => {
-            this._snackBar.open(
-              'We Found An Error During Adding Project Please refresh this page  !!!',
-              '❌'
-            );
-          }
-        );
-    });
-  }
+
   // Changing the status of the current team
   // InWorking Status
   // Not Available Status
@@ -213,4 +212,50 @@ export class TeamDetailsComponent {
     // );
   }
 
+  openUpdateDialog(): void {
+    const dialogRef = this.dialog.open(AjouterEquipeDialogComponent, {
+      width: '400px',
+       height: '330px',
+      data:{teamData:this.teamData,
+      action:'update'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        this.ngOnInit();
+      }
+    });}
+  openAddUser(){
+    const dialogRef = this.dialog.open(AjouterUserTeamComponent, {
+      width: '400px',
+      height: '180px',
+      data: {teamId: this.teamData.id,action:'add user'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        this.ngOnInit();
+      }
+    });
+  }
+  openAddProject(){
+    const dialogRef = this.dialog.open(AjouterUserTeamComponent, {
+      width: '400px',
+      height: '180px',
+      data: {teamId: this.teamData.id,action:'add project'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        this.ngOnInit();
+      }
+    });
+  }
+
+  openHistory() {
+    const dialogRef = this.dialog.open(EquipeHistoriqueDialogComponent, {
+      width: '400px',
+      height: '330px',
+      data:this.teamData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });}
 }

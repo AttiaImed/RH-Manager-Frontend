@@ -48,7 +48,7 @@ export class SignupComponent {
   hide: boolean = true;
   errorMessage: string = '';
   userData: Utilisateur = {
-    email: "", id: 0, idUtilisateur: 0, login: "", nom: "", password: "", prenom: "", status: false, type: ""
+    email: "", id: 0, idUtilisateur: 0, login: "", nom: "", password: "", prenom: "", status: false, type: "",poste:""
   };
 mail = "exemple@mail.com"
   typeOptions: string[] = ['RH', 'EMPLOYE', 'ADMINISTRATEUR', 'MANAGER', 'DIRECTOR'];

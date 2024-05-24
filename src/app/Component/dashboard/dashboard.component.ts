@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
   // User data object
   userData: Utilisateur = {
-    email: "", id: 0, idUtilisateur: 0, login: "", nom: "", password: "", prenom: "", status: false, type: ""
+    email: "", id: 0, idUtilisateur: 0, login: "", nom: "", password: "", prenom: "", status: false, type: "",poste:""
 
   };
 
