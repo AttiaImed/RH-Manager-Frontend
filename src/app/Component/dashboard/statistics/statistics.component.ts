@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
 import {PresenceService} from "../../../Services/presence.service";
+import {StaticsService} from "../../../Services/statics.service";
+import {data} from "jquery";
 
 @Component({
   selector: 'app-statistics',
@@ -11,10 +13,12 @@ import {PresenceService} from "../../../Services/presence.service";
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.css',
 })
-export class StatisticsComponent {
+export class StatisticsComponent implements OnInit{
   presence : number =0;
   allPresence : number = 0;
-  constructor(private presenceService : PresenceService) {
+  optionzaineb: EChartsOption = {};
+
+  constructor(private presenceService : PresenceService,private staticsService: StaticsService) {
     this.presenceService.getPresenceByUser().subscribe((res:any[]) =>{
       this.presence = res.filter(p=> p.presence == true).length;
       this.allPresence = res.length;
@@ -102,62 +106,33 @@ export class StatisticsComponent {
     ],
   };
 
-
-  optionzaineb: EChartsOption = {
-    xAxis: {
-      type: 'category',
-      boundaryGap: false
-    },
-    yAxis: {
-      type: 'value',
-      boundaryGap: [0, '30%']
-    },
-    visualMap: {
-      type: 'piecewise',
-      show: false,
-      dimension: 0,
-      seriesIndex: 0,
-      pieces: [
+  updateChart(data: { pleasedCount: number; unpleasedCount: number }) {
+    this.optionzaineb = {
+      xAxis: {
+        type: 'category',
+        data: ['Pleased', 'Unpleased']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
         {
-          gt: 1,
-          lt: 3,
-          color: 'rgba(0, 0, 180, 0.4)'
-        },
-        {
-          gt: 5,
-          lt: 7,
-          color: 'rgba(0, 0, 180, 0.4)'
+          type: 'bar',
+          data: [data.pleasedCount, data.unpleasedCount],
+          itemStyle: {
+            color: function (params) {
+              return params.dataIndex === 0 ? '#5470C6' : '#EE6666';
+            }
+          }
         }
       ]
-    },
-    series: [
-      {
-        type: 'line',
-        smooth: 0.6,
-        symbol: 'none',
-        lineStyle: {
-          color: '#5470C6',
-          width: 5
-        },
-        markLine: {
-          symbol: ['none', 'none'],
-          label: { show: false },
-          data: [{ xAxis: 1 }, { xAxis: 3 }, { xAxis: 5 }, { xAxis: 7 }]
-        },
-        areaStyle: {},
-        data: [
-          ['2019-10-10', 200],
-          ['2019-10-11', 560],
-          ['2019-10-12', 750],
-          ['2019-10-13', 580],
-          ['2019-10-14', 250],
-          ['2019-10-15', 300],
-          ['2019-10-16', 450],
-          ['2019-10-17', 300],
-          ['2019-10-18', 100]
-        ]
-      }
-    ],
-  };
+    };
 
 }
+
+  ngOnInit(): void {
+    this.staticsService.statistics$.subscribe(data => {
+      this.updateChart(data);
+    });
+  }
+  }

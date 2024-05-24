@@ -1,16 +1,48 @@
+
+<p class="placeholder-glow">
+  <span class="placeholder col-12"></span>
+</p>
 <div style="text-align: center;">
-  <h2 class="feedback-title">Your Feedback matters ! </h2>
+  <h2 class="feedback-title">Your Feedback matters!</h2>
 </div>
-<div style="text-align: right;">
-  <!-- Champ de recherche -->
-  <input type="text" [(ngModel)]="searchTerm" (keyup)="applyFilters()" placeholder="Rechercher..." />
-  <select (change)="filterType()" [(ngModel)]="searchType">
-    <option value="PLEASED">Pleased</option>
-    <option value="UNPLEASED">Unpleased</option>
-  </select>
-  <!-- Bouton de recherche -->
-  <!--  <button (click)="searchAndDisplay()">Rechercher</button>-->
+<p class="placeholder-wave">
+  <span class="placeholder col-12"></span>
+</p>
+<div class="container">
+  <div class="search-bar">
+    <input type="text" class="form-control search-input" [(ngModel)]="searchTerm" (keyup)="applyFilters()" placeholder="Rechercher..." />
+    <select class="form-control search-select" [(ngModel)]="searchType" (change)="filterType()">
+      <option value="PLEASED">Pleased</option>
+      <option value="UNPLEASED">Unpleased</option>
+    </select>
+    <!-- Bouton de recherche (optionnel) -->
+    <!-- <button class="btn btn-primary" (click)="searchAndDisplay()">Rechercher</button> -->
+  </div>
 </div>
+
+
+<!-- <div style="text-align: right;">-->
+<!--  &lt;!&ndash; Champ de recherche &ndash;&gt;-->
+<!--  <input type="text" [(ngModel)]="searchTerm" (keyup)="applyFilters()" placeholder="Rechercher..." />-->
+<!--  <select (change)="filterType()" [(ngModel)]="searchType">-->
+<!--    <option value="PLEASED">Pleased</option>-->
+<!--    <option value="UNPLEASED">Unpleased</option>-->
+<!--  </select>-->
+<!--  &lt;!&ndash; Bouton de recherche &ndash;&gt;-->
+<!--  &lt;!&ndash;  <button (click)="searchAndDisplay()">Rechercher</button>&ndash;&gt;-->
+<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFeedbackModal">
   Ajouter feedback
@@ -20,7 +52,6 @@
   <table class="table">
     <thead>
     <tr>
-      <th scope="col">ID FEEDBACK</th>
       <th scope="col">LIBELLE</th>
       <th scope="col">DATE SOUMISSION</th>
       <th scope="col">DESCRIPTION</th>
@@ -30,7 +61,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let item of filteredFeedback | paginate: { itemsPerPage: 6, currentPage: p }">
-      <th scope="row">{{item.id}}</th>
       <td>{{item.libelle}}</td>
       <td>{{item.dateSoumission | date}}</td>
       <td>{{item.description}}</td>
@@ -52,19 +82,6 @@
 <div *ngIf="filteredFeedback.length === 0">
   <p>Aucun résultat trouvé.</p>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- Modal for editing feedback -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -143,3 +160,4 @@
     </div>
   </div>
 </div>
+

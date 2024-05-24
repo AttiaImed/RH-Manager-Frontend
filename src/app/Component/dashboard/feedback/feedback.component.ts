@@ -7,6 +7,8 @@ import {FeedbackService} from "../../../Services/feedback.service";
 import {Utilisateur} from "../../../Models/utilisateur";
 import {NgxPaginationModule} from "ngx-pagination";
 import {Component} from "@angular/core";
+import {StaticsService} from "../../../Services/statics.service";
+import {TokenStorageService} from "../../../Services/token.service";
 
 @Component({
   selector: 'app-feedback',
@@ -15,7 +17,8 @@ import {Component} from "@angular/core";
     FormsModule,
     NgForOf,
     MatIcon, JsonPipe, DatePipe, NgIf,
-    NgxPaginationModule // Ajoutez NgxPaginationModule dans vos imports
+    NgxPaginationModule ,// Ajoutez NgxPaginationModule dans vos imports
+
 
   ],
   templateUrl: './feedback.component.html',
@@ -30,37 +33,50 @@ export class FeedbackComponent {
   filteredFeedback: any[] = [];
   searchTerm: string = '';
   newFeedback: { dateSoumission: Date; typeFeedBack: string; libelle: string; description: string; id: number }=new Feedback();
+  pleasedCount: number = 0;
+  unpleasedCount: number = 0;
+  chartInstance: any;
 
-
-  constructor(private feedbackService: FeedbackService) {
+  constructor(private feedbackService: FeedbackService ,private staticsService: StaticsService,private tokenStorage : TokenStorageService) {
+    console.log(this.tokenStorage.getRole())
     this.loadFeedbacks();
-    this.loadStatistics();
   }
-  loadStatistics() {
-    this.feedbackService.getFeedbackStatistics().subscribe(
-      (data: { pleasedCount: number; unpleasedCount: number }) => {
-      },
-      (error) => {
-        console.log(error + "statistics not found");
-      }
-    );
+  calculateStatistics() {
+    this.pleasedCount = this.listFeedback.filter(feedback => feedback.typeFeedBack === 'pleased').length;
+    this.unpleasedCount = this.listFeedback.filter(feedback => feedback.typeFeedBack === 'unpleased').length;
+    this.staticsService.updateStatistics({ pleasedCount: this.pleasedCount, unpleasedCount: this.unpleasedCount });
   }
-
-
-
 
 
   loadFeedbacks() {
-    this.feedbackService.getAll().subscribe(
-      (data:Feedback[])=>{
-        this.listFeedback = data;
-        this.filteredFeedback=data;
-        console.log(data)
-      },
-      (error)=>{
-        console.log(error + "feedback not found");
-      }
-    );
+
+    if(this.tokenStorage.getRole() === "EMPLOYE"){
+      this.feedbackService.getfeedbackByUserId().subscribe(
+        (data:Feedback[])=>{
+          this.listFeedback = data;
+          this.filteredFeedback=data;
+          this.calculateStatistics();
+          console.log(data)
+        },
+        (error)=>{
+          console.log(error + "feedback not found");
+        }
+      );
+    }else{
+      this.feedbackService.getAll().subscribe(
+        (data:Feedback[])=>{
+          this.listFeedback = data;
+          this.filteredFeedback=data;
+          this.calculateStatistics();
+          console.log(data)
+        },
+        (error)=>{
+          console.log(error + "feedback not found");
+        }
+      );
+
+    }
+
   }
   applyFilters() {
     // Filtrer les données en fonction du terme de recherche et du type sélectionné
@@ -119,6 +135,8 @@ export class FeedbackComponent {
     this.feedbackService.Create(this.newFeedback).subscribe(
       (createdFeedback: Feedback) => {
         console.log(`New feedback added successfully.`);
+        window.location.reload();
+
         this.newFeedback = {
           id :0,
           libelle : "",
