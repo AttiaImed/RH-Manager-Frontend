@@ -20,9 +20,7 @@ import {ChatComponent} from "../chat/chat.component";
 export class DashboardComponent implements OnInit {
   isChatVisible: boolean = true;
 
-  toggleChat(): void {
-    this.isChatVisible = !this.isChatVisible;
-  }
+
   LogoImgPath = '../../../assets/logo.png';
   isLoggedIn:boolean = false;
 

@@ -1,10 +1,11 @@
 import { Component, ElementRef, Input, ViewChild, OnInit, AfterViewChecked } from '@angular/core';
 import { FormsModule } from "@angular/forms";
-import { DatePipe, NgForOf } from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import { ChatsService } from "../../Services/chats.service";
 import { TokenStorageService } from "../../Services/token.service";
 import { UserService } from "../../Services/user.service";
 import { Utilisateur } from "../../Models/utilisateur";
+import { MatGridList, MatGridTile } from "@angular/material/grid-list";
 
 @Component({
   selector: 'app-chat',
@@ -12,17 +13,23 @@ import { Utilisateur } from "../../Models/utilisateur";
   imports: [
     FormsModule,
     NgForOf,
-    DatePipe
+    DatePipe,
+    MatGridList,
+    MatGridTile,
+    NgClass,
+    NgIf
   ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   messages: any[] = [];
+  contacts: any[] = [];
   text: string = '';
-  @Input() isVisible: boolean = true;
+  isVisible: boolean = true;
   @ViewChild('messagesArea') private messagesArea!: ElementRef;
   user!: Utilisateur;
+  selectedContact : number = 0;
 
   constructor(
     private chatService: ChatsService,
@@ -32,13 +39,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     const userId = this.tokenService.getUser();
     this.userService.get(userId).subscribe((res: Utilisateur) => {
       this.user = res;
+      this.loadContacts();
       console.log(res);
     });
   }
 
   ngOnInit(): void {
     this.chatService.getMessages().subscribe(messages => {
-      this.messages = messages;
+      this.messages = messages.filter((message: any) => message.from === this.user.id || message.to === this.user.id);
       this.scrollToBottom();
     });
   }
@@ -49,10 +57,27 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   sendMessage(): void {
     if (this.text.trim().length > 0) {
-      this.chatService.sendMessage(this.text, this.user.prenom + this.user.nom);
+      this.chatService.sendMessage(this.text, this.selectedContact);
       this.text = '';
     }
   }
+
+  private loadContacts(): void {
+    this.chatService.getMessages().subscribe(messages => {
+      // Extract unique user IDs from the messages
+      const userIds = Array.from(new Set(
+        messages.flatMap(message => [message.from, message.to])
+      )).filter(id => id !== this.user.id);
+      console.log(userIds)
+      // Fetch user details for these IDs
+      this.userService.getAll().subscribe(allUsers => {
+        this.contacts = allUsers.filter((user:any) => userIds.includes(user.id));
+        this.selectedContact = userIds[0];
+        console.log(this.selectedContact )
+      });
+    });
+  }
+
 
   private scrollToBottom(): void {
     try {
@@ -62,5 +87,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   closeChat(): void {
     this.isVisible = false;
+  }
+  toggleChat(): void {
+    this.isVisible = !this.isVisible;
   }
 }

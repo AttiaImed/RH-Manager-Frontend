@@ -1,4 +1,3 @@
-// src/app/chat.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -7,8 +6,8 @@ import { map } from 'rxjs/operators';
 import {TokenStorageService} from "./token.service";
 
 interface Message {
-  from: string;
-  to : string;
+  from: number;
+  to: number;
   text: string;
   timestamp: number;
 }
@@ -17,20 +16,20 @@ interface Message {
   providedIn: 'root'
 })
 export class ChatsService {
-  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) {
-
-  }
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth,private tokenStorageService : TokenStorageService) {}
 
   getMessages(): Observable<Message[]> {
     return this.firestore.collection<Message>('messages', ref => ref.orderBy('timestamp')).valueChanges();
   }
 
-  sendMessage(text: string,username : string): void {
+  sendMessage(text: string, to: number): void {
+    const currentUserId = this.tokenStorageService.getUser() as number;
+    console.log(currentUserId)
     this.auth.user.subscribe(user => {
       const message: Message = {
-        from: username,
+        from: Number(currentUserId),
+        to: to,
         text: text,
-        to : "2",
         timestamp: Date.now()
       };
       this.firestore.collection('messages').add(message);
