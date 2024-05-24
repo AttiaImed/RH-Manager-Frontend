@@ -106,9 +106,6 @@ export const routes: Routes = [
         path: 'FeedBack',
         component :FeedbackComponent,
         canActivate: [AuthGuard],
-        data:{
-          role :['ADMINISTRATEUR','RH','DIRECTOR']
-        }
       },
 
 

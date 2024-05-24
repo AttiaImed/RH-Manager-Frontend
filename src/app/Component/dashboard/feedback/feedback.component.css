@@ -2,12 +2,35 @@ button{
   margin:10px;
 }
 .feedback-title {
-  color: #007bff; /* Bleu */
+  color: #5E5D6A; /* Bleu */
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
+
+
+
+.container {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end; /* Aligne tout le contenu à droite */
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  max-width: 300px;
+  margin-right: 10px;
+}
+
+.search-select {
+  margin-right: 10px;
+}
 .table {
   width: 100%;
   border-collapse: collapse;
