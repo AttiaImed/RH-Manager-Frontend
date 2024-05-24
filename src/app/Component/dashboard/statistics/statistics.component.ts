@@ -1,27 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
 import {PresenceService} from "../../../Services/presence.service";
+import {Utilisateur} from "../../../Models/utilisateur";
+import {JsonPipe} from "@angular/common";
 import {StaticsService} from "../../../Services/statics.service";
 import {data} from "jquery";
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [NgxEchartsDirective],
+  imports: [NgxEchartsDirective, JsonPipe],
   providers: [provideEcharts()],
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.css',
 })
-export class StatisticsComponent implements OnInit{
-  presence : number =0;
-  allPresence : number = 0;
+export class StatisticsComponent {
+  listUsers : any[] =[];
   optionzaineb: EChartsOption = {};
 
   constructor(private presenceService : PresenceService,private staticsService: StaticsService) {
     this.presenceService.getPresenceByUser().subscribe((res:any[]) =>{
-      this.presence = res.filter(p=> p.presence == true).length;
-      this.allPresence = res.length;
+      this.listUsers = res;
     })
   }
   // Data for charts

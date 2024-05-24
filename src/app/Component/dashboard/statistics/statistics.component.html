@@ -5,7 +5,7 @@
           <div class="row">
             <div class="col">
               <h5 class="card-title text-uppercase text-muted mb-0">Présence</h5>
-              <span class="h2 font-weight-bold mb-0">{{presence}} personnes</span>
+              <span class="h2 font-weight-bold mb-0">{{listUsers.length}} personnes</span>
             </div>
             <div class="col-auto">
               <div class="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -13,8 +13,8 @@
               </div>
             </div>
           <p class="mt-3 mb-0 text-muted text-sm">
-            <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> {{presence}} présents</span>
-            <span class="text-danger"><i class="fas fa-arrow-down"></i> {{allPresence - presence}} absents</span>
+            <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> {{listUsers[0].utilisateur.nom}}
+              présents</span>
           </p>
         </div>
       </div>
