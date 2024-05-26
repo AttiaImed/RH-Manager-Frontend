@@ -6,6 +6,7 @@ import { TokenStorageService } from "../../Services/token.service";
 import { UserService } from "../../Services/user.service";
 import { Utilisateur } from "../../Models/utilisateur";
 import { MatGridList, MatGridTile } from "@angular/material/grid-list";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-chat',
@@ -17,16 +18,19 @@ import { MatGridList, MatGridTile } from "@angular/material/grid-list";
     MatGridList,
     MatGridTile,
     NgClass,
-    NgIf
+    NgIf,
+    MatIcon
   ],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
   messages: any[] = [];
+  disc: any
+  listUsers: Utilisateur[]=[];
   contacts: any[] = [];
   text: string = '';
-  isVisible: boolean = true;
+  isVisible: boolean = false;
   @ViewChild('messagesArea') private messagesArea!: ElementRef;
   user!: Utilisateur;
   selectedContact : number = 0;
@@ -49,10 +53,21 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.messages = messages.filter((message: any) => message.from === this.user.id || message.to === this.user.id);
       this.scrollToBottom();
     });
+    this.loadUser();
   }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
+  }
+  loadUser() {
+    this.userService.getAll().subscribe(
+      (data:Utilisateur[])=>{
+        this.listUsers=data;
+      },
+      (error)=>{
+        console.log(error + "User not found");
+      }
+    );
   }
 
   sendMessage(): void {
@@ -61,7 +76,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.text = '';
     }
   }
-
+visiblity(){
+    this.isVisible=true;
+}
   private loadContacts(): void {
     this.chatService.getMessages().subscribe(messages => {
       // Extract unique user IDs from the messages
@@ -91,4 +108,36 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   toggleChat(): void {
     this.isVisible = !this.isVisible;
   }
+  reciverIde:any
+    getMessagesBetweenUsers(recieverId:any){
+    this.reciverIde= recieverId;
+    const senderId = localStorage.getItem("user_id")
+    this.chatService.getMessagesWithSenderAndReciever(senderId,recieverId).subscribe(data =>{
+      this.disc = data;
+
+      console.log("data disc ", this.disc)
+    })
+    console.log(recieverId);
+
+  }
+  removeRec(){
+    this.reciverIde=null;
+  }
+  sendMessageBetweenUsers(){
+    if (this.reciverIde){
+      let body = {
+        "senderId":localStorage.getItem("user_id"),
+        "receiverId": this.reciverIde,
+        "content": this.text
+      }
+      this.chatService.sendMessagesWithSenderAndReciever(body).subscribe(data =>{
+        this.disc=[...this.disc,data];
+        this.text='';
+        console.log(this.disc)
+      })
+    }else {
+      this.sendMessage();
+    }
+    }
+
 }

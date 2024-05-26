@@ -16,6 +16,33 @@
   display: flex;
   flex-direction: column;
 }
+.contact-item button{
+  display: flex;
+  flex-direction: row-reverse;
+  background: transparent;
+  border: none;
+  color: white;
+}
+.selected-contact{
+  border:2px solid white;
+}
+.float{
+  position:fixed;
+  width:60px;
+  height:60px;
+  bottom:40px;
+  right:40px;
+  background-color:black;
+  color:#FFF;
+  border-radius:50px;
+  text-align:center;
+  box-shadow: 2px 2px 3px #999;
+}
+.my-float{
+  margin-top:30px;
+  color: white;
+
+}
 
 .sidenav {
   width: 30%;
