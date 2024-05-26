@@ -78,6 +78,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 visiblity(){
     this.isVisible=true;
+    
 }
   private loadContacts(): void {
     this.chatService.getMessages().subscribe(messages => {
