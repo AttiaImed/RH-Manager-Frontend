@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Reclamation} from "../../../Models/reclamation";
 import {FormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
+import {CommonModule, NgForOf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {Utilisateur} from "../../../Models/utilisateur";
 import {UserService} from "../../../Services/user.service";
@@ -11,6 +11,7 @@ import {UserService} from "../../../Services/user.service";
   standalone: true,
   imports: [FormsModule,
     NgForOf,
+    CommonModule,
     MatIcon],
   templateUrl: './utilisateur.component.html',
   styleUrl: './utilisateur.component.css'
@@ -37,6 +38,7 @@ export class UtilisateurComponent {
   }
 
   delete(id:number){
+    this.listUsers=this.listUsers.filter(item=>item.id!==id)
     this.userSerivce.Delete(id).subscribe(
       ()=>{
         const index=this.listUsers.findIndex((user)=>user.id===id);

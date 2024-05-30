@@ -114,6 +114,7 @@ export class ReclamationComponent {
       // Si la réclamation n'existe pas dans la liste, l'ajouter
       this.reclamationService.Create(this.newReclamation).subscribe(
         (createdReclamation: Reclamation) => {
+          this.loadReclamations();
           console.log(`New reclamation added successfully.`);
           createdReclamation.status = "Pending"; // Ajouter la valeur par défaut du statut
           this.listReclamation.unshift(createdReclamation); // Ajouter la nouvelle réclamation à la liste
