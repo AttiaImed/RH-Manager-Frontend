@@ -108,6 +108,10 @@ export class StatisticsComponent {
 
   updateChart(data: { pleasedCount: number; unpleasedCount: number }) {
     this.optionzaineb = {
+      title: {
+        text: 'Statistiques des Feedbacks',
+        left: 'center',
+      },
       xAxis: {
         type: 'category',
         data: ['Pleased', 'Unpleased']
