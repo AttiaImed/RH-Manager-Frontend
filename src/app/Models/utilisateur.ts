@@ -5,9 +5,9 @@ export class Utilisateur {
  prenom !: string;
  type !: string;
  email !: string;
+ poste !: string;
  login !: string;
  password !: string
  status !: boolean;
-poste !:string;
 
 }

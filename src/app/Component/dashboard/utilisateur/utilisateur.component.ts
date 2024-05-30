@@ -18,7 +18,7 @@ import {UserService} from "../../../Services/user.service";
 export class UtilisateurComponent {
   listUsers: Utilisateur[]=[];
   selectedReclamation: Utilisateur=new Utilisateur();
-  newReclamation: { id: number; type: string; nom: string; prenom: string; email: string; status: boolean }=new Utilisateur();
+  newReclamation: { id: number; type: string; nom: string; prenom: string; email: string; poste:string; status: boolean  }=new Utilisateur();
 
   constructor(private userSerivce: UserService) {
     this.loadUser();
@@ -53,15 +53,14 @@ export class UtilisateurComponent {
       }
     );
   }
+  selectedUser: Utilisateur = new Utilisateur();
 
-  edit(reclamation: Utilisateur) {
-    console.log( this.selectedReclamation)
-
-    this.selectedReclamation = reclamation;
+  edit(user: Utilisateur) {
+    this.selectedReclamation = { ...user }; // Assign the selected user to the form model
   }
 
   saveChanges() {
-    this.userSerivce.Update(this.selectedReclamation.id,this.selectedReclamation).subscribe(
+    this.userSerivce.Update(this.selectedReclamation.id, this.selectedReclamation).subscribe(
       () => {
         console.log(`Reclamation with id ${this.selectedReclamation.id} updated successfully.`);
         this.loadUser();
@@ -82,6 +81,7 @@ export class UtilisateurComponent {
           nom: "",
           prenom: "",
           email: "",
+          poste: "",
           type:"",
           status: false,
         };

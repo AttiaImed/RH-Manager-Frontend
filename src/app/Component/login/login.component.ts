@@ -85,6 +85,7 @@ export class LoginComponent {
         .subscribe({
           next: (data: any) => {
             this.tokenStorage.saveToken(data.token);
+            localStorage.setItem("user_id",this.tokenStorage.getId())
             this.router.navigate(['/Dashboard']);
           },
           error: (err: Error) => {

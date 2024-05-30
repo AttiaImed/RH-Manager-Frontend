@@ -9,6 +9,7 @@
       <th scope="col">Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Poste</th>
       <th scope="col">Type</th>
       <th scope="col">Status</th>
     </tr>
@@ -19,6 +20,7 @@
   <td>{{ user.nom }}</td>
   <td>{{ user.prenom }}</td>
   <td>{{ user.email }}</td>
+  <td>{{ user.poste }}</td>
   <td>{{ user.type }}</td>
   <td>{{ user.status }}</td>
       <div>
@@ -53,6 +55,10 @@
         <input type="text" class="form-control" id="prenom" [(ngModel)]="selectedReclamation.prenom" name="prenom">
         <label for="email">Email</label>
         <input type="text" class="form-control" id="email" [(ngModel)]="selectedReclamation.email" name="email">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" [(ngModel)]="selectedReclamation.password" name="password">
+        <label for="poste">Poste</label>
+        <input type="text" class="form-control" id="poste" [(ngModel)]="selectedReclamation.poste" name="poste">
         <label for="type">Type</label>
         <input type="text" class="form-control" id="type" [(ngModel)]="selectedReclamation.type" name="type">
         <label for="status">Status</label>
@@ -64,7 +70,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveChanges()" data-dismiss="modal">Save changes</button>
+        <button class="button" data-toggle="modal" data-target="#editModal" (click)="edit(selectedReclamation)">
+          edit
+        </button>
       </div>
     </div>
   </div>
@@ -83,11 +91,13 @@
       <div class="modal-body">
         <!-- Add new dossier form fields -->
         <label for="nom">Name</label>
-        <input type=date class="form-control" id="nom" [(ngModel)]="newReclamation.nom" name="nom">
+        <input type=text class="form-control" id="nom" [(ngModel)]="newReclamation.nom" name="nom">
         <label for="prenom">Lastname</label>
-        <input type=date class="form-control" id="prenom" [(ngModel)]="newReclamation.prenom" name="prenom">
+        <input type=text class="form-control" id="prenom" [(ngModel)]="newReclamation.prenom" name="prenom">
         <label for="email">Email</label>
         <input type="text" class="form-control" id="email" [(ngModel)]="newReclamation.email" name="email">
+        <label for="poste">Poste</label>
+        <input type="text" class="form-control" id="poste" [(ngModel)]="newReclamation.poste" name="poste">
         <label for="type">Type</label>
         <input type="text" class="form-control" id="type" [(ngModel)]="newReclamation.type" name="type">
         <label for="status">Status</label>

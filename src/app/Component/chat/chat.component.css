@@ -1,16 +1,57 @@
-/* src/app/chat/chat.component.css */
 .container {
-  width: 300px;
+  width: 600px;
   height: 400px; /* Adjust the height as needed */
   background-color: #343541;
   border-radius: 8px;
   display: flex;
-  flex-direction: column;
   position: fixed;
   bottom: 20px;
   right: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000; /* Ensure it is above other elements */
+}
+
+.chat-area {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.contact-item button{
+  display: flex;
+  flex-direction: row-reverse;
+  background: transparent;
+  border: none;
+  color: white;
+}
+.selected-contact{
+  border:2px solid white;
+}
+.float{
+  position:fixed;
+  width:60px;
+  height:60px;
+  bottom:40px;
+  right:40px;
+  background-color:black;
+  color:#FFF;
+  border-radius:50px;
+  text-align:center;
+  box-shadow: 2px 2px 3px #999;
+}
+.my-float{
+  margin-top:30px;
+  color: white;
+
+}
+
+.sidenav {
+  width: 30%;
+  background-color: #2E2F3A;
+  border-radius: 0 8px 8px 0;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  color: white;
 }
 
 .nav-bar {
@@ -57,7 +98,6 @@
 
 .messages-area {
   background-color: transparent;
-  width: 100%;
   height: calc(100% - 110px); /* Adjust based on other elements' height */
   overflow-y: scroll; /* Enable vertical scrolling */
   padding: 10px; /* Optional: Add some padding for better spacing */
@@ -65,29 +105,25 @@
 
 .sender-area {
   background-color: #343541;
-  width: 100%;
   height: 70px;
   display: flex;
   border-radius: 8px;
 }
 
 .message {
-  width: 100%;
   margin-bottom: 10px; /* Optional: Add some spacing between messages */
 }
 
-.message.one,
-.message.three,
-.message.five {
+.my-message {
   color: white;
-  background-color: #2E2F3A;
+  background-color: #303783;
   padding: 10px; /* Add some padding for better spacing */
   border-radius: 5px; /* Optional: Add rounded corners */
 }
 
-.message.two,
-.message.four,
-.message.six {
+.their-message {
+  color: white;
+  text-align: end;
   background-color: #343541;
   padding: 10px; /* Add some padding for better spacing */
   border-radius: 5px; /* Optional: Add rounded corners */
@@ -144,6 +180,62 @@
 .send-icon {
   width: 17px;
 }
-.hide{
+
+.contact-item {
+  margin-bottom: 10px; /* Optional: Add some spacing between contacts */
+  padding: 5px;
+  background-color: #3A3B4A;
+  border-radius: 5px;
+}
+
+.hide {
   display: none;
 }
+
+.contactButton {
+  position: fixed;
+  z-index: 1000; /* Ensure it is above other elements */
+  background: #7079f0;
+  color: white;
+  font-family: inherit;
+  padding: 0.45em;
+  padding-left: 1em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #714da6;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3em;
+}
+
+.iconButton {
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #7a8cf3;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.contactButton:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em #5566c2;
+}
+
+.contactButton:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em #5566c2;
+}
+
