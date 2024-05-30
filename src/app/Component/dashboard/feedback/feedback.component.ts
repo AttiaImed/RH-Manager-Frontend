@@ -40,12 +40,17 @@ export class FeedbackComponent {
   constructor(private feedbackService: FeedbackService ,private staticsService: StaticsService,private tokenStorage : TokenStorageService) {
     console.log(this.tokenStorage.getRole())
     this.loadFeedbacks();
+
+
   }
   calculateStatistics() {
-    this.pleasedCount = this.listFeedback.filter(feedback => feedback.typeFeedBack === 'pleased').length;
-    this.unpleasedCount = this.listFeedback.filter(feedback => feedback.typeFeedBack === 'unpleased').length;
+    this.pleasedCount = this.listFeedback.filter(feedback => feedback.typeFeedBack === 'PLEASED').length;
+    console.log(this.listFeedback.length)
+    this.unpleasedCount = this.listFeedback.length - this.pleasedCount;
     this.staticsService.updateStatistics({ pleasedCount: this.pleasedCount, unpleasedCount: this.unpleasedCount });
+    return { pleasedCount: this.pleasedCount, unpleasedCount: this.unpleasedCount };
   }
+
 
 
   loadFeedbacks() {
@@ -56,7 +61,7 @@ export class FeedbackComponent {
           this.listFeedback = data;
           this.filteredFeedback=data;
           this.calculateStatistics();
-          console.log(data)
+
         },
         (error)=>{
           console.log(error + "feedback not found");
@@ -68,7 +73,9 @@ export class FeedbackComponent {
           this.listFeedback = data;
           this.filteredFeedback=data;
           this.calculateStatistics();
-          console.log(data)
+          console.log(this.calculateStatistics())
+
+          console.log(this.listFeedback)
         },
         (error)=>{
           console.log(error + "feedback not found");
@@ -76,7 +83,6 @@ export class FeedbackComponent {
       );
 
     }
-
   }
   applyFilters() {
     // Filtrer les données en fonction du terme de recherche et du type sélectionné

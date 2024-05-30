@@ -12,4 +12,7 @@ export class StaticsService {
   updateStatistics(data: { pleasedCount: number, unpleasedCount: number }) {
     this.statisticsSubject.next(data);
   }
+  getStatistics() {
+    return this.statistics$;
+  }
 }

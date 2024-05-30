@@ -115,6 +115,23 @@ export class StatisticsComponent {
       yAxis: {
         type: 'value'
       },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#283b56',
+          },
+        },
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          dataView: { readOnly: false },
+          restore: {},
+          saveAsImage: {},
+        },
+      },
       series: [
         {
           type: 'bar',
