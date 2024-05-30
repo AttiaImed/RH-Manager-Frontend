@@ -5,6 +5,7 @@ import {CommonModule, NgForOf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {Utilisateur} from "../../../Models/utilisateur";
 import {UserService} from "../../../Services/user.service";
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 
 @Component({
   selector: 'app-utilisateur',
@@ -12,16 +13,20 @@ import {UserService} from "../../../Services/user.service";
   imports: [FormsModule,
     NgForOf,
     CommonModule,
-    MatIcon],
+    MatIcon, MatCard, MatCardHeader, MatCardTitle, MatCardContent],
   templateUrl: './utilisateur.component.html',
   styleUrl: './utilisateur.component.css'
 })
 export class UtilisateurComponent {
   listUsers: Utilisateur[]=[];
   selectedReclamation: Utilisateur=new Utilisateur();
+  totalUsers: number = 0;
+  activeUsers: number = 0;
+  userTypes: { type: string, count: number }[] = [];
   newReclamation: { id: number; type: string; nom: string; prenom: string; email: string; poste:string; status: boolean  }=new Utilisateur();
 
   constructor(private userSerivce: UserService) {
+    this.calculateStatistics();
     this.loadUser();
   }
 
@@ -35,6 +40,25 @@ export class UtilisateurComponent {
         console.log(error + "User not found");
       }
     );
+  }
+  calculateStatistics() {
+    this.totalUsers = this.listUsers.length;
+    console.log("leng",this.listUsers.length)
+
+    // Number of active users
+    this.activeUsers = this.listUsers.filter(user => user.status === true).length;
+
+    // Number of users by type
+    const userTypesMap = new Map<string, number>();
+    this.listUsers.forEach(user => {
+      const userType = user.type;
+      if (userTypesMap.has(userType)) {
+        userTypesMap.set(userType, userTypesMap.get(userType)! + 1);
+      } else {
+        userTypesMap.set(userType, 1);
+      }
+    });
+    this.userTypes = Array.from(userTypesMap).map(([type, count]) => ({ type, count }));
   }
 
   delete(id:number){

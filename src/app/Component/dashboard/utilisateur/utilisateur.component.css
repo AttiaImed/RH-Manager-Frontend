@@ -1,3 +1,45 @@
+.user-statistics-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.user-statistics-card {
+  width: 250px;
+  margin: 0 10px;
+}
+
+.user-statistic {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.user-type-list {
+  list-style: none;
+  padding: 0;
+}
+
+.user-type-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-type-item:last-child {
+  border-bottom: none;
+}
+
+.user-type-item span {
+  font-size: 1rem;
+}
+
+.user-type-count {
+  font-weight: bold;
+}
+
 .button {
   width: 50px;
   height: 50px;
