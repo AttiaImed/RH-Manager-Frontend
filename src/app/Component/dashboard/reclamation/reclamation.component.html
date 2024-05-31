@@ -17,7 +17,7 @@
     <caption>List of reclamations</caption>
     <thead>
     <tr>
-      <th scope="col">ID</th>
+
       <th scope="col">DATE SOUMISSION</th>
       <th scope="col">DATE CLOTURE</th>
       <th scope="col">TITRE</th>
@@ -28,8 +28,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let reclamation of listReclamation | search:searchText">
-      <td>{{ reclamation.id }}</td>
+    <tr *ngFor="let reclamation of filteredFeedback | search:searchText | paginate: { itemsPerPage: 6, currentPage: p }">
+
       <td>{{ reclamation.dateSoumission }}</td>
       <td>{{ reclamation.dateCloture }}</td>
       <td>{{ reclamation.titre }}</td>
@@ -37,17 +37,17 @@
       <td>{{ reclamation.typeReclamation }}</td>
 
       <td>
-        <div *ngIf="editStatusId !== reclamation.id">
-          <div (click)="setEditStatusId(reclamation.id)" style="cursor: pointer">
+        <div *ngIf="editStatusId?.id !== reclamation.id">
+          <div (click)="setEditStatusId(reclamation)" style="cursor: pointer">
             {{ reclamation.status }}
           </div>
         </div>
-        <div *ngIf="editStatusId === reclamation.id">
+        <div *ngIf="editStatusId?.id === reclamation.id && isLoggedIn==='RH'">
           <select class="form-control" id="editStatus" [(ngModel)]="reclamation.status" (blur)="clearEditStatusId()"
                   name="editStatus">
             <option value="PENDING">PENDING</option>
-            <option value="IN_PROGRESS">In Progress</option>
-            <option value="DONE">Done</option>
+            <option value="REJECTED">REJECTED</option>
+            <option value="APPROVED">APPROVED</option>
           </select>
         </div>
       </td>
@@ -63,6 +63,8 @@
     </tr>
     </tbody>
   </table>
+  <pagination-controls (pageChange)="setPage($event)"></pagination-controls>
+
 </div>
 
 <!-- Edit Modal -->

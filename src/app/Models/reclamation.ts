@@ -6,6 +6,6 @@ export class Reclamation {
   description !: string;
   typeReclamation !: string;
   status !:string
-
+  utilisateurReclamation : any;
 
 }

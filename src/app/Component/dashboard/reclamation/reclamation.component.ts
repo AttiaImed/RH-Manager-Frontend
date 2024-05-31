@@ -8,6 +8,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {SearchPipe} from "../../../search.pipe";
 import {TokenStorageService} from "../../../Services/token.service";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @Component({
   selector: 'app-reclamation',
@@ -17,7 +18,8 @@ import {TokenStorageService} from "../../../Services/token.service";
     NgForOf,
     MatIcon,
     NgIf,
-    SearchPipe
+    SearchPipe,
+    NgxPaginationModule
   ],
   templateUrl: './reclamation.component.html',
   styleUrl: './reclamation.component.css'
@@ -25,6 +27,9 @@ import {TokenStorageService} from "../../../Services/token.service";
 export class ReclamationComponent {
   listReclamation: Reclamation[]=[];
   selectedReclamation: Reclamation=new Reclamation();
+  p:number=1;
+filteredFeedback : Reclamation[]=[];
+
   newReclamation: {
     dateSoumission: Date;
     titre: string;
@@ -33,8 +38,9 @@ export class ReclamationComponent {
     id: number;
     dateCloture: Date
     status:string
+    utilisateurReclamation : any;
   }=new Reclamation();
-  editStatusId: number | null = null; // Initialisé à null au lieu de undefined
+  editStatusId: any;// Initialisé à null au lieu de undefined
   searchText='';
   isLoggedIn : string ="";
   constructor(private reclamationService: ReclamationService , private tokenStorage : TokenStorageService) {
@@ -47,6 +53,7 @@ export class ReclamationComponent {
     this.reclamationService.getAll().subscribe(
       (data:Reclamation[])=>{
         this.listReclamation=data;
+        this.filteredFeedback=data;
       },
 
       (error)=>{
@@ -111,14 +118,15 @@ export class ReclamationComponent {
     );
 
     if (existingReclamationIndex === -1) {
+      this.newReclamation.utilisateurReclamation= {
+        id : this.tokenStorage.getUser()
+      }
+      console.log(this.newReclamation)
       // Si la réclamation n'existe pas dans la liste, l'ajouter
       this.reclamationService.Create(this.newReclamation).subscribe(
         (createdReclamation: Reclamation) => {
           this.loadReclamations();
-          console.log(`New reclamation added successfully.`);
-          createdReclamation.status = "Pending"; // Ajouter la valeur par défaut du statut
-          this.listReclamation.unshift(createdReclamation); // Ajouter la nouvelle réclamation à la liste
-          this.clearNewReclamationFields(); // Réinitialiser les champs de la nouvelle réclamation
+          //window.location.reload();
         },
         (error) => {
           console.log(error);
@@ -153,15 +161,29 @@ export class ReclamationComponent {
       titre: "",
       description: "",
       typeReclamation: "",
-      status: "" // Réinitialiser le statut
+      status: "" ,// Réinitialiser le statut,
+      utilisateurReclamation : {
+        id : this.tokenStorage.getUser()
+      }
     };
   }
 
   setEditStatusId(reclamationId: number) {
     this.editStatusId = reclamationId;
+
   }
   clearEditStatusId() {
+    this.editStatusId.utilisateurReclamation = null;
+    console.log( this.editStatusId)
+
+    this.reclamationService.Update(this.editStatusId.id, this.editStatusId).subscribe((res : any)=>{
+      console.log(res);
+      window.location.reload();
+    })
     this.editStatusId = null;
+  }
+  setPage(event : number){
+    this.p = event
   }
 
 }

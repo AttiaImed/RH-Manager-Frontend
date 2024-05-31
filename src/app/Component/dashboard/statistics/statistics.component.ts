@@ -32,7 +32,9 @@ export class StatisticsComponent {
     { value: 484, name: 'Union Ads' },
     { value: 300, name: 'Video Ads' },
   ];
-  dataCandlesHorizontale = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+
+  dataCandlesHorizontale = ['PENDING', 'APPROVED', 'REJECTED'];
   dataCandles = [120, 200, 150, 80, 70, 110, 130];
 
   // Charts Configurations
