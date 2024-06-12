@@ -21,9 +21,12 @@ import {UtilisateurComponent} from "./Component/dashboard/utilisateur/utilisateu
 import {ForgetPasswordComponent} from "./Component/login/forget-password/forget-password.component";
 import {RequestComponent} from "./Component/Projet/request/request.component";
 import {ChatComponent} from "./Component/chat/chat.component";
+import {FaceRecognitionComponent} from "./Component/face-recognition/face-recognition.component";
 
 export const routes: Routes = [
   {path: 'login', component :LoginComponent, canActivate: [SecureInnerPagesGuard]},
+  {path: 'face', component :FaceRecognitionComponent, canActivate: [SecureInnerPagesGuard]},
+
   {path: 'forget-password', component :ForgetPasswordComponent, canActivate: [SecureInnerPagesGuard]},
   {path: 'signup', component :SignupComponent, canActivate: [SecureInnerPagesGuard]},
   {path : "message" , component : ChatComponent},

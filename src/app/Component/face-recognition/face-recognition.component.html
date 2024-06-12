@@ -1,0 +1,8 @@
+<div class="floating-webcam">
+  <webcam [trigger]="triggerObservable"
+          (imageCapture)="handleImage($event)"
+          [allowCameraSwitch]="true"
+          [videoOptions]="{ width: 640, height: 480 }"
+          (initError)="handleInitError($event)">
+  </webcam>
+</div>

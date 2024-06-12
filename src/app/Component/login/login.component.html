@@ -44,6 +44,7 @@
   <div class="card login">
     <div class="card-body">
       <h2 class="login-title">Login with your email</h2>
+      <button class="btn btn-primary" (click)="openDialog()" style="margin: 10px">Open with your face</button>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="email"><i class="me-3"><mat-icon>email</mat-icon></i> Email address</label>

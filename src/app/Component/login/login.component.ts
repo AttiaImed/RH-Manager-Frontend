@@ -13,6 +13,8 @@ import {ErrorsStateMatcher} from "../../Models/ErrorStateMatcher";
 import {CommonModule} from "@angular/common";
 import {MatInput} from "@angular/material/input";
 import {Subject, takeUntil} from "rxjs";
+import {FaceRecognitionComponent} from "../face-recognition/face-recognition.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-login',
@@ -28,6 +30,7 @@ import {Subject, takeUntil} from "rxjs";
     MatIcon,
     MatFormField,
     MatLabel,
+    FaceRecognitionComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -39,7 +42,8 @@ export class LoginComponent {
     private _snackBar: MatSnackBar,
     private router: Router,
     private entryService: EntryService,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    public dialog: MatDialog,
   ) {
   }
 
@@ -97,5 +101,20 @@ export class LoginComponent {
     } else {
       this._snackBar.open('Enter valid information!!!', '❌');
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(FaceRecognitionComponent, {
+      width: '300px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Logic to handle the result from the dialog, e.g., refresh the table
+      console.log('Dialog result:', result);
+      if (result) {
+        window.location.reload();
+      }
+    });
   }
 }

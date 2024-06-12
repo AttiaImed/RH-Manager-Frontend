@@ -30,5 +30,9 @@ getUserId(){
     const decodedToken : any = jwt_decode.jwtDecode(token)
   return decodedToken?.user_id
 }
+loginWithUserId(userId : number){
+  return this.http.post(`${APIUrl}authenticate/${userId}`,null)
+
+}
 
 }
